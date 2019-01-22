@@ -12,9 +12,9 @@ public class RobotMap {
 	public static final double W = 21.5;
 	public static final double R = Math.sqrt((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
 	public static final double circumference = 4.096;
-	// public static final double toleranceAnglePID = circumference/100/4;
+	public static final double toleranceAnglePID = circumference/100/4;
 	public static final double deadbandJoystickInput = 0.05;
-	public static final double[] setpointOffset = {2.0, 2.5, 1.4, 0.0};
+	public static final double[] setpointOffset = {2.0, 2.6, 1.4, 0.0};
 	public static final double[][] PIDconst = {{0.8, 0, 0}, 
 												{0.8, 0, 0}, 
 												{0.8, 0, 0}, 
