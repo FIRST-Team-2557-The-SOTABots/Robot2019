@@ -1,11 +1,10 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
+import java.lang.Math;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,6 +22,9 @@ public class SwerveModule extends Subsystem {
 	public double error;
 	public double output;
 	public double encPID;
+	public double rawSetpoint;
+	public double mod;
+	public double yOffset;
 	
 	public SwerveModule(int swerveModIndex, boolean inverted) {
 		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
@@ -58,15 +60,29 @@ public class SwerveModule extends Subsystem {
 		return setpoint;
 	}
 	
-	public void drive (double speed, double angle) {
+	public void drive (double speed, double angle) { // angle = -1 to 1
 		speedMotor.set (speed);
 
-		setpoint = ((angle + 1) * RobotMap.circumference / 2) % RobotMap.circumference;
-		setpoint = (setpoint + setpointOffset + RobotMap.circumference) % RobotMap.circumference;
-		pidController.setSetpoint(setpoint);
+		setpoint = ((angle + 1.0) * RobotMap.circumference * 1000.0 / 2.0);
+		setpoint = (setpoint + setpointOffset * 1000.0) % (RobotMap.circumference * 1000.0);
+		pidController.setSetpoint(setpoint / 1000.0);
+
+		// double halfCir = RobotMap.circumference/2;
+		// setpoint = angle * halfCir; // -2.048 to 2.048
+		// setpoint += setpointOffset;
+		// rawSetpoint = setpoint;
+		// mod = setpoint % halfCir;
+		// yOffset = - Math.floor(setpoint/halfCir) * halfCir;
+		// setpoint = setpoint % halfCir - Math.floor(setpoint/halfCir) * halfCir; // still -2.048 to 2.048
+
+		// error = setpoint - encPID; // + or - diff 
+		// output = PID[0] * error / halfCir; // kP * error / cir = motorPower
+		// if (Math.abs(output) < RobotMap.toleranceAnglePID) { output = 0.0; }
+		// angleMotor.set(output); // set motor
+
 		error = pidController.getError();
 		output = pidController.get();
-		encPID = encoder.pidGet();
+		encPID = encoder.pidGet(); // -2.048 to 2.048
 	}
 
 
