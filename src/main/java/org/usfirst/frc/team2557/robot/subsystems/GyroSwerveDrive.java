@@ -5,12 +5,19 @@ import org.usfirst.frc.team2557.robot.commands.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GyroSwerveDrive extends Subsystem {
-  
   public void gyroDrive (double str, double fwd, double rot) {
     double angle = RobotMap.gyro.getAngle();
+    angle = Math.toRadians(angle);
     double intermediary = fwd * Math.cos(angle) + str * Math.sin(angle);
     str = - fwd * Math.sin(angle) + str * Math.cos(angle);
     fwd = intermediary;
+
+    // double radius = Math.sqrt(Math.pow(fwd, 2) + Math.pow(str, 2));
+    // double initAngle = Math.atan2(axis1, axis0);
+    // double gyroAngle = RobotMap.gyro.getAngle();
+    // double finalAngle = initAngle - gyroAngle;
+    // double finalYaxis = radius * Math.sin(finalAngle);
+    // double finalXaxis = radius * Math.cos(finalAngle);
 
     double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);

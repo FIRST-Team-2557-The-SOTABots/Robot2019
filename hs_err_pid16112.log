@@ -1,0 +1,188 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (t:/workspace/open/src/hotspot/share/memory/allocation.cpp:46), pid=16112, tid=15276
+#
+# JRE version:  (11.0.1+13) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.1+13, mixed mode, aot, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Xmx64m -Dorg.gradle.appname=gradlew org.gradle.wrapper.GradleWrapperMain deploy -PteamNumber=2557 --offline -Dorg.gradle.java.home=C:\Users\Public\frc2019\jdk
+
+Host: Intel(R) Core(TM) i3-7100U CPU @ 2.40GHz, 4 cores, 3G,  Windows 10 , 64 bit Build 17134 (10.0.17134.1)
+Time: Thu Jan 24 11:02:59 2019 Pacific Standard Time elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001c273317000):  JavaThread "Unknown thread" [_thread_in_vm, id=15276, stack(0x0000002425600000,0x0000002425700000)]
+
+Stack: [0x0000002425600000,0x0000002425700000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x63ad9a]
+V  [jvm.dll+0x77851f]
+V  [jvm.dll+0x779b08]
+V  [jvm.dll+0x77a1c3]
+V  [jvm.dll+0x2624c8]
+V  [jvm.dll+0xbd5c4]
+V  [jvm.dll+0x2f915d]
+V  [jvm.dll+0x2f3479]
+V  [jvm.dll+0x7517c7]
+V  [jvm.dll+0x752f0f]
+V  [jvm.dll+0x373ff9]
+V  [jvm.dll+0x738049]
+V  [jvm.dll+0x3e357d]
+V  [jvm.dll+0x3e58e1]
+C  [java.exe+0x3603]
+C  [java.exe+0x1746c]
+C  [KERNEL32.DLL+0x13034]
+C  [ntdll.dll+0x73691]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x000001c271a665d0, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001c271b3d000 GCTaskThread "GC Thread#0" [stack: 0x0000002425700000,0x0000002425800000] [id=14056]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffa8730df20]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000001c273315220] Heap_lock - owner thread: 0x000001c273317000
+
+Heap address: 0x00000000fc000000, size: 64 MB, Compressed Oops mode: Non-zero based: 0x00000000fc000000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff747dd0000 - 0x00007ff747e15000 	C:\Users\Public\frc2019\jdk\bin\java.exe
+0x00007ffadf0c0000 - 0x00007ffadf2a1000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffadefc0000 - 0x00007ffadf072000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffadb690000 - 0x00007ffadb903000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffade600000 - 0x00007ffade790000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffadb5f0000 - 0x00007ffadb610000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffade5d0000 - 0x00007ffade5f8000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffadc020000 - 0x00007ffadc1b2000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffadc4b0000 - 0x00007ffadc54f000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffadb490000 - 0x00007ffadb58a000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffac64a0000 - 0x00007ffac6709000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.17134.523_none_fb409dd930672a56\COMCTL32.dll
+0x00007ffadc550000 - 0x00007ffadc5ee000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffadec90000 - 0x00007ffadefb2000 	C:\WINDOWS\System32\combase.dll
+0x00007ffadc860000 - 0x00007ffadc984000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffadb610000 - 0x00007ffadb68a000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffade790000 - 0x00007ffade7bd000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffac0310000 - 0x00007ffac0326000 	C:\Users\Public\frc2019\jdk\bin\vcruntime140.dll
+0x00007ffac0270000 - 0x00007ffac030b000 	C:\Users\Public\frc2019\jdk\bin\msvcp140.dll
+0x00007ffa87010000 - 0x00007ffa87b51000 	C:\Users\Public\frc2019\jdk\bin\server\jvm.dll
+0x00007ffadcb60000 - 0x00007ffadcc01000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffade570000 - 0x00007ffade5cb000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffadc850000 - 0x00007ffadc858000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffac6230000 - 0x00007ffac6239000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007fface3a0000 - 0x00007fface3aa000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffad9440000 - 0x00007ffad9463000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffade300000 - 0x00007ffade36c000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffad9410000 - 0x00007ffad943a000 	C:\WINDOWS\SYSTEM32\winmmbase.dll
+0x00007ffadc1c0000 - 0x00007ffadc209000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x00007ffadb3f0000 - 0x00007ffadb401000 	C:\WINDOWS\System32\kernel.appcore.dll
+0x00007ffac0250000 - 0x00007ffac0261000 	C:\Users\Public\frc2019\jdk\bin\verify.dll
+0x00007ffac4bd0000 - 0x00007ffac4d99000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffac4e90000 - 0x00007ffac4eb9000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffac0220000 - 0x00007ffac0248000 	C:\Users\Public\frc2019\jdk\bin\java.dll
+0x00007ffabf290000 - 0x00007ffabf2a6000 	C:\Users\Public\frc2019\jdk\bin\zip.dll
+0x00007ffacc6e0000 - 0x00007ffacc6ea000 	C:\Users\Public\frc2019\jdk\bin\jimage.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\Public\frc2019\jdk\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.17134.523_none_fb409dd930672a56;C:\Users\Public\frc2019\jdk\bin\server
+
+VM Arguments:
+jvm_args: -Xmx64m -Dorg.gradle.appname=gradlew 
+java_command: org.gradle.wrapper.GradleWrapperMain deploy -PteamNumber=2557 --offline -Dorg.gradle.java.home=C:\Users\Public\frc2019\jdk
+java_class_path (initial): c:\Users\charl\Desktop\VS Code Projects\Robot2019\\gradle\wrapper\gradle-wrapper.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 3                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 4                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 65011712                                  {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 67108864                                  {product} {command line}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5830092                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122914074                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122914074                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Users\Public\frc2019\jdk
+CLASSPATH=c:\Users\charl\Desktop\VS Code Projects\Robot2019\\gradle\wrapper\gradle-wrapper.jar
+PATH=C:\Users\Public\frc2019\jdk\bin:C:\Program Files\Java\jdk-11.0.2\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\PuTTY\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Common Files\Adobe\AGL;C:\Users\Public\frc2019\roborio\bin;C:\Users\Public\frc2019\frccode;C:\Program Files\Git\cmd;C:\Users\charl\AppData\Local\Microsoft\WindowsApps;C:\Users\Public\frc2019\roborio\bin;C:\Users\Public\frc2019\frccode;C:\Users\charl\AppData\Local\GitHubDesktop\bin
+USERNAME=charl
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 17134 (10.0.17134.1)
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 142 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx, fma
+
+Memory: 4k page, system-wide physical 3964M (442M free)
+TotalPageFile size 6012M (AvailPageFile size 4M)
+current process WorkingSet (physical memory assigned to process): 9M, peak: 9M
+current process commit charge ("private bytes"): 49M, peak: 50M
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.1+13) for windows-amd64 JRE (11.0.1+13), built on Oct  6 2018 13:18:13 by "mach5one" with MS VC++ 15.5 (VS2017)
+
+END.

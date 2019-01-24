@@ -6,26 +6,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SwerveModule extends Subsystem {
 	private final double[] pidConstants;
 	private final double setpointOffset;
+	public double setpoint;
+	public double error;
+	public double output;
+	public double encCount;
 
 	private WPI_TalonSRX angleMotor;
 	private CANSparkMax speedMotor;
 	private PIDController pidController;
 	private AnalogInput encoder;
 
-	public double setpoint;
-	public double error;
-	public double output;
-	public double encCount;
-
-	// public int sec;
-	// public Timer timer;
-	
 	public SwerveModule(int swerveModIndex, boolean angleMotorInverted) {
 		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
 		angleMotor = new WPI_TalonSRX(swerveModIndex);
@@ -49,10 +44,6 @@ public class SwerveModule extends Subsystem {
 		angleMotor.configPeakCurrentLimit(RobotMap.SWERVE_MAX_CURRENT, 0);
 		angleMotor.configPeakCurrentDuration(RobotMap.SWERVE_CURRENT_DUR, 0);
 		angleMotor.enableCurrentLimit(true);
-
-		// timer = new Timer();
-		// timer.reset();
-		// timer.start();
 	}
 
 	public double getSetpoint(){
@@ -70,8 +61,6 @@ public class SwerveModule extends Subsystem {
 		}
 		pidController.setSetpoint(setpoint);
 
-		// angleMotor.set (angle/10);
-
 		/* println to console output 
 		is for graphing in excel 
 		AND REMEMBER only use one swervemod
@@ -81,16 +70,6 @@ public class SwerveModule extends Subsystem {
 		encCount = encoder.pidGet();
 		// System.out.println("setpoint: " + setpoint + " error: " + error + " output: " 
 				// + output + " encCount: " + encCount + " time: " + timer.get());
-
-		/* timer stuff for testing */
-		// if(timer.get() > sec){
-		// 	sec += 2;
-		// 	if(sec/2 % 2 == 0){
-		// 		pidController.setSetpoint(0.0);
-		// 	}else{
-		// 		pidController.setSetpoint(2.0);
-		// 	}
-		// }
 	}
 
 

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2557.robot.commands;
 
+// import java.lang.Math;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,10 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwerveDriveCommand extends Command {
 
     public SwerveDriveCommand () {
-    	requires(Robot.swerveDrive);
+    	// requires(Robot.swerveDrive);
     }
 
     protected void initialize() {
+        // RobotMap.gyro.reset();
     }
 
     protected void execute() {
@@ -23,9 +25,20 @@ public class SwerveDriveCommand extends Command {
 		if (axis1 < RobotMap.JOYSTICK_DEADBAND && axis1 > -RobotMap.JOYSTICK_DEADBAND) { axis1 = 0.0; }
 		if (axis4 < RobotMap.JOYSTICK_DEADBAND && axis4 > -RobotMap.JOYSTICK_DEADBAND) { axis4 = 0.0; }
         if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) { axis5 = 0.0; }
+
+        axis0 *= -1;
+        axis1 *= -1;
+        axis4 *= -1;
+
+        // double radius = Math.sqrt(Math.pow(axis0, 2) + Math.pow(axis1, 2));
+        // double initAngle = Math.atan2(axis1, axis0);
+        // double gyroAngle = RobotMap.gyro.getAngle();
+        // double finalAngle = initAngle - gyroAngle;
+        // double finalYaxis = radius * Math.sin(finalAngle);
+        // double finalXaxis = radius * Math.cos(finalAngle);
         
-        Robot.swerveDrive.drive(-axis1/10.0, axis5);
-        // Robot.swerveDrive.drive(axis0/5.0, -axis1/5.0, axis4/5.0);
+        // Robot.swerveDrive.drive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
+        //         axis4 * RobotMap.SWERVE_MULTIPLIER);
     }
 
     protected boolean isFinished() {
