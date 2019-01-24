@@ -81,32 +81,27 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("encoder BL", RobotMap.swerveModBL.getEncoderCount());
-		SmartDashboard.putNumber("encoder BR", RobotMap.swerveModBR.getEncoderCount());
-		SmartDashboard.putNumber("encoder FL", RobotMap.swerveModFL.getEncoderCount());
-		SmartDashboard.putNumber("encoder FR", RobotMap.swerveModFR.getEncoderCount());
+		SmartDashboard.putNumber("encoder BL", RobotMap.swerveModBL.encCount);
+		SmartDashboard.putNumber("encoder BR", RobotMap.swerveModBR.encCount);
+		SmartDashboard.putNumber("encoder FL", RobotMap.swerveModFL.encCount);
+		SmartDashboard.putNumber("encoder FR", RobotMap.swerveModFR.encCount);
 
-		SmartDashboard.putNumber("encoderAdjusted BL", (RobotMap.swerveModBL.encPID + RobotMap.setpointOffset[2] + RobotMap.circumference) % RobotMap.circumference);
-		SmartDashboard.putNumber("encoderAdjusted BR", (RobotMap.swerveModBR.encPID + RobotMap.setpointOffset[2] + RobotMap.circumference) % RobotMap.circumference);
-		SmartDashboard.putNumber("encoderAdjusted FL", (RobotMap.swerveModFL.encPID + RobotMap.setpointOffset[2] + RobotMap.circumference) % RobotMap.circumference);
-		SmartDashboard.putNumber("encoderAdjusted FR", (RobotMap.swerveModFR.encPID + RobotMap.setpointOffset[2] + RobotMap.circumference) % RobotMap.circumference);
+		SmartDashboard.putNumber("setpoint BL", RobotMap.swerveModBL.setpoint);
+		SmartDashboard.putNumber("setpoint BR", RobotMap.swerveModBR.setpoint);
+		SmartDashboard.putNumber("setpoint FL", RobotMap.swerveModFL.setpoint);
+		SmartDashboard.putNumber("setpoint FR", RobotMap.swerveModFR.setpoint);
 
-		// SmartDashboard.putNumber("setpoint BL", RobotMap.swerveModBL.getSetpoint());
-		// SmartDashboard.putNumber("setpoint BR", RobotMap.swerveModBR.getSetpoint());
-		// SmartDashboard.putNumber("setpoint FL", RobotMap.swerveModFL.getSetpoint());
-		// SmartDashboard.putNumber("setpoint FR", RobotMap.swerveModFR.getSetpoint());
-
-		// SmartDashboard.putNumber("error BL", RobotMap.swerveModBL.error);
-		// SmartDashboard.putNumber("error BR", RobotMap.swerveModBR.error);
-		// SmartDashboard.putNumber("error FL", RobotMap.swerveModFL.error);
-		// SmartDashboard.putNumber("error FR", RobotMap.swerveModFR.error);
+		SmartDashboard.putNumber("error BL", RobotMap.swerveModBL.error);
+		SmartDashboard.putNumber("error BR", RobotMap.swerveModBR.error);
+		SmartDashboard.putNumber("error FL", RobotMap.swerveModFL.error);
+		SmartDashboard.putNumber("error FR", RobotMap.swerveModFR.error);
 
 		SmartDashboard.putNumber("output BL", RobotMap.swerveModBL.output);
 		SmartDashboard.putNumber("output BR", RobotMap.swerveModBR.output); 
 		SmartDashboard.putNumber("output FL", RobotMap.swerveModFL.output);
 		SmartDashboard.putNumber("output FR", RobotMap.swerveModFR.output);
 
-		SmartDashboard.putNumber("axis 5", m_oi.joystick.getRawAxis(5));
+		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick.getRawAxis(5));
 
 		Scheduler.getInstance().run();
 	}

@@ -8,18 +8,20 @@ public class RobotMap {
 	public static AHRS gyro;
 
 	public static SwerveModule swerveModBR, swerveModBL, swerveModFR, swerveModFL;
-	public static final double L = 21.5;
-	public static final double W = 21.5;
-	public static final double R = Math.sqrt((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
-	public static final double circumference = 4.096;
-	public static final double pidLoopTime = 0.100; // 100 milliseconds (50 ms is default)
-	public static final double toleranceAnglePID = circumference/100/4;
-	public static final double deadbandJoystickInput = 0.05;
-	public static final double[] setpointOffset = {2.0, 2.6, 1.4, 0.0};
-	public static final double[][] PIDconst = {{0.8, 0, 0}, 
-												{0.8, 0, 0}, 
-												{0.8, 0, 0}, 
-												{0.8, 0, 0}};
+
+	public static final double JOYSTICK_DEADBAND = 0.05;
+
+	public static final double SWERVE_LENGTH = 21.5;
+	public static final double SWERVE_WIDTH = 21.5;
+	public static final double SWERVE_RADIUS = Math.sqrt(Math.pow(SWERVE_LENGTH, 2) + Math.pow(SWERVE_WIDTH, 2));
+	public static final double SWERVE_ENC_CIRC = 4.096;
+	public static final double SWERVE_LOOP_TIME = 0.100; // 100 milliseconds (50 ms is default)
+	public static final double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.0, 2.6, 1.4, 0.0}; // must be >= 0.0
+	public static final double[][] SWERVE_PID_CONSTANTS = {{0.8, 0, 0}, 
+															{0.8, 0, 0}, 
+															{0.8, 0, 0}, 
+															{0.8, 0, 0}};
 	
 	public static void init() {
 		gyro = new AHRS(SPI.Port.kMXP);
