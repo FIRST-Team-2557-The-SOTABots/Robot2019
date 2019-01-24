@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 	public static OI m_oi;
-	public static SwerveDrive swerveDrive;
-	// public static GyroSwerveDrive gyroIntegrated;
+	// public static SwerveDrive swerveDrive;
+	public static GyroSwerveDrive gyroSwerveDrive;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
@@ -23,8 +23,8 @@ public class Robot extends TimedRobot {
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
 
-		swerveDrive = new SwerveDrive();
-		// gyroIntegrated = new GyroSwerveDrive();
+		// swerveDrive = new SwerveDrive();
+		gyroSwerveDrive = new GyroSwerveDrive();
 
 		// NOTE: oi MUST be constructed after subsystems
 		m_oi = new OI();
@@ -103,6 +103,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("output FR", RobotMap.swerveModFR.output);
 
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick.getRawAxis(5));
+		SmartDashboard.putNumber("gyro: ", RobotMap.gyro.getAngle());
 
 		Scheduler.getInstance().run();
 	}

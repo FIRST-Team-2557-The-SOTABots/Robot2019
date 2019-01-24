@@ -2,16 +2,16 @@ package org.usfirst.frc.team2557.robot.commands;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GyroSwerveDriveCommand extends Command {
   public GyroSwerveDriveCommand () {
-    // requires(Robot.gyroIntegrated);
+    requires(Robot.gyroSwerveDrive);
   }
 
   @Override
   protected void initialize() {
+    RobotMap.gyro.reset();
   }
 
   @Override
@@ -25,9 +25,13 @@ public class GyroSwerveDriveCommand extends Command {
 		if (axis1 < RobotMap.JOYSTICK_DEADBAND && axis1 > -RobotMap.JOYSTICK_DEADBAND) { axis1 = 0.0; }
 		if (axis4 < RobotMap.JOYSTICK_DEADBAND && axis4 > -RobotMap.JOYSTICK_DEADBAND) { axis4 = 0.0; }
     if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) { axis5 = 0.0; }
+
+    axis0 *= -1;
+    axis1 *= -1;
+    axis4 *= -1;
          
-    // Robot.swerveDrive.drive(Robot.m_oi.joystick.getRawAxis(0), 
-    //     Robot.m_oi.joystick.getRawAxis(1), Robot.m_oi.joystick.getRawAxis(4));
+    Robot.gyroSwerveDrive.gyroDrive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
+        axis4 * RobotMap.SWERVE_MULTIPLIER);
   }
 
   @Override
