@@ -66,10 +66,10 @@ public class SwerveModule extends Subsystem {
 	public void drive (double speed, double angle) {
 		speedMotor.set (speed);
 
-		setpoint = (angle + 1.0) * RobotMap.ENC_CIRC / 2.0;
+		setpoint = (angle + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0;
 		setpoint += setpointOffset;
-		if(setpoint >= RobotMap.ENC_CIRC){
-			setpoint -= RobotMap.ENC_CIRC;
+		if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
+			setpoint -= RobotMap.SWERVE_ENC_CIRC;
 		}
 		// adjEnc.setSetpoint(setpoint);
 		pidController.setSetpoint(setpoint);
