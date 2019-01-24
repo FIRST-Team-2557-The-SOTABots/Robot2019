@@ -70,6 +70,8 @@ public class SwerveModule extends Subsystem {
 		}
 		pidController.setSetpoint(setpoint);
 
+		// angleMotor.set (angle/10);
+
 		/* println to console output 
 		is for graphing in excel 
 		AND REMEMBER only use one swervemod
@@ -78,7 +80,7 @@ public class SwerveModule extends Subsystem {
 		output = pidController.get();
 		encCount = encoder.pidGet();
 		// System.out.println("setpoint: " + setpoint + " error: " + error + " output: " 
-		// 		+ output + " encCount: " + encCount + " time: " + timer.get());
+				// + output + " encCount: " + encCount + " time: " + timer.get());
 
 		/* timer stuff for testing */
 		// if(timer.get() > sec){

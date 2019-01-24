@@ -24,8 +24,8 @@ public class SwerveDriveCommand extends Command {
 		if (axis4 < RobotMap.JOYSTICK_DEADBAND && axis4 > -RobotMap.JOYSTICK_DEADBAND) { axis4 = 0.0; }
         if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) { axis5 = 0.0; }
         
-        Robot.swerveDrive.drive(axis1, axis5);
-        // Robot.swerveDrive.drive(axis0, axis1, axis4);
+        Robot.swerveDrive.drive(-axis1/10.0, axis5);
+        // Robot.swerveDrive.drive(axis0/5.0, -axis1/5.0, axis4/5.0);
     }
 
     protected boolean isFinished() {
