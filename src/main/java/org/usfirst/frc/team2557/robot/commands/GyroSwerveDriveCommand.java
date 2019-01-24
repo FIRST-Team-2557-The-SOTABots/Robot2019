@@ -21,11 +21,11 @@ public class GyroSwerveDriveCommand extends Command {
     double axis4 = Robot.m_oi.joystick.getRawAxis(4);
     double axis5 = Robot.m_oi.joystick.getRawAxis(5);
 
-    if (axis0 < RobotMap.deadbandJoystickInput && axis0 > -RobotMap.deadbandJoystickInput) { axis0 = 0.0; }
-		if (axis1 < RobotMap.deadbandJoystickInput && axis1 > -RobotMap.deadbandJoystickInput) { axis1 = 0.0; }
-		if (axis4 < RobotMap.deadbandJoystickInput && axis4 > -RobotMap.deadbandJoystickInput) { axis4 = 0.0; }
-    if (axis5 < RobotMap.deadbandJoystickInput && axis5 > -RobotMap.deadbandJoystickInput) { axis5 = 0.0; }
-        
+    if (axis0 < RobotMap.JOYSTICK_DEADBAND && axis0 > -RobotMap.JOYSTICK_DEADBAND) { axis0 = 0.0; }
+		if (axis1 < RobotMap.JOYSTICK_DEADBAND && axis1 > -RobotMap.JOYSTICK_DEADBAND) { axis1 = 0.0; }
+		if (axis4 < RobotMap.JOYSTICK_DEADBAND && axis4 > -RobotMap.JOYSTICK_DEADBAND) { axis4 = 0.0; }
+    if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) { axis5 = 0.0; }
+         
     // Robot.swerveDrive.drive(Robot.m_oi.joystick.getRawAxis(0), 
     //     Robot.m_oi.joystick.getRawAxis(1), Robot.m_oi.joystick.getRawAxis(4));
   }
