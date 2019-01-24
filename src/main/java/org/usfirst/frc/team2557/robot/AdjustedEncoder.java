@@ -2,7 +2,6 @@ package org.usfirst.frc.team2557.robot;
 
 import java.lang.Math;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -16,10 +15,6 @@ public class AdjustedEncoder implements PIDSource {
         pst = PIDSourceType.kDisplacement;
         enc = new AnalogInput(index);
         setpoint = 0;
-    }
-
-    public void setPIDSourceType​ (PIDSourceType pidSourceType) {
-        pst = pidSourceType;
     }
 
     public PIDSourceType getPIDSourceType()	{
@@ -42,6 +37,11 @@ public class AdjustedEncoder implements PIDSource {
         //     prevEnc = encVal;
         // }
         return encVal;
+    }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+        pst = pidSource;
     }
 }
 

@@ -12,10 +12,10 @@ public class GyroSwerveDrive extends Subsystem {
     str = - fwd * Math.sin(angle) + str * Math.cos(angle);
     fwd = intermediary;
 
-    double a = str - rot * (RobotMap.L / RobotMap.R);
-		double b = str + rot * (RobotMap.L / RobotMap.R);
-		double c = fwd - rot * (RobotMap.W / RobotMap.R);
-    double d = fwd + rot * (RobotMap.W / RobotMap.R);
+    double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+		double c = fwd - rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
+    double d = fwd + rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
     
     double speedBR = Math.sqrt ((a * a) + (d * d));
     double speedBL = Math.sqrt ((a * a) + (c * c));
