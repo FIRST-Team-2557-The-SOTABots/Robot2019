@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GyroSwerveDriveCommand extends Command {
   public GyroSwerveDriveCommand () {
-    requires(Robot.gyroSwerveDrive);
+    // requires(Robot.gyroSwerveDrive);
   }
 
   @Override
@@ -27,11 +27,11 @@ public class GyroSwerveDriveCommand extends Command {
     if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) { axis5 = 0.0; }
 
     axis0 *= -1;
-    axis1 *= -1;
+    // axis1 *= -1;
     axis4 *= -1;
          
-    Robot.gyroSwerveDrive.gyroDrive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
-        axis4 * RobotMap.SWERVE_MULTIPLIER);
+    // Robot.gyroSwerveDrive.gyroDrive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
+    //     axis4 * RobotMap.SWERVE_MULTIPLIER);
   }
 
   @Override

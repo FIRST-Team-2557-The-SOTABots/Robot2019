@@ -1,11 +1,12 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
+import org.usfirst.frc.team2557.robot.AdjustedEncoder;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import org.usfirst.frc.team2557.robot.RobotMap;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SwerveModule extends Subsystem {
@@ -19,16 +20,20 @@ public class SwerveModule extends Subsystem {
 	private WPI_TalonSRX angleMotor;
 	private CANSparkMax speedMotor;
 	private PIDController pidController;
+	// private AdjustedEncoder encoder;
 	private AnalogInput encoder;
 
-	public SwerveModule(int swerveModIndex, boolean angleMotorInverted) {
+	public SwerveModule(int swerveModIndex, boolean inverted) {
 		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
 		angleMotor = new WPI_TalonSRX(swerveModIndex);
-		angleMotor.setInverted(angleMotorInverted);
+		// angleMotor.setInverted(angleMotorInverted);
+		// speedMotor.setInverted(angleMotorInverted);
 		encoder = new AnalogInput(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
 		setpointOffset = RobotMap.SWERVE_SETPOINT_OFFSET[swerveModIndex];
+
+		// encoder = new AdjustedEncoder(swerveModIndex, inverted, pidConstants[0]);
 
 		// should try messing with loop time to see what it does to the performance
 		pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
