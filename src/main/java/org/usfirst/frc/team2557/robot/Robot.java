@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
+		/* meant for picking up vision values, needs testing after swerve works */
 		// NetworkTable contoursTable = NetworkTableInstance.getDefault().getTable("/vision/contours");
 		// String[] labels = {"x", "y", "h", "w", "area", "dist", "rot"};
 		// double[][] data = new double[7][0];
