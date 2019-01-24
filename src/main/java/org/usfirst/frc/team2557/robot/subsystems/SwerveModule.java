@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-// import org.usfirst.frc.team2557.robot.AdjustedEncoder;
 
 public class SwerveModule extends Subsystem {
 	private final double[] pidConstants;
@@ -18,7 +17,6 @@ public class SwerveModule extends Subsystem {
 	private CANSparkMax speedMotor;
 	private PIDController pidController;
 	private AnalogInput encoder;
-	// private AdjustedEncoder adjEnc;
 
 	public double setpoint;
 	public double error;
@@ -33,7 +31,6 @@ public class SwerveModule extends Subsystem {
 		angleMotor = new WPI_TalonSRX(swerveModIndex);
 		angleMotor.setInverted(angleMotorInverted);
 		encoder = new AnalogInput(swerveModIndex);
-		// adjEnc = new AdjustedEncoder(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
 		setpointOffset = RobotMap.SWERVE_SETPOINT_OFFSET[swerveModIndex];
@@ -71,7 +68,6 @@ public class SwerveModule extends Subsystem {
 		if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
 			setpoint -= RobotMap.SWERVE_ENC_CIRC;
 		}
-		// adjEnc.setSetpoint(setpoint);
 		pidController.setSetpoint(setpoint);
 
 		/* println to console output 

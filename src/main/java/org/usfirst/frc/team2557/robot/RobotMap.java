@@ -11,16 +11,16 @@ public class RobotMap {
 
 	public static final double JOYSTICK_DEADBAND = 0.05;
 
-	public static final int SWERVE_MAX_CURRENT = 30;
-	public static final int SWERVE_CURRENT_DUR = 100;
+	public static final int SWERVE_MAX_CURRENT = 30; // in amps
+	public static final int SWERVE_CURRENT_DUR = 100; // in ms
 
 	public static final double SWERVE_LENGTH = 21.5;
 	public static final double SWERVE_WIDTH = 21.5;
 	public static final double SWERVE_RADIUS = Math.sqrt(Math.pow(SWERVE_LENGTH, 2) + Math.pow(SWERVE_WIDTH, 2));
 	public static final double SWERVE_ENC_CIRC = 4.096;
-	public static final double SWERVE_LOOP_TIME = 0.100; // 100 milliseconds (50 ms is default)
+	public static final double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static final double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.0, 2.6, 1.4, 0.0}; // must be >= 0.0
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.0, 2.6, 1.4, 0.0}; // must be [0, 4.096)
 	public static final double[][] SWERVE_PID_CONSTANTS = {{0.8, 0, 0}, 
 															{0.8, 0, 0}, 
 															{0.8, 0, 0}, 
