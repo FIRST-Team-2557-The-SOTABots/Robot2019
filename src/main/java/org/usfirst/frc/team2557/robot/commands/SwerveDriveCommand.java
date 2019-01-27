@@ -36,8 +36,7 @@ public class SwerveDriveCommand extends Command {
         // double finalYaxis = radius * Math.sin(finalAngle);
         // double finalXaxis = radius * Math.cos(finalAngle);
         
-        Robot.swerveDrive.drive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
-                axis4 * RobotMap.SWERVE_MULTIPLIER);
+        Robot.swerveDrive.drive(axis0, axis1, axis4);
     }
 
     protected boolean isFinished() {

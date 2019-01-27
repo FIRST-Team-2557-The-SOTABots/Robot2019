@@ -92,6 +92,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("setpoint FL", RobotMap.swerveModFL.setpoint);
 		SmartDashboard.putNumber("setpoint FR", RobotMap.swerveModFR.setpoint);
 
+		SmartDashboard.putNumber("adjsetpoint BL", RobotMap.swerveModBL.adjSetpoint);
+		SmartDashboard.putNumber("adjsetpoint BR", RobotMap.swerveModBR.adjSetpoint);
+		SmartDashboard.putNumber("adjsetpoint FL", RobotMap.swerveModFL.adjSetpoint);
+		SmartDashboard.putNumber("adjsetpoint FR", RobotMap.swerveModFR.adjSetpoint);
+
 		SmartDashboard.putNumber("error BL", RobotMap.swerveModBL.error);
 		SmartDashboard.putNumber("error BR", RobotMap.swerveModBR.error);
 		SmartDashboard.putNumber("error FL", RobotMap.swerveModFL.error);
@@ -102,7 +107,23 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("output FL", RobotMap.swerveModFL.output);
 		SmartDashboard.putNumber("output FR", RobotMap.swerveModFR.output);
 
+		SmartDashboard.putNumber("drive angle BL", Robot.swerveDrive.angleBL);
+		SmartDashboard.putNumber("drive angle BR", Robot.swerveDrive.angleBR);
+		SmartDashboard.putNumber("drive angle FL", Robot.swerveDrive.angleFL);
+		SmartDashboard.putNumber("drive angle FR", Robot.swerveDrive.angleFR);
+
+		SmartDashboard.putNumber("drive speed BL", Robot.swerveDrive.speedBL);
+		SmartDashboard.putNumber("drive speed BR", Robot.swerveDrive.speedBR);
+		SmartDashboard.putNumber("drive speed FL", Robot.swerveDrive.speedFL);
+		SmartDashboard.putNumber("drive speed FR", Robot.swerveDrive.speedFR);
+
+		SmartDashboard.putNumber("a", Robot.swerveDrive.a);
+		SmartDashboard.putNumber("b", Robot.swerveDrive.b);
+		SmartDashboard.putNumber("c", Robot.swerveDrive.c);
+		SmartDashboard.putNumber("d", Robot.swerveDrive.d);
+
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick.getRawAxis(5));
+		SmartDashboard.putNumber("joystick axis 4", m_oi.joystick.getRawAxis(4));
 		SmartDashboard.putNumber("gyro: ", RobotMap.gyro.getAngle());
 
 		Scheduler.getInstance().run();

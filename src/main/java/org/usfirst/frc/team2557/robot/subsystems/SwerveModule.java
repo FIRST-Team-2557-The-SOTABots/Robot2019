@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
-import org.usfirst.frc.team2557.robot.AdjustedEncoder;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -8,6 +7,7 @@ import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveModule extends Subsystem {
 	private final double[] pidConstants;
@@ -16,24 +16,22 @@ public class SwerveModule extends Subsystem {
 	public double error;
 	public double output;
 	public double encCount;
+	public double adjSetpoint;
 
 	private WPI_TalonSRX angleMotor;
 	private CANSparkMax speedMotor;
 	private PIDController pidController;
-	// private AdjustedEncoder encoder;
 	private AnalogInput encoder;
 
-	public SwerveModule(int swerveModIndex, boolean inverted) {
+	public SwerveModule(int swerveModIndex, boolean angleInverted, boolean speedInverted) {
 		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
 		angleMotor = new WPI_TalonSRX(swerveModIndex);
-		// angleMotor.setInverted(angleMotorInverted);
-		// speedMotor.setInverted(angleMotorInverted);
+		angleMotor.setInverted(angleInverted);
+		// speedMotor.setInverted(speedInverted);
 		encoder = new AnalogInput(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
 		setpointOffset = RobotMap.SWERVE_SETPOINT_OFFSET[swerveModIndex];
-
-		// encoder = new AdjustedEncoder(swerveModIndex, inverted, pidConstants[0]);
 
 		// should try messing with loop time to see what it does to the performance
 		pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
@@ -57,25 +55,38 @@ public class SwerveModule extends Subsystem {
 	
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive (double speed, double angle) {
-		speedMotor.set (speed);
-
-		setpoint = (angle + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0;
-		setpoint += setpointOffset;
-		if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
+		encCount = encoder.pidGet(); // [0,cir)
+		setpoint = angle * RobotMap.SWERVE_ENC_CIRC/2 + setpointOffset; // [-cir/2,cir)
+		// setpoint = angle * RobotMap.SWERVE_ENC_CIRC*5/4 + setpointOffset; // [-cir/2,cir)
+		if(setpoint < 0){ 
+			setpoint += RobotMap.SWERVE_ENC_CIRC; 
+		}else if (setpoint > RobotMap.SWERVE_ENC_CIRC){
 			setpoint -= RobotMap.SWERVE_ENC_CIRC;
 		}
+		adjSetpoint = setpoint; // [0,cir)
+		if(adjSetpoint < RobotMap.SWERVE_ENC_CIRC/2){
+			adjSetpoint += RobotMap.SWERVE_ENC_CIRC/2; // [cir/2,cir)
+		}else{
+			adjSetpoint -= RobotMap.SWERVE_ENC_CIRC/2; // [0,cir/2)
+		}
+		if(Math.abs(encCount - setpoint) > Math.abs(encCount - adjSetpoint)){
+			setpoint = adjSetpoint; // [0,cir)
+			speed *= -1; // [-1,1]
+		}
 		pidController.setSetpoint(setpoint);
+
+		speedMotor.set (speed);
+		// angleMotor.set (angle);
 
 		/* println to console output 
 		is for graphing in excel 
 		AND REMEMBER only use one swervemod
 		at a time with this console output */
-		error = pidController.getError();
-		output = pidController.get();
-		encCount = encoder.pidGet();
+		// error = pidController.getError();
+		// output = pidController.get();
 		// System.out.println("setpoint: " + setpoint + " error: " + error + " output: " 
 				// + output + " encCount: " + encCount + " time: " + timer.get());
-	}
+		}
 
 
     public void initDefaultCommand() {
