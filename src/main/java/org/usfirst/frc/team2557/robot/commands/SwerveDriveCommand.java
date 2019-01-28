@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2557.robot.commands;
 
+// import java.lang.Math;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,11 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwerveDriveCommand extends Command {
 
     public SwerveDriveCommand () {
-    	requires(Robot.swerveDrive);
+    	// requires(Robot.swerveDrive);
     }
 
     protected void initialize() {
         RobotMap.gyro.reset();
+
     }
 
     protected void execute() {
@@ -27,7 +29,7 @@ public class SwerveDriveCommand extends Command {
 
         axis0 *= -1;
         axis1 *= -1;
-        // axis4 *= -1;
+        axis4 *= -1;
 
         // double radius = Math.sqrt(Math.pow(axis0, 2) + Math.pow(axis1, 2));
         // double initAngle = Math.atan2(axis1, axis0);
@@ -36,7 +38,8 @@ public class SwerveDriveCommand extends Command {
         // double finalYaxis = radius * Math.sin(finalAngle);
         // double finalXaxis = radius * Math.cos(finalAngle);
         
-        Robot.swerveDrive.drive(axis0, axis1, axis4);
+        // Robot.swerveDrive.drive(axis0 * RobotMap.SWERVE_MULTIPLIER, axis1 * RobotMap.SWERVE_MULTIPLIER, 
+                // axis4 * RobotMap.SWERVE_MULTIPLIER);
     }
 
     protected boolean isFinished() {
