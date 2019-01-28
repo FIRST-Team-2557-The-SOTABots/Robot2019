@@ -33,6 +33,8 @@ public class GyroSwerveDriveCommand extends Command {
     axis1 *= -1;
     axis4 *= -1;
 
+    if(Robot.m_oi.dx.get()) RobotMap.gyro.reset();
+
     if(Robot.m_oi.db.get()){
       Robot.gyroSwerveDrive.gyroDrive(axis0*.95, axis1*.95, axis4*.95);
       // if(triggerRight > 0.2){
@@ -52,6 +54,7 @@ public class GyroSwerveDriveCommand extends Command {
     }else{
       Robot.gyroSwerveDrive.gyroDrive(axis0 * 0.5, axis1 * 0.5, axis4 * 0.5);
     }
+
   }
 
   @Override
