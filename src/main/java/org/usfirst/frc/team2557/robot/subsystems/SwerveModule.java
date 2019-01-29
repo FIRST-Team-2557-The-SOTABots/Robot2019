@@ -26,8 +26,6 @@ public class SwerveModule extends Subsystem {
 		encoder = new AnalogInput(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
-
-		// should try messing with loop time to see what it does to the performance
 		pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
 				encoder, angleMotor, RobotMap.SWERVE_LOOP_TIME);
 
@@ -45,35 +43,10 @@ public class SwerveModule extends Subsystem {
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive (double speed, double angle) {
-		// encCount = encoder.pidGet();
-		// setpoint = (angle + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0; 
-		// setpoint += setpointOffset;
-		// if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
-		// 	setpoint -= RobotMap.SWERVE_ENC_CIRC;
-		// }else if(setpoint < 0){
-		// 	setpoint += RobotMap.SWERVE_ENC_CIRC;
-		// }
-		// double adjSetpoint = setpoint;
-		// if(adjSetpoint < RobotMap.SWERVE_ENC_CIRC/2){
-		// 	adjSetpoint += RobotMap.SWERVE_ENC_CIRC/2;
-		// }else{
-		// 	adjSetpoint -= RobotMap.SWERVE_ENC_CIRC/2;
-		// }
-		// if(Math.abs(encCount - setpoint) > Math.abs(encCount - adjSetpoint)){
-		// 	setpoint = adjSetpoint;
-		// 	speed *= -1;
-		// }
 		pidController.setSetpoint(angle);
 		speedMotor.set (speed);
-
-		/* println to console output 
-		is for graphing in excel 
-		AND REMEMBER only use one swervemod
-		at a time with this console output */
 		error = pidController.getError();
 		output = pidController.get();
-		// System.out.println("setpoint: " + setpoint + " error: " + error + " output: " 
-				// + output + " encCount: " + encCount + " time: " + timer.get());
 	}
 
 
