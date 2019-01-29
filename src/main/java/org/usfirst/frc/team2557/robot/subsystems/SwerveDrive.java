@@ -7,16 +7,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class SwerveDrive extends Subsystem {
 	
 	public void drive (double str, double fwd, double rot) {
-	// public void drive (double d, double r) {
-	// 	double speedBR = d;
-	//     double speedBL = d;
-	//     double speedFR = d;
-	//     double speedFL = d;
-	//     double angleBR = r;
-	//     double angleBL = r;
-	//     double angleFR = r;
-	// 	double angleFL = r;
-	
 		double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double c = fwd - rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
@@ -37,8 +27,6 @@ public class SwerveDrive extends Subsystem {
 	    // RobotMap.swerveModFR.drive (speedFR, angleFR);
 	    // RobotMap.swerveModFL.drive (speedFL, angleFL);
 	}
-
-    // Put methods for controlling this subsystem here
 
     public void initDefaultCommand() {
     	setDefaultCommand(new SwerveDriveCommand());

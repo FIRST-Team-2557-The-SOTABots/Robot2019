@@ -31,10 +31,7 @@ public class GyroSwerveDrive extends Subsystem {
   }
 
   public void computeInputs (double str, double fwd, double rot){
-    double baseAngle = RobotMap.gyro.getAngle() % 360;
-    baseAngle = Math.toRadians(baseAngle);
-    baseAngle *= -1;
-
+    double baseAngle = -1 * Math.toRadians(RobotMap.gyro.getAngle() % 360);
     double intermediary = fwd * Math.cos(baseAngle) + str * Math.sin(baseAngle);
     str = -fwd * Math.sin(baseAngle) + str * Math.cos(baseAngle);
     fwd = intermediary;
@@ -70,11 +67,17 @@ public class GyroSwerveDrive extends Subsystem {
       angle[i] = (angle[i] + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
       if(angle[i] > RobotMap.SWERVE_ENC_CIRC) { angle[i] -= RobotMap.SWERVE_ENC_CIRC; }
 
-      double adjSetpoint = getOppositeAngle(i);
-      if(Math.abs(encCount - angle[i]) > Math.abs(encCount - adjSetpoint)){
-        angle[i] = adjSetpoint;
+      double degreesBeforeFlip = 95;
+      if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC/360*degreesBeforeFlip){
+        angle[i] = getOppositeAngle(i);
         speed[i] *= -1;
       }
+
+      // double adjSetpoint = getOppositeAngle(i);
+      // if(Math.abs(encCount - angle[i]) > Math.abs(encCount - adjSetpoint)){
+      //   angle[i] = adjSetpoint;
+      //   speed[i] *= -1;
+      // }
     }
   }
   

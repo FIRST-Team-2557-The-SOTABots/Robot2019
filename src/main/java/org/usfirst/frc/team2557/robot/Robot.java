@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2557.robot;
 
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
-// import org.usfirst.frc.team2557.robot.subsystems.SwerveDrive;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;

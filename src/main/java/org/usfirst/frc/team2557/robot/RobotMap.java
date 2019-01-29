@@ -4,7 +4,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
-
 public class RobotMap {
 	public static AHRS gyro;
 
@@ -33,9 +32,5 @@ public class RobotMap {
 		for(int i = 0; i < 4; i++){
 			swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 		}
-		// swerveModFR = new SwerveModule (0, true);
-		// swerveModBR = new SwerveModule (1, true);
-		// swerveModBL = new SwerveModule (2, false);
-		// swerveModFL = new SwerveModule (3, false);
 	}
 }
