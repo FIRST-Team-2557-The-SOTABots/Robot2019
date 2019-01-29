@@ -81,14 +81,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		for(int i = 0; i<4; i++){
-		SmartDashboard.putNumber("encoderCount" + i, RobotMap.swerveMod[i].encCount);
-		SmartDashboard.putNumber("angleSetpoint " + i, Robot.gyroSwerveDrive.angle[i]); 
-		SmartDashboard.putNumber("error" + i, RobotMap.swerveMod[i].error);
-		SmartDashboard.putNumber("output" + i, RobotMap.swerveMod[i].output);
-		SmartDashboard.putNumber("dirs" + i, Robot.gyroSwerveDrive.dirs[i]);
-	}
-
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick.getRawAxis(5));
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
 		SmartDashboard.putNumber("gyro: ", RobotMap.gyro.getAngle());
