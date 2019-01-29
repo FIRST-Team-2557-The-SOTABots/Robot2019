@@ -81,25 +81,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("encoder BL", RobotMap.swerveModBL.encCount);
-		SmartDashboard.putNumber("encoder BR", RobotMap.swerveModBR.encCount);
-		SmartDashboard.putNumber("encoder FL", RobotMap.swerveModFL.encCount);
-		SmartDashboard.putNumber("encoder FR", RobotMap.swerveModFR.encCount);
-
-		SmartDashboard.putNumber("setpoint BL", RobotMap.swerveModBL.setpoint);
-		SmartDashboard.putNumber("setpoint BR", RobotMap.swerveModBR.setpoint);
-		SmartDashboard.putNumber("setpoint FL", RobotMap.swerveModFL.setpoint);
-		SmartDashboard.putNumber("setpoint FR", RobotMap.swerveModFR.setpoint);
-
-		SmartDashboard.putNumber("error BL", RobotMap.swerveModBL.error);
-		SmartDashboard.putNumber("error BR", RobotMap.swerveModBR.error);
-		SmartDashboard.putNumber("error FL", RobotMap.swerveModFL.error);
-		SmartDashboard.putNumber("error FR", RobotMap.swerveModFR.error);
-
-		SmartDashboard.putNumber("output BL", RobotMap.swerveModBL.output);
-		SmartDashboard.putNumber("output BR", RobotMap.swerveModBR.output); 
-		SmartDashboard.putNumber("output FL", RobotMap.swerveModFL.output);
-		SmartDashboard.putNumber("output FR", RobotMap.swerveModFR.output);
+		for(int i = 0; i<4; i++){
+		SmartDashboard.putNumber("encoderCount" + i, RobotMap.swerveMod[i].encCount);
+		SmartDashboard.putNumber("angleSetpoint " + i, Robot.gyroSwerveDrive.angle[i]); 
+		SmartDashboard.putNumber("error" + i, RobotMap.swerveMod[i].error);
+		SmartDashboard.putNumber("output" + i, RobotMap.swerveMod[i].output);
+		SmartDashboard.putNumber("dirs" + i, Robot.gyroSwerveDrive.dirs[i]);
+	}
 
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick.getRawAxis(5));
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);

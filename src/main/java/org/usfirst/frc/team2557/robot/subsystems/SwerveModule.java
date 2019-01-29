@@ -10,16 +10,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SwerveModule extends Subsystem {
 	private final double[] pidConstants;
-	private final double setpointOffset;
-	public double setpoint;
 	public double error;
 	public double output;
 	public double encCount;
 
 	private WPI_TalonSRX angleMotor;
 	private CANSparkMax speedMotor;
-	private PIDController pidController;
-	private AnalogInput encoder;
+	public PIDController pidController;
+	public AnalogInput encoder;
 
 	public SwerveModule(int swerveModIndex, boolean angleMotorInverted) {
 		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
@@ -28,7 +26,6 @@ public class SwerveModule extends Subsystem {
 		encoder = new AnalogInput(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
-		setpointOffset = RobotMap.SWERVE_SETPOINT_OFFSET[swerveModIndex];
 
 		// should try messing with loop time to see what it does to the performance
 		pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
@@ -46,31 +43,27 @@ public class SwerveModule extends Subsystem {
 		angleMotor.enableCurrentLimit(true);
 	}
 
-	public double getSetpoint(){
-		return setpoint;
-	}
-	
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive (double speed, double angle) {
-		encCount = encoder.pidGet();
-		setpoint = (angle + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0; 
-		setpoint += setpointOffset;
-		if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
-			setpoint -= RobotMap.SWERVE_ENC_CIRC;
-		}else if(setpoint < 0){
-			setpoint += RobotMap.SWERVE_ENC_CIRC;
-		}
-		double adjSetpoint = setpoint;
-		if(adjSetpoint < RobotMap.SWERVE_ENC_CIRC/2){
-			adjSetpoint += RobotMap.SWERVE_ENC_CIRC/2;
-		}else{
-			adjSetpoint -= RobotMap.SWERVE_ENC_CIRC/2;
-		}
-		if(Math.abs(encCount - setpoint) > Math.abs(encCount - adjSetpoint)){
-			setpoint = adjSetpoint;
-			speed *= -1;
-		}
-		pidController.setSetpoint(setpoint);
+		// encCount = encoder.pidGet();
+		// setpoint = (angle + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0; 
+		// setpoint += setpointOffset;
+		// if(setpoint >= RobotMap.SWERVE_ENC_CIRC){
+		// 	setpoint -= RobotMap.SWERVE_ENC_CIRC;
+		// }else if(setpoint < 0){
+		// 	setpoint += RobotMap.SWERVE_ENC_CIRC;
+		// }
+		// double adjSetpoint = setpoint;
+		// if(adjSetpoint < RobotMap.SWERVE_ENC_CIRC/2){
+		// 	adjSetpoint += RobotMap.SWERVE_ENC_CIRC/2;
+		// }else{
+		// 	adjSetpoint -= RobotMap.SWERVE_ENC_CIRC/2;
+		// }
+		// if(Math.abs(encCount - setpoint) > Math.abs(encCount - adjSetpoint)){
+		// 	setpoint = adjSetpoint;
+		// 	speed *= -1;
+		// }
+		pidController.setSetpoint(angle);
 		speedMotor.set (speed);
 
 		/* println to console output 
