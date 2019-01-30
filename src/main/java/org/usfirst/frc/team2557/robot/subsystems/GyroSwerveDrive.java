@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
+import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,6 +10,7 @@ public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];
   public double[] angle = new double[4];
   public boolean dir = false;
+  boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
     computeInputs(str, fwd, rot);
@@ -16,6 +18,7 @@ public class GyroSwerveDrive extends Subsystem {
 
     for(int i = 0; i < 4; i++){
       RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+      // RobotMap.swerveMod[i].drive(0, angle[i]);
       SmartDashboard.putString("mod: " + i, "speed: " + ((int) (100*speed[i])) / 100.0 + " angle: " + ((int) (100*angle[i])) / 100.0);
     }
   }
@@ -31,10 +34,17 @@ public class GyroSwerveDrive extends Subsystem {
   }
 
   public void computeInputs (double str, double fwd, double rot){
-    double baseAngle = -1 * Math.toRadians(RobotMap.gyro.getAngle() % 360);
-    double intermediary = fwd * Math.cos(baseAngle) + str * Math.sin(baseAngle);
-    str = -fwd * Math.sin(baseAngle) + str * Math.cos(baseAngle);
-    fwd = intermediary;
+    double gyroAngle = -1 * Math.toRadians(RobotMap.gyro.getAngle() % 360);
+    // double joystickAngle = Math.atan2(fwd, str);
+    if(fcd){ 
+      double intermediary = fwd * Math.cos(gyroAngle) + str * Math.sin(gyroAngle);
+      str = -fwd * Math.sin(gyroAngle) + str * Math.cos(gyroAngle);
+      fwd = intermediary;
+    }
+    
+    if(Robot.m_oi.start.get() || Robot.m_oi.back.get()){
+      fcd = !fcd;
+    }
 
     double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
@@ -67,17 +77,11 @@ public class GyroSwerveDrive extends Subsystem {
       angle[i] = (angle[i] + 1.0) * RobotMap.SWERVE_ENC_CIRC / 2.0 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
       if(angle[i] > RobotMap.SWERVE_ENC_CIRC) { angle[i] -= RobotMap.SWERVE_ENC_CIRC; }
 
-      double degreesBeforeFlip = 95;
-      if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC/360*degreesBeforeFlip){
+      double degreesBeforeFlip = 90.0;
+      if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC/360.0*degreesBeforeFlip){
         angle[i] = getOppositeAngle(i);
         speed[i] *= -1;
       }
-
-      // double adjSetpoint = getOppositeAngle(i);
-      // if(Math.abs(encCount - angle[i]) > Math.abs(encCount - adjSetpoint)){
-      //   angle[i] = adjSetpoint;
-      //   speed[i] *= -1;
-      // }
     }
   }
   

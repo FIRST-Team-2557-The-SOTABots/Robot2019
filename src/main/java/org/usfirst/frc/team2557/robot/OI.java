@@ -12,6 +12,10 @@ public class OI {
 
 	//actual use
 	public JoystickButton dx;
+	public JoystickButton dy;
+
+	public JoystickButton start;
+	public JoystickButton back;
 
 	public OI(){
 		joystick = new Joystick(0);
@@ -20,5 +24,9 @@ public class OI {
 		da = new JoystickButton(joystick, 1);
 
 		dx = new JoystickButton(joystick, 3);
+		dy = new JoystickButton(joystick, 4);
+
+		start = new JoystickButton(joystick, 8);
+		back = new JoystickButton(joystick, 7);
 	}
 }

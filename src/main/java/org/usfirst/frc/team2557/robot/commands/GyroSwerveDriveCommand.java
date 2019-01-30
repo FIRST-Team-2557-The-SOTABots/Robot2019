@@ -47,13 +47,20 @@ public class GyroSwerveDriveCommand extends Command {
       if(triggerRight > 0.2){
         Robot.gyroSwerveDrive.gyroDrive(axis0*.2, axis1*.2, -triggerRight*.2);
       }else if(triggerLeft > 0.2){
-        Robot.gyroSwerveDrive.gyroDrive(axis0 * 0.5, axis1 * 0.5, 
-          axis4 * 0.5);
+        Robot.gyroSwerveDrive.gyroDrive(axis0 * 0.2, axis1 * 0.2, 
+          triggerLeft * 0.2);
       }else{
         Robot.gyroSwerveDrive.gyroDrive(axis0*.2, axis1*.2, axis4*.2);
       }
     }else{
-      Robot.gyroSwerveDrive.gyroDrive(axis0 * 0.5, axis1 * 0.5, axis4 * 0.5);
+      if(triggerRight > 0.2){
+        Robot.gyroSwerveDrive.gyroDrive(axis0*.5, axis1*.5, -triggerRight*.5);
+      }else if(triggerLeft > 0.2){
+        Robot.gyroSwerveDrive.gyroDrive(axis0 * 0.5, axis1 * 0.5, 
+          triggerLeft * 0.5);
+      }else{
+        Robot.gyroSwerveDrive.gyroDrive(axis0*.5, axis1*.5, axis4*.5);
+      }
     }
   }
 
