@@ -51,27 +51,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-		/* meant for picking up vision values, needs testing after swerve works */
-		// NetworkTable contoursTable = NetworkTableInstance.getDefault().getTable("/vision/contours");
-		// String[] labels = {"x", "y", "h", "w", "area", "dist", "rot"};
-		// double[][] data = new double[7][0];
-		// contoursTable.getEntry("centerX").getDoubleArray(data[0]);
-		// contoursTable.getEntry("centerY").getDoubleArray(data[1]);
-		// contoursTable.getEntry("height").getDoubleArray(data[2]);
-		// contoursTable.getEntry("width").getDoubleArray(data[3]);
-		// contoursTable.getEntry("area").getDoubleArray(data[4]);
-		// contoursTable.getEntry("distance").getDoubleArray(data[5]);
-		// contoursTable.getEntry("rotation").getDoubleArray(data[6]);
-		// for (int i = 0; i < data.length; i++) {
-		// 	System.out.println(labels[i] + ": " + data[i].toString());
-		// }
 	}
 
 	@Override
 	public void teleopInit() {
-		// makes autonomous stop running when teleop starts if you want 
-		// autonomous to continue until interrupted remove it/comment out
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
