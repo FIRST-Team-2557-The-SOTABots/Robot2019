@@ -12,10 +12,9 @@ public class SwerveModule extends Subsystem {
 	private final double[] pidConstants;
 	public double error;
 	public double output;
-	public double encCount;
 
-	private WPI_TalonSRX angleMotor;
-	private CANSparkMax speedMotor;
+	public WPI_TalonSRX angleMotor;
+	public CANSparkMax speedMotor;
 	public PIDController pidController;
 	public AnalogInput encoder;
 
