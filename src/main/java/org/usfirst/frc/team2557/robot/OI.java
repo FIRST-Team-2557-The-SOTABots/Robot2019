@@ -60,8 +60,8 @@ public class OI {
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
 
-		mx.whileHeld(new PIDup(10000));
-		my.whileHeld(new PIDdown(10000));
+		mx.whileHeld(new PIDup(208000));
+		// my.whileHeld(new PIDdown(10000));
 
 
 	}

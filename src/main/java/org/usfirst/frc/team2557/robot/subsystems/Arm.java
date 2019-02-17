@@ -16,12 +16,41 @@ public class Arm extends Subsystem {
 
   	//the arm does lock. Reverse is locked. Foward is unlocked
   public void arm (double power) {
-    if(Robot.m_oi.mbumperRight.get()){
-      RobotMap.dsArmLock.set(Value.kReverse);
-    }else if(Robot.m_oi.mbumperLeft.get()){
-      RobotMap.dsArmLock.set(Value.kForward);
+
+    boolean front = true;
+
+    if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 0){
+      front = true;
+    }else{
+      front = false;
     }
-      RobotMap.armLeft.set(power * 0.2);
-      RobotMap.armRight.set(-power * 0.2);
+
+    if(front){
+      if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -3450){
+        RobotMap.armRight.set(0);
+        RobotMap.armLeft.set(0);
+      }else{
+        if(Robot.m_oi.mbumperRight.get()){
+          RobotMap.dsArmLock.set(Value.kReverse);
+        }else if(Robot.m_oi.mbumperLeft.get()){
+          RobotMap.dsArmLock.set(Value.kForward);
+        }
+          RobotMap.armLeft.set(power * 0.2);
+          RobotMap.armRight.set(-power * 0.2);
+      }
+    }else{
+      if(RobotMap.armLeft.getSensorCollection().getQuadraturePosition() > 4450){
+        RobotMap.armRight.set(0);
+        RobotMap.armLeft.set(0);
+      }else{
+        if(Robot.m_oi.mbumperRight.get()){
+          RobotMap.dsArmLock.set(Value.kReverse);
+        }else if(Robot.m_oi.mbumperLeft.get()){
+          RobotMap.dsArmLock.set(Value.kForward);
+        }
+          RobotMap.armLeft.set(power * 0.2);
+          RobotMap.armRight.set(-power * 0.2);
+      }
+    }
   }
 }

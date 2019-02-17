@@ -67,7 +67,7 @@ public class RobotMap {
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
-		// ds12inch = new DoubleSolenoid(0, 4, 5);
+		ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
 
 		touch1 = new DigitalInput(0);

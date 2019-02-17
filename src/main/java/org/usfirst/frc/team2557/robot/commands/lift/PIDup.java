@@ -16,7 +16,8 @@ public class PIDup extends Command {
 	public PIDup(double target) {
 		requires(Robot.lift);
 		
-		pidcontroller = new PIDController(0.001, 0.00005, 0.001, new PIDSource(){
+		//0.001, 0.00005, 0.001
+		pidcontroller = new PIDController(0.95, 0.00005, 0.000, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -28,17 +29,17 @@ public class PIDup extends Command {
 
 			@Override
 			public double pidGet() {
-				return -RobotMap.lift1.getSensorCollection().getQuadraturePosition();
+				return RobotMap.lift2.getSensorCollection().getQuadraturePosition();
 			}
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.lift.lift(output*0.5);
+				Robot.lift.lift(-output*0.5);
 			}
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(500);
+		pidcontroller.setAbsoluteTolerance(3000);
 	}
 
 	// Called just before this Command runs the first time
@@ -49,7 +50,7 @@ public class PIDup extends Command {
 	}
 	
 	protected void execute(){
-		SmartDashboard.putNumber("LiftCommandAuto encoder position", -RobotMap.lift1.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

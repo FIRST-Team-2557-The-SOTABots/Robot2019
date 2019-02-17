@@ -22,6 +22,12 @@ public class Climber extends Subsystem {
       RobotMap.ds8inch.set(Value.kReverse);
     }
 
+    if(Robot.m_oi.dx.get()){
+      RobotMap.ds12inch.set(Value.kForward);
+    }else if(Robot.m_oi.dy.get()){
+      RobotMap.ds12inch.set(Value.kReverse);
+    }
+
   }
 
   public void cancel() {

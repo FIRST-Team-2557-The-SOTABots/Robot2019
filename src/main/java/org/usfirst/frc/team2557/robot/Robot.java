@@ -38,12 +38,13 @@ public class Robot extends TimedRobot {
 		arm = new Arm();
 		climb = new Climber();
 
-
-		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		// NOTE: oi MUST be constructed after subsystems
 		m_oi = new OI();
 		m_chooser = new SendableChooser<>();
+
+		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		// m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// m_chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -113,11 +114,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("arm left", RobotMap.armLeft.getSensorCollection().getQuadraturePosition());
 
 		SmartDashboard.putNumber("arm right", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
+		
+		SmartDashboard.putNumber("lift 2", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 
 		RobotMap.armLeft.getSensorCollection().getQuadraturePosition();
 		RobotMap.armLeft.getSensorCollection().getQuadraturePosition();
-
-
 
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick1.getRawAxis(5));
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
