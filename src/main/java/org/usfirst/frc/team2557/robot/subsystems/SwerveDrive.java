@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
 import org.usfirst.frc.team2557.robot.RobotMap;
-import org.usfirst.frc.team2557.robot.commands.SwerveDriveCommand;
+import org.usfirst.frc.team2557.robot.commands.drive.SwerveDriveCommand;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SwerveDrive extends Subsystem {

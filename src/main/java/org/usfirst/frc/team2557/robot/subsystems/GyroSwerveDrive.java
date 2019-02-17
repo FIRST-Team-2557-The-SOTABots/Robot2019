@@ -2,7 +2,7 @@ package org.usfirst.frc.team2557.robot.subsystems;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-import org.usfirst.frc.team2557.robot.commands.GyroSwerveDriveCommand;
+import org.usfirst.frc.team2557.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,7 +14,22 @@ public class GyroSwerveDrive extends Subsystem {
   public void gyroDrive (double str, double fwd, double rot) {
     computeInputs(str, fwd, rot);
     setSetpoints(rot);
+    // scaleOutput(); // meant to reduce drift/error
     for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+  }
+
+  public void scaleOutput(){
+    double diff = 0;
+    for(int i = 0; i < 4; i++){
+      if(Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet()) > diff){
+        diff = Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet());
+      }
+    }
+    if(diff > RobotMap.SWERVE_ENC_CIRC/8){
+      for(int i = 0; i < 4; i++){
+        speed[i] *= RobotMap.SWERVE_ENC_CIRC/8 / diff;  // up for changes
+      }
+    }
   }
 
   public double getOppositeAngle(int index){

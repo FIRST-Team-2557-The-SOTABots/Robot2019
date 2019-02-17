@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2557.robot.commands;
+package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
@@ -16,12 +16,12 @@ public class GyroSwerveDriveCommand extends Command {
 
   @Override
   protected void execute() {
-    double axis0 = -Robot.m_oi.joystick.getRawAxis(0);
-    double axis1 = -Robot.m_oi.joystick.getRawAxis(1);
-    double axis4 = -Robot.m_oi.joystick.getRawAxis(4);
-    double axis5 = Robot.m_oi.joystick.getRawAxis(5);
-    double triggerLeft = Robot.m_oi.joystick.getRawAxis(2);
-    double triggerRight = Robot.m_oi.joystick.getRawAxis(3);
+    double axis0 = -Robot.m_oi.joystick1.getRawAxis(0);
+    double axis1 = -Robot.m_oi.joystick1.getRawAxis(1);
+    double axis4 = -Robot.m_oi.joystick1.getRawAxis(4);
+    double axis5 = Robot.m_oi.joystick1.getRawAxis(5);
+    double triggerLeft = Robot.m_oi.joystick1.getRawAxis(2);
+    double triggerRight = Robot.m_oi.joystick1.getRawAxis(3);
 
     if (axis0 < RobotMap.JOYSTICK_DEADBAND && axis0 > -RobotMap.JOYSTICK_DEADBAND) axis0 = 0.0;
 		if (axis1 < RobotMap.JOYSTICK_DEADBAND && axis1 > -RobotMap.JOYSTICK_DEADBAND) axis1 = 0.0;
@@ -32,12 +32,21 @@ public class GyroSwerveDriveCommand extends Command {
 
     if(Robot.m_oi.dx.get()) RobotMap.gyro.reset();
 
-    double mult = 0.5;
-    if(Robot.m_oi.db.get()) mult = 0.95;
-    else if(Robot.m_oi.da.get()) mult = 0.2;
-    if(triggerRight > 0.2) axis4 = -triggerRight;
-    else if(triggerLeft > 0.2) axis4 = triggerLeft;
-    Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult);
+    if(Robot.m_oi.da.get()){
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, axis4*0.95);
+    }else if(Robot.m_oi.db.get()){
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.2, axis1*0.2, axis4*0.2);
+    }else{
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, axis4*0.5);
+
+    }
+
+    // double mult = 0.95;
+    // if(Robot.m_oi.db.get()) mult = 1;
+    // else if(Robot.m_oi.da.get()) mult = 0.2;
+    // if(triggerRight > 0.2) axis4 = -triggerRight;
+    // else if(triggerLeft > 0.2) axis4 = triggerLeft;
+    // Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult);
   }
 
   @Override
