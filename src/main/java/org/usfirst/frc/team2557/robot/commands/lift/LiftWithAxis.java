@@ -20,12 +20,7 @@ public class LiftWithAxis extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.mstart.get()){
-      RobotMap.dsLift.set(Value.kForward);
-    }else{
-      RobotMap.dsLift.set(Value.kReverse);
       Robot.lift.lift(Robot.m_oi.joystick2.getRawAxis(1));
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

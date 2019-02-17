@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.lift.PIDdown;
+import org.usfirst.frc.team2557.robot.commands.lift.PIDup;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -56,6 +59,10 @@ public class OI {
 		mstart = new JoystickButton(joystick2, 8);
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
+
+		mx.whileHeld(new PIDup(10000));
+		my.whileHeld(new PIDdown(10000));
+
 
 	}
 }

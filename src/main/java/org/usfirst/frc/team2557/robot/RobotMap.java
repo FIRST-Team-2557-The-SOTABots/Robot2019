@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -28,7 +29,8 @@ public class RobotMap {
 	public static double SWERVE_ENC_CIRC = 4.94;
 	public static double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
-	public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
+	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
@@ -46,7 +48,9 @@ public class RobotMap {
 	public static DoubleSolenoid ds12inch;
 	public static DoubleSolenoid ds8inch;
 	public static Compressor compressor;
-	// public static Solenoid sol;
+
+	public static DigitalInput touch1;
+	public static DigitalInput touch2;
 
 	public static void init() {
 		lift1 = new WPI_TalonSRX(4);
@@ -63,9 +67,11 @@ public class RobotMap {
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
-		ds12inch = new DoubleSolenoid(0, 4, 5);
+		// ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
-		// sol = new Solenoid(0);
+
+		touch1 = new DigitalInput(0);
+		touch2 = new DigitalInput(1);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];

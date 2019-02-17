@@ -64,11 +64,11 @@ public class GyroSwerveDrive extends Subsystem {
     angle[0] = Math.atan2 (b, d) / Math.PI;
     angle[3] = Math.atan2 (b, c) / Math.PI;
     
-    double max = speed[1];
-    if (speed[2] > max) speed[2] = max; 
-    if (speed[0] > max) speed[0] = max; 
-    if (speed[3] > max) speed[3] = max;
-    if (max > 1) speed[3] /= max; speed[0] /= max; speed[2] /= max;
+    // double max = speed[1];
+    // if (speed[2] > max) speed[2] = max; 
+    // if (speed[0] > max) speed[0] = max; 
+    // if (speed[3] > max) speed[3] = max;
+    // if (max > 1) speed[3] /= max; speed[0] /= max; speed[2] /= max;
   }
 
   public void setSetpoints(double rot){

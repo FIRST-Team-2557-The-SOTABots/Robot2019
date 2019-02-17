@@ -73,6 +73,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		RobotMap.ds8inch.set(Value.kForward);
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -81,20 +82,33 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 
-		//setting 12 to foward also seems to make the top ones go up?
+		// setting 12 to foward also seems to make the top ones go up?
+		//foward extends outwards. Reverse to go inward
 		// RobotMap.ds12inch.set(Value.kForward);
+		// RobotMap.ds12inch.set(Value.kReverse);
 
 		//8 inch is the top one. And reverse goes up, maybe
+		//reverse made the lower retract
+		// RobotMap.ds8inch.set(Value.kForward);
 		// RobotMap.ds8inch.set(Value.kReverse);
 
-		//the arm does lock. Reverse is locked. Foward is unlocked
-		// RobotMap.dsArmLock.set(Value.kForward);  
 
-		//high gear up. position when in low gearlow gear when climb
-		// RobotMap.dsLift.set(Value.kReverse);
+		//the arm does lock. Reverse is locked. Foward is unlocked
+		// RobotMap.dsArmLock.set(Value.kReverse);  
+
+		//high gear is kFoward when you want to lift. position when in low gearlow gear when climb
+		//low gear is when you move. High gear is kFoward and when it wants to go slower
+		// RobotMap.dsLift.set(Value.kForward);
 
 		//forward shoots in out. Reverse retracts
 		// RobotMap.dsIntake.set(Value.kForward);
+
+		SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
+
+		SmartDashboard.putNumber("POV inttin", Robot.m_oi.joystick1.getPOV(0));
+
+		SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());
+		SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());
 
 		SmartDashboard.putNumber("arm left", RobotMap.armLeft.getSensorCollection().getQuadraturePosition());
 

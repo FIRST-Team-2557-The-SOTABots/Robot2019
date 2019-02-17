@@ -32,12 +32,21 @@ public class GyroSwerveDriveCommand extends Command {
 
     if(Robot.m_oi.dx.get()) RobotMap.gyro.reset();
 
-    double mult = 0.5;
-    if(Robot.m_oi.db.get()) mult = 0.95;
-    else if(Robot.m_oi.da.get()) mult = 0.2;
-    if(triggerRight > 0.2) axis4 = -triggerRight;
-    else if(triggerLeft > 0.2) axis4 = triggerLeft;
-    Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult);
+    if(Robot.m_oi.da.get()){
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, axis4*0.95);
+    }else if(Robot.m_oi.db.get()){
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.2, axis1*0.2, axis4*0.2);
+    }else{
+      Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, axis4*0.5);
+
+    }
+
+    // double mult = 0.95;
+    // if(Robot.m_oi.db.get()) mult = 1;
+    // else if(Robot.m_oi.da.get()) mult = 0.2;
+    // if(triggerRight > 0.2) axis4 = -triggerRight;
+    // else if(triggerLeft > 0.2) axis4 = triggerLeft;
+    // Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult);
   }
 
   @Override

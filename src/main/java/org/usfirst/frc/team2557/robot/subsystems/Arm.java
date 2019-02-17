@@ -14,13 +14,14 @@ public class Arm extends Subsystem {
     setDefaultCommand(new ArmWithAxis());
   }
 
+  	//the arm does lock. Reverse is locked. Foward is unlocked
   public void arm (double power) {
-    if(Robot.m_oi.ma.get()){
+    if(Robot.m_oi.mbumperRight.get()){
       RobotMap.dsArmLock.set(Value.kReverse);
-    }else{
+    }else if(Robot.m_oi.mbumperLeft.get()){
       RobotMap.dsArmLock.set(Value.kForward);
+    }
       RobotMap.armLeft.set(power * 0.2);
       RobotMap.armRight.set(-power * 0.2);
-    }
   }
 }
