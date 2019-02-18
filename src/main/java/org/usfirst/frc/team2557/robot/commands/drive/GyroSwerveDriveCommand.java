@@ -34,11 +34,11 @@ public class GyroSwerveDriveCommand extends Command {
 
     if(Robot.m_oi.da.get()){
       if(triggerRight > 0.2){
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, triggerRight*0.95);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, triggerRight*0.5);
       }else if(triggerLeft > 0.2){
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, -triggerLeft*0.95);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, -triggerLeft*0.5);
       }else{
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, axis4*0.95);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.95, axis1*0.95, axis4*0.5);
       }
     }else if(Robot.m_oi.db.get()){
       if(triggerRight > 0.2){
@@ -50,11 +50,11 @@ public class GyroSwerveDriveCommand extends Command {
       }
     }else{
       if(triggerRight > 0.2){
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, triggerRight*0.5);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, triggerRight*0.25);
       }else if(triggerLeft > 0.2){
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, -triggerLeft*0.5);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, -triggerLeft*0.25);
       }else{
-        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, axis4*0.5);
+        Robot.gyroSwerveDrive.gyroDrive(axis0*0.5, axis1*0.5, axis4*0.25);
       }
     }
 

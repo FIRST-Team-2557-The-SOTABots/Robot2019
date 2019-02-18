@@ -20,8 +20,8 @@ public class ArmWithAxis extends Command {
   @Override
   protected void execute() {
 
-      if(Robot.m_oi.joystick2.getRawAxis(5) > 0.05 || Robot.m_oi.joystick2.getRawAxis(5) < 0.05){
-        Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(5));
+      if(Robot.m_oi.joystick2.getRawAxis(1) > 0.05 || Robot.m_oi.joystick2.getRawAxis(1) < 0.05){
+        Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(1));
     }
     
   }
