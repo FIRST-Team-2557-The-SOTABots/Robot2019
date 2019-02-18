@@ -16,7 +16,7 @@ public class PIDdown extends Command {
 	public PIDdown(double target) {
 		requires(Robot.lift);
 		
-		pidcontroller = new PIDController(0.001, 0.00005, 0.001, new PIDSource(){
+		pidcontroller = new PIDController(0.0008, -0.0008, 0.000, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -38,7 +38,7 @@ public class PIDdown extends Command {
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(500);
+		pidcontroller.setAbsoluteTolerance(5000);
 	}
 
 	// Called just before this Command runs the first time

@@ -20,7 +20,16 @@ public class LiftWithAxis extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+    if(Robot.m_oi.mback.get()){
       Robot.lift.lift(Robot.m_oi.joystick2.getRawAxis(1));
+    }else{
+      // if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < 564000){
+        Robot.lift.lift(Robot.m_oi.joystick2.getRawAxis(1));
+      // }else{
+        // Robot.lift.lift(0);
+      // }
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

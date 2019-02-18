@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2557.robot.commands.lift;
+package org.usfirst.frc.team2557.robot.commands.arm;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
@@ -9,15 +9,14 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PIDup extends Command {
+public class PIDarm extends Command {
 	PIDController pidcontroller;
 	double target;
 
-	public PIDup(double target) {
-		requires(Robot.lift);
-		
-		// pidcontroller = new PIDController(0.008, 0.004, 0.008, new PIDSource(){
-			pidcontroller = new PIDController(0.008, -0.008, 0.00, new PIDSource(){
+	public PIDarm(double target) {
+		requires(Robot.arm);
+		//make sure go any direction and see how much wiggle.
+			pidcontroller = new PIDController(0.00008, -0.00008, 0.00, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -29,17 +28,17 @@ public class PIDup extends Command {
 
 			@Override
 			public double pidGet() {
-				return RobotMap.lift2.getSensorCollection().getQuadraturePosition();
+				return RobotMap.armRight.getSensorCollection().getQuadraturePosition();
 			}
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.lift.lift(-output*0.5);
+				Robot.arm.arm(-output*0.5);
 			}
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(36000);
+		pidcontroller.setAbsoluteTolerance(200);
 	}
 
 	// Called just before this Command runs the first time
@@ -50,7 +49,7 @@ public class PIDup extends Command {
 	}
 	
 	protected void execute(){
-		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

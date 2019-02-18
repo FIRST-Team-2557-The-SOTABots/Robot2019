@@ -17,7 +17,7 @@ public class IntakeTrigger extends Command {
     Robot.intake.speed(0);
   }
 
-  // Called repeatedly when this Command is scheduled to run
+ //forward shoots in out. Reverse retracts
   @Override
   protected void execute() {
     double trr = Robot.m_oi.joystick2.getRawAxis(3);
@@ -31,22 +31,21 @@ public class IntakeTrigger extends Command {
       Robot.intake.speed(trr);
       RobotMap.dsIntake.set(Value.kReverse);
     }else if(trl > 0.1){
-      Robot.intake.speed(-trl);
+      // Robot.intake.speed(-trl);
+      Robot.intake.speed(-1);
       RobotMap.dsIntake.set(Value.kForward);
+    }else if(Robot.m_oi.joystick2.getPOV() == 0){
+      Robot.intake.speed(1.0);
+    }else if(Robot.m_oi.joystick2.getPOV() == 45){
+      Robot.intake.speed(0.5);
     }else{
-      Robot.intake.speed(0);
+      Robot.intake.speed(0.0);
     }
+
+
+
   
 
-    // if(trl < RobotMap.TRIGGER_DEADBAND) trl = 0.0;
-    // if(trr < RobotMap.TRIGGER_DEADBAND) trr = 0.0;
-    // if(trr > trl){
-    //   Robot.intake.speed(trr);
-    //   RobotMap.dsIntake.set(Value.kReverse);
-    // }else{
-    //   Robot.intake.speed(-trl);
-    //   RobotMap.dsIntake.set(Value.kForward);
-    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()

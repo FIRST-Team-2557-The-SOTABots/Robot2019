@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDdown;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDup;
 
@@ -60,9 +61,19 @@ public class OI {
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
 
-		mx.whileHeld(new PIDup(208000));
-		// my.whileHeld(new PIDdown(10000));
 
+		//encoder to inch = 5556
+		my.whileHeld(new PIDup(600000)); //top
+		mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
+		mx.whileHeld(new PIDup(150000)); //lower (unkonwn rocket location, placeholder)
+		ma.whileHeld(new PIDup(100000)); //intake
+		// my.whileHeld(new PIDdown(45000));
 
+		//encoder to degree = 62.5
+		if(joystick2.getPOV() == 315)new PIDarm(-6300);
+		if(joystick2.getPOV() == 270)new PIDarm(-5625);
+		if(joystick2.getPOV() == 225)new PIDarm(-1875);
+		if(joystick2.getPOV() == 180)new PIDarm(0);
+		if(joystick2.getPOV() == 90) new PIDarm(5625);
 	}
 }

@@ -19,6 +19,7 @@ public class Lift extends Subsystem {
   //low gear is when you move. High gear is kReverse and when it wants to go slower
   public void lift (double power){
 
+
     if(Robot.m_oi.mstart.get()){
       RobotMap.dsLift.set(Value.kForward);
       RobotMap.lift1.set(power);

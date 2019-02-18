@@ -1,12 +1,13 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveDrive;
-
+import org.usfirst.frc.team2557.robot.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -42,9 +43,6 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		m_chooser = new SendableChooser<>();
 
-		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		// m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// m_chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -62,6 +60,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
+
+
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
@@ -75,6 +75,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		RobotMap.ds8inch.set(Value.kForward);
+		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -105,8 +108,10 @@ public class Robot extends TimedRobot {
 		// RobotMap.dsIntake.set(Value.kForward);
 
 		SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
+		SmartDashboard.putNumber("getting POV stick2 ", Robot.m_oi.joystick2.getPOV());
 
-		SmartDashboard.putNumber("POV inttin", Robot.m_oi.joystick1.getPOV(0));
+		// SmartDashboard.putNumber("POV inttin", Robot.m_oi.joystick1.getPOV(0));
+		// SmartDashboard.putNumber("POV inttin", Robot.m_oi.joystick2.getPOV(0));
 
 		SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());
 		SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());

@@ -27,7 +27,13 @@ public class Climber extends Subsystem {
     }else if(Robot.m_oi.dy.get()){
       RobotMap.ds12inch.set(Value.kReverse);
     }
-
+    // if(Robot.m_oi.bumperRight.get()){
+    //   RobotMap.ds8inch.set(Value.kForward);
+    //   RobotMap.ds12inch.set(Value.kForward);
+    // }else if(Robot.m_oi.bumperLeft.get()){
+    //   RobotMap.ds8inch.set(Value.kReverse);
+    //   RobotMap.ds12inch.set(Value.kReverse);
+    // }
   }
 
   public void cancel() {
