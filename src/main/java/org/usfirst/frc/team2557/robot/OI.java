@@ -64,10 +64,13 @@ public class OI {
 
 		//encoder to inch = 5556
 		my.whileHeld(new PIDup(600000)); //top
-		mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
-		mx.whileHeld(new PIDup(150000)); //lower (unkonwn rocket location, placeholder)
-		ma.whileHeld(new PIDup(100000)); //intake
-		// my.whileHeld(new PIDdown(45000));
+
+		if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000));
+		else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
+		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(160000));
+		else mx.whileHeld(new PIDup(300000)); //lower (unkonwn rocket location, placeholder)
+		if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000));
+		else ma.whileHeld(new PIDup(300000)); //intake
 
 		//encoder to degree = 62.5
 		if(joystick2.getPOV() == 315)new PIDarm(-6300);
