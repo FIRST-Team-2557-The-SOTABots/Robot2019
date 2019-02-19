@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import jaci.pathfinder.Pathfinder;
+
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
@@ -77,5 +79,6 @@ public class RobotMap {
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+
 	}
 }

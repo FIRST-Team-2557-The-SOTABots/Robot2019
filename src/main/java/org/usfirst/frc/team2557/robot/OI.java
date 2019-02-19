@@ -73,10 +73,13 @@ public class OI {
 		else ma.whileHeld(new PIDup(300000)); //intake
 
 		//encoder to degree = 62.5
-		if(joystick2.getPOV() == 315)new PIDarm(-6300);
-		if(joystick2.getPOV() == 270)new PIDarm(-5625);
-		if(joystick2.getPOV() == 225)new PIDarm(-1875);
-		if(joystick2.getPOV() == 180)new PIDarm(0);
-		if(joystick2.getPOV() == 90) new PIDarm(5625);
+
+		// mterribleLeft.whileHeld(new PIDarmPlacements());
+
+		// if(joystick2.getPOV() == 315)new PIDarm(-6300);
+		// if(joystick2.getPOV() == 270)new PIDarm(-5625);
+		// if(joystick2.getPOV() == 225)new PIDarm(-1875);
+		// if(joystick2.getPOV() == 180)new PIDarm(0);
+		// if(joystick2.getPOV() == 90) new PIDarm(5625);
 	}
 }

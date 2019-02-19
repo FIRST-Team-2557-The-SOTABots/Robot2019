@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2557.robot;
 
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
+import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
@@ -43,9 +44,10 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		m_chooser = new SendableChooser<>();
 
-		// m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// m_chooser.addObject("My Auto", new MyAutoCommand());
+		// m_chooser.addDefault("Default Auto", new Segment1());
+		// m_chooser.addObject("My Auto", new Segment1());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
 	}
 
 	@Override

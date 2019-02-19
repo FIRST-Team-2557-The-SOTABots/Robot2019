@@ -14,7 +14,8 @@ public class PIDarm extends Command {
 	double target;
 
 	public PIDarm(double target) {
-		requires(Robot.arm);
+    requires(Robot.arm);
+    
 		//make sure go any direction and see how much wiggle.
 			pidcontroller = new PIDController(0.00008, -0.00008, 0.00, new PIDSource(){
 			@Override
@@ -36,19 +37,33 @@ public class PIDarm extends Command {
 				Robot.arm.arm(-output*0.5);
 			}
 		});
-		this.target = target;
+    this.target = target;
+    
+      // if(Robot.m_oi.joystick2.getPOV() == 315)this.target = -6300;
+      // if(Robot.m_oi.joystick2.getPOV() == 270)this.target = -5625;
+      // if(Robot.m_oi.joystick2.getPOV() == 225)this.target = -1875;
+      // if(Robot.m_oi.joystick2.getPOV() == 180)this.target = 0;
+      // if(Robot.m_oi.joystick2.getPOV() == 90) this.target = 5625;
 		pidcontroller.setOutputRange(-1, 1);
 		pidcontroller.setAbsoluteTolerance(200);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		pidcontroller.reset();
-		pidcontroller.setSetpoint(target);
-		pidcontroller.enable();
+
+    // if(Robot.m_oi.joystick2.getRawAxis(1) > 0.2){
+
+    // }else{
+      pidcontroller.reset();
+      pidcontroller.setSetpoint(target);
+      pidcontroller.enable();
+    // }
 	}
 	
 	protected void execute(){
+  // if(Robot.m_oi.joystick2.getRawAxis(1) > 0.2){
+  // Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(1));
+  // }
 		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 	}
 

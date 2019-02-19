@@ -1,4 +1,5 @@
 package org.usfirst.frc.team2557.robot.commands.arm;
+
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
@@ -16,13 +17,32 @@ public class ArmWithAxis extends Command {
     Robot.arm.arm(0);
   }
 
-  // Called repeatedly when this Command is scheduled to run
+
   @Override
   protected void execute() {
 
-      if(Robot.m_oi.joystick2.getRawAxis(1) > 0.05 || Robot.m_oi.joystick2.getRawAxis(1) < 0.05){
+    if(Robot.m_oi.joystick2.getPOV() > 0){
+
+    }else{
+      if((Robot.m_oi.joystick2.getRawAxis(1) > 0.05 || Robot.m_oi.joystick2.getRawAxis(1) < 0.05)){
         Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(1));
+       }
     }
+
+    
+    // if(Robot.m_oi.joystick1.getPOV() == 315){
+
+    // }
+
+    // if(Robot.m_oi.joystick2.getPOV() == 315){
+    //   PIDarm(-6300);
+    // }
+
+      // if(Robot.m_oi.joystick2.getPOV() == 315)this.target = -6300;
+      // if(Robot.m_oi.joystick2.getPOV() == 270)this.target = -5625;
+      // if(Robot.m_oi.joystick2.getPOV() == 225)this.target = -1875;
+      // if(Robot.m_oi.joystick2.getPOV() == 180)this.target = 0;
+      // if(Robot.m_oi.joystick2.getPOV() == 90) this.target = 5625;
     
   }
 
