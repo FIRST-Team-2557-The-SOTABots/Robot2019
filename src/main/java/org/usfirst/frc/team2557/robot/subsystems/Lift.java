@@ -23,13 +23,13 @@ public class Lift extends Subsystem {
     if(Robot.m_oi.mstart.get()){
       RobotMap.dsLift.set(Value.kForward);
       RobotMap.lift1.set(power);
-      RobotMap.lift2.set(power);
-      RobotMap.lift3.set(-power);
+      RobotMap.lift2.set(-power);
+      RobotMap.lift3.set(power);
     }else{
       RobotMap.dsLift.set(Value.kReverse);
       RobotMap.lift1.set(power);
-      RobotMap.lift2.set(power);
-      RobotMap.lift3.set(-power);
+      RobotMap.lift2.set(-power);
+      RobotMap.lift3.set(power);
     }
   }
 }

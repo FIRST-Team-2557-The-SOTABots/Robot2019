@@ -25,27 +25,29 @@ public class SwerveModule extends Subsystem {
 		encoder = new AnalogInput(swerveModIndex);
 
 		pidConstants = RobotMap.SWERVE_PID_CONSTANTS[swerveModIndex];
-		pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
-				encoder, angleMotor, RobotMap.SWERVE_LOOP_TIME);
+		// pidController = new PIDController(pidConstants[0], pidConstants[1], pidConstants[2], 
+		// 		encoder, angleMotor, RobotMap.SWERVE_LOOP_TIME);
 
-		pidController.setInputRange(0.0, RobotMap.SWERVE_ENC_CIRC);
-		pidController.setOutputRange(-1.0, 1.0);
-		pidController.setContinuous(true);
-		pidController.setAbsoluteTolerance(RobotMap.SWERVE_PID_TOLERANCE);
-		pidController.enable();
+		// pidController.setInputRange(0.0, RobotMap.SWERVE_ENC_CIRC);
+		// pidController.setOutputRange(-1.0, 1.0);
+		// pidController.setContinuous(true);
+		// pidController.setAbsoluteTolerance(RobotMap.SWERVE_PID_TOLERANCE);
+		// pidController.enable();
 
-		angleMotor.configContinuousCurrentLimit(RobotMap.SWERVE_MAX_CURRENT, 0);
-		angleMotor.configPeakCurrentLimit(RobotMap.SWERVE_MAX_CURRENT, 0);
-		angleMotor.configPeakCurrentDuration(RobotMap.SWERVE_CURRENT_DUR, 0);
-		angleMotor.enableCurrentLimit(true);
+		// angleMotor.configContinuousCurrentLimit(RobotMap.SWERVE_MAX_CURRENT, 0);
+		// angleMotor.configPeakCurrentLimit(RobotMap.SWERVE_MAX_CURRENT, 0);
+		// angleMotor.configPeakCurrentDuration(RobotMap.SWERVE_CURRENT_DUR, 0);
+		// angleMotor.enableCurrentLimit(true);
 	}
 
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive (double speed, double angle) {
-		pidController.setSetpoint(angle);
+		// pidController.setSetpoint(angle);
+		angleMotor.set(angle);
+
 		speedMotor.set (speed);
-		error = pidController.getError();
-		output = pidController.get();
+		// error = pidController.getError();
+		// output = pidController.get();
 	}
 
 

@@ -33,7 +33,9 @@ public class RobotMap {
 	public static double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
 	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
+	//real bot
+	public static final double[] SWERVE_SETPOINT_OFFSET = {1.79, 2.6585, 1.6819, 1.2646};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
@@ -64,7 +66,6 @@ public class RobotMap {
 		intake = new WPI_TalonSRX(9);
 
 		gyro = new AHRS(SPI.Port.kMXP);
-
 		compressor = new Compressor(0);
 		// ds = new DoubleSolenoid(0, 0, 1);
 		dsLift = new DoubleSolenoid(1, 0, 1);
@@ -72,6 +73,12 @@ public class RobotMap {
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
 		ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
+
+		// dsLift = new DoubleSolenoid(0, 0, 1);
+		// dsIntake = new DoubleSolenoid(0, 2, 3);
+		// dsArmLock = new DoubleSolenoid(0, 4, 5);
+		// ds12inch = new DoubleSolenoid(1, 4, 5);
+		// ds8inch = new DoubleSolenoid(1, 6, 7);
 
 		touch1 = new DigitalInput(0);
 		touch2 = new DigitalInput(1);

@@ -8,7 +8,7 @@ import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveDrive;
-import org.usfirst.frc.team2557.robot.TrajectoryGenerator;
+// import org.usfirst.frc.team2557.robot.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -131,9 +131,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
 
 		for(int i = 0; i < 4; i++){
-			SmartDashboard.putNumber("Encoder value" + i, RobotMap.swerveMod[i].encoder.pidGet());
-			SmartDashboard.putNumber("Encoder value degrees" + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
-			SmartDashboard.putNumber("Offset to zero" + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
+			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
+			SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
 		}
 		Scheduler.getInstance().run();
 	}
