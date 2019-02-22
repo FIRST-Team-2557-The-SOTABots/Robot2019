@@ -23,10 +23,10 @@ public class IntakeTrigger extends Command {
     double trr = Robot.m_oi.joystick2.getRawAxis(3);
     double trl = Robot.m_oi.joystick2.getRawAxis(2);
 
-    if(trr > 0.1){
+    if(trr > 0.2){
       Robot.intake.speed(trr);
       RobotMap.dsIntake.set(Value.kReverse);
-    }else if(trl > 0.1){
+    }else if(trl > 0.2){
       // Robot.intake.speed(-trl);
       Robot.intake.speed(-1);
       RobotMap.dsIntake.set(Value.kForward);
