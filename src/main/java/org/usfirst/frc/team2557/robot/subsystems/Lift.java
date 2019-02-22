@@ -22,17 +22,30 @@ public class Lift extends Subsystem {
     //practice bot has the third one being negative
     //real bot has the second one
 
-
-    if(Robot.m_oi.mstart.get()){
-      RobotMap.dsLift.set(Value.kForward);
-      RobotMap.lift1.set(power);
-      RobotMap.lift2.set(-power);
-      RobotMap.lift3.set(power);
+    if(Robot.m_oi.mterribleRight.get()){
+      if(Robot.m_oi.mstart.get()){
+        RobotMap.dsLift.set(Value.kForward);
+        RobotMap.lift1.set(power * 0.3);
+        RobotMap.lift2.set(power * 0.3);
+        RobotMap.lift3.set(-power * 0.3);
+      }else{
+        RobotMap.dsLift.set(Value.kReverse);
+        RobotMap.lift1.set(power * 0.3);
+        RobotMap.lift2.set(power * 0.3);
+        RobotMap.lift3.set(-power * 0.3);
+      }
     }else{
-      RobotMap.dsLift.set(Value.kReverse);
-      RobotMap.lift1.set(power);
-      RobotMap.lift2.set(-power);
-      RobotMap.lift3.set(power);
+      if(Robot.m_oi.mstart.get()){
+        RobotMap.dsLift.set(Value.kForward);
+        RobotMap.lift1.set(power);
+        RobotMap.lift2.set(power);
+        RobotMap.lift3.set(-power);
+      }else{
+        RobotMap.dsLift.set(Value.kReverse);
+        RobotMap.lift1.set(power);
+        RobotMap.lift2.set(power);
+        RobotMap.lift3.set(-power);
+      }
     }
   }
 }

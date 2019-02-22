@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2557.robot;
 
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
+import org.usfirst.frc.team2557.robot.commands.intake.IntakeLolz;
+import org.usfirst.frc.team2557.robot.commands.intake.IntakeTrigger;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDdown;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDup;
 
@@ -63,14 +65,22 @@ public class OI {
 
 
 		//encoder to inch = 5556
-		my.whileHeld(new PIDup(600000)); //top
+		// my.whileHeld(new PIDup(750000)); //top
 
-		if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000));
-		else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
-		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(160000));
-		else mx.whileHeld(new PIDup(300000)); //lower (unkonwn rocket location, placeholder)
-		if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000));
-		else ma.whileHeld(new PIDup(300000)); //intake
+		my.whileHeld(new PIDarm(-5625));
+		my.whileHeld(new IntakeLolz());
+
+		ma.whileHeld(new PIDarm(-1875));
+
+		mx.whileHeld(new PIDarm(5625));
+
+		// if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000));
+		// else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
+		// if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(160000));
+		// else mx.whileHeld(new PIDup(300000)); //lower (unkonwn rocket location, placeholder)
+		// if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000));
+		// else ma.whileHeld(new PIDup(300000)); //intake
+
 
 		//encoder to degree = 62.5
 

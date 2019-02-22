@@ -3,6 +3,7 @@ package org.usfirst.frc.team2557.robot;
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
+import org.usfirst.frc.team2557.robot.subsystems.Arm2;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
@@ -23,6 +24,7 @@ public class Robot extends TimedRobot {
 	public static Lift lift;
 	public static Intake intake;
 	public static Arm arm;
+	public static Arm2 arm2;
 	public static Climber climb;
 
 	Command m_autonomousCommand;
@@ -38,6 +40,7 @@ public class Robot extends TimedRobot {
 		lift = new Lift();
 		intake = new Intake();
 		arm = new Arm();
+		arm2 = new Arm2();
 		climb = new Climber();
 
 		// NOTE: oi MUST be constructed after subsystems
@@ -76,7 +79,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		RobotMap.ds8inch.set(Value.kForward);
+		
+		RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+
+		// RobotMap.ds8inch.set(Value.kForward);
 		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
@@ -108,6 +116,8 @@ public class Robot extends TimedRobot {
 
 		//forward shoots in out. Reverse retracts
 		// RobotMap.dsIntake.set(Value.kForward);
+
+		// if(m_oi.joystick2.getPOV() != -1)new This();
 
 		SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
 		SmartDashboard.putNumber("getting POV stick2 ", Robot.m_oi.joystick2.getPOV());

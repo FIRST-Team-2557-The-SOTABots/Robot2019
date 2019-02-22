@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PIDarm extends Command {
+public class PIDarmPlacements extends Command {
 	PIDController pidcontroller;
 	double target;
 
-	public PIDarm(double target) {
+	public PIDarmPlacements() {
     requires(Robot.arm);
     
 		//make sure go any direction and see how much wiggle.
@@ -29,27 +29,33 @@ public class PIDarm extends Command {
 
 			@Override
 			public double pidGet() {
-				return -RobotMap.armRight.getSensorCollection().getQuadraturePosition();
+				return RobotMap.armRight.getSensorCollection().getQuadraturePosition();
 			}
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.arm.arm(output*0.6);
+				Robot.arm.arm(-output*0.5);
 			}
 		});
-    	this.target = target;
+
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(1000);
+		pidcontroller.setAbsoluteTolerance(200);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+
       pidcontroller.reset();
       pidcontroller.setSetpoint(target);
       pidcontroller.enable();
 	}
 	
 	protected void execute(){
+      if(Robot.m_oi.joystick2.getPOV() == 315)this.target = -6300;
+      if(Robot.m_oi.joystick2.getPOV() == 270)this.target = -5625;
+      if(Robot.m_oi.joystick2.getPOV() == 225)this.target = -1875;
+      if(Robot.m_oi.joystick2.getPOV() == 180)this.target = 0;
+      if(Robot.m_oi.joystick2.getPOV() == 90) this.target = 5625;
 		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 	}
 
@@ -60,6 +66,7 @@ public class PIDarm extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+
 		Robot.lift.lift(0);
 		pidcontroller.disable();
 	}
@@ -69,5 +76,6 @@ public class PIDarm extends Command {
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();
+//		this.
 	}
 }
