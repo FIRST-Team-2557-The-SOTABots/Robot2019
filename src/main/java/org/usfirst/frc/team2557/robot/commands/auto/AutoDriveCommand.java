@@ -20,7 +20,7 @@ public class AutoDriveCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    follower = new EncoderFollower[4];
+    follower = new EncoderFollower[3];
 
     // The swerve mode to generate will be the 'default' mode, where the 
     // robot will constantly be facing forward and 'sliding' sideways to  follow a curved path.
@@ -36,7 +36,7 @@ public class AutoDriveCommand extends Command {
     follower[3] = new EncoderFollower(modifier.getFrontLeftTrajectory());
     
     RobotMap.gyro.reset();
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       follower[i].reset();
       follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);
       follower[i].configurePIDVA(1, 0, 0, 1/RobotMap.MAX_VEL, RobotMap.MAX_ACC);
@@ -46,7 +46,7 @@ public class AutoDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       double output = follower[i].calculate((int) (RobotMap.swerveMod[i].encoder.pidGet() * 1000));
       double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()));
       RobotMap.swerveMod[i].drive(output, heading);
@@ -56,7 +56,7 @@ public class AutoDriveCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       if(!follower[i].isFinished()){
         return false;
       }
@@ -68,7 +68,7 @@ public class AutoDriveCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       RobotMap.swerveMod[i].drive(0, 0);
     }
   }
@@ -77,7 +77,7 @@ public class AutoDriveCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       RobotMap.swerveMod[i].drive(0, 0);
     }
   }

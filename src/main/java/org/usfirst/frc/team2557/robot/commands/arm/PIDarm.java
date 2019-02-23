@@ -60,7 +60,7 @@ public class PIDarm extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.lift.lift(0);
+		Robot.arm.arm(0);
 		pidcontroller.disable();
 	}
 

@@ -68,25 +68,18 @@ public class RobotMap {
 
 		gyro = new AHRS(SPI.Port.kMXP);
 		compressor = new Compressor(0);
-		// ds = new DoubleSolenoid(0, 0, 1);
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
 		ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
 
-		// dsLift = new DoubleSolenoid(0, 0, 1);
-		// dsIntake = new DoubleSolenoid(0, 2, 3);
-		// dsArmLock = new DoubleSolenoid(0, 4, 5);
-		// ds12inch = new DoubleSolenoid(1, 4, 5);
-		// ds8inch = new DoubleSolenoid(1, 6, 7);
-
 		touch1 = new DigitalInput(0);
 		touch2 = new DigitalInput(1);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
-		swerveMod = new SwerveModule[4];
-		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+		swerveMod = new SwerveModule[3];
+		for(int i = 0; i < 3; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 
 	}
 }
