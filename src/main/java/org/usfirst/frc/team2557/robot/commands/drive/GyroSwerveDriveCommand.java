@@ -65,7 +65,7 @@ public class GyroSwerveDriveCommand extends Command {
     // }
 
 
-    double mult = 0.95;
+    double mult = 0.5;
     if(Robot.m_oi.db.get()) mult = 1;
     else if(Robot.m_oi.da.get()) mult = 0.2;
     if(triggerRight > 0.2) axis4 = triggerRight;

@@ -67,12 +67,13 @@ public class OI {
 		//encoder to inch = 5556
 		// my.whileHeld(new PIDup(750000)); //top
 
-		my.whileHeld(new PIDarm(-5625));
-		my.whileHeld(new IntakeLolz());
-
 		ma.whileHeld(new PIDarm(-1875));
-
-		mx.whileHeld(new PIDarm(5625));
+		mb.whileHeld(new PIDarm(-5400));
+		// my.whileHeld(new IntakeLolz());
+		mx.whileHeld(new PIDarm(5400));
+		my.whileHeld(new PIDarm(6300));
+		
+		//up on 
 
 		// if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000));
 		// else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)

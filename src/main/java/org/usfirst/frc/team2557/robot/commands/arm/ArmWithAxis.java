@@ -21,13 +21,13 @@ public class ArmWithAxis extends Command {
   @Override
   protected void execute() {
 
-    if(Robot.m_oi.joystick2.getPOV() > 0){
+    // if(Robot.m_oi.joystick2.getPOV() > 0){
 
-    }else{
-      if((Robot.m_oi.joystick2.getRawAxis(1) > 0.05 || Robot.m_oi.joystick2.getRawAxis(1) < 0.05)){
+    // }else{
+      if((Robot.m_oi.joystick2.getRawAxis(1) > 0.1 || Robot.m_oi.joystick2.getRawAxis(1) < 0.1)){
         Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(1));
        }
-    }
+    // }
 
     
     // if(Robot.m_oi.joystick1.getPOV() == 315){

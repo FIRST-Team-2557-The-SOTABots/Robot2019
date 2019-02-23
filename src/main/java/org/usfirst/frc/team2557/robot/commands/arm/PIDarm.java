@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,7 +18,7 @@ public class PIDarm extends Command {
     requires(Robot.arm);
     
 		//make sure go any direction and see how much wiggle.
-			pidcontroller = new PIDController(0.00008, -0.00008, 0.00, new PIDSource(){
+			pidcontroller = new PIDController(0.0008, -0.00008, 0.00, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -34,12 +35,12 @@ public class PIDarm extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.arm.arm(output*0.6);
+				Robot.arm.arm(-output*0.7);
 			}
 		});
     	this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(1000);
+		pidcontroller.setAbsoluteTolerance(2500);
 	}
 
 	// Called just before this Command runs the first time
@@ -50,7 +51,9 @@ public class PIDarm extends Command {
 	}
 	
 	protected void execute(){
-		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
+		// SmartDashboard.putNumber("Arm encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("arm target", target);
+		// SmartDashboard.putNumber("arm output", output);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -61,6 +64,7 @@ public class PIDarm extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.arm.arm(0);
+		RobotMap.dsArmLock.set(Value.kReverse);
 		pidcontroller.disable();
 	}
 
