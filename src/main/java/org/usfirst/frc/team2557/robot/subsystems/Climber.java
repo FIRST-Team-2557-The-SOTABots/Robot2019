@@ -16,17 +16,7 @@ public class Climber extends Subsystem {
 
   public void climb(){
 
-    // setting 12 to foward also seems to make the top ones go up?
-		//foward extends outwards. Reverse to go inward
-		// RobotMap.ds12inch.set(Value.kForward);
-		// RobotMap.ds12inch.set(Value.kReverse);
-
-		//8 inch is the top one. And reverse goes up, maybe
-		//reverse made the lower retract
-		// RobotMap.ds8inch.set(Value.kForward);
-		// RobotMap.ds8inch.set(Value.kReverse);
-
-    //right bumper makes go up
+    //right bumper makes go rectract
     if(Robot.m_oi.bumperRight.get()){
       RobotMap.ds8inch.set(Value.kForward);
     }else if(Robot.m_oi.bumperLeft.get()){

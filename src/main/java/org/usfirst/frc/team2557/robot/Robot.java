@@ -3,7 +3,6 @@ package org.usfirst.frc.team2557.robot;
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
-import org.usfirst.frc.team2557.robot.subsystems.Arm2;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
@@ -24,7 +23,6 @@ public class Robot extends TimedRobot {
 	public static Lift lift;
 	public static Intake intake;
 	public static Arm arm;
-	public static Arm2 arm2;
 	public static Climber climb;
 
 	Command m_autonomousCommand;
@@ -40,12 +38,14 @@ public class Robot extends TimedRobot {
 		lift = new Lift();
 		intake = new Intake();
 		arm = new Arm();
-		arm2 = new Arm2();
 		climb = new Climber();
 
 		// NOTE: oi MUST be constructed after subsystems
 		m_oi = new OI();
 		m_chooser = new SendableChooser<>();
+
+		RobotMap.ds8inch.set(Value.kForward);
+		RobotMap.ds12inch.set(Value.kForward);
 
 		// m_chooser.addDefault("Default Auto", new Segment1());
 		// m_chooser.addObject("My Auto", new Segment1());
@@ -118,6 +118,9 @@ public class Robot extends TimedRobot {
 		// RobotMap.dsIntake.set(Value.kForward);
 
 		// if(m_oi.joystick2.getPOV() != -1)new This();
+
+		SmartDashboard.putBoolean("1", RobotMap.touch1.get());
+		SmartDashboard.putBoolean("2", RobotMap.touch2.get());
 
 		SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
 		SmartDashboard.putNumber("getting POV stick2 ", Robot.m_oi.joystick2.getPOV());
