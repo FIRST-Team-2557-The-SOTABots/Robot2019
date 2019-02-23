@@ -78,8 +78,8 @@ public class RobotMap {
 		touch2 = new DigitalInput(1);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
-		swerveMod = new SwerveModule[3];
-		for(int i = 0; i < 3; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+		swerveMod = new SwerveModule[4];
+		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 
 	}
 }

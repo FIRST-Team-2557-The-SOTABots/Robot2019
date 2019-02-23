@@ -140,7 +140,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("joystick axis 5", m_oi.joystick1.getRawAxis(5));
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
 
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 4; i++){
 			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
 			SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
 			SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
