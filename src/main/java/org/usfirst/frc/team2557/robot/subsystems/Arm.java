@@ -18,13 +18,21 @@ public class Arm extends Subsystem {
   // the arm does lock. Reverse is locked. Foward is unlocked
   public void arm(double power) {
 
+
+    double mult = 0.75;
+    // if(power > 0){
+    //   mult =.75;
+    // }else if(power < 0){
+    //   mult = .95;
+    // }
+
     if (Robot.m_oi.mbumperRight.get()) {
       RobotMap.dsArmLock.set(Value.kReverse);
     } else if (Robot.m_oi.mbumperLeft.get()) {
       RobotMap.dsArmLock.set(Value.kForward);
     }
-    RobotMap.armLeft.set(power * 0.5);
-    RobotMap.armRight.set(-power * 0.5);
+    RobotMap.armLeft.set(power * mult);
+    RobotMap.armRight.set(-power * mult);
 
     // if (front) {
     //   if (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -5500) {

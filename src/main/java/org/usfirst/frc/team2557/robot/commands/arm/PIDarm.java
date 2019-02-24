@@ -15,10 +15,11 @@ public class PIDarm extends Command {
 	double target;
 
 	public PIDarm(double target) {
-    requires(Robot.arm);
+
+	requires(Robot.arm);
     
 		//make sure go any direction and see how much wiggle.
-			pidcontroller = new PIDController(0.0008, -0.00008, 0.00, new PIDSource(){
+			pidcontroller = new PIDController(0.08, -0.00008, 0.00, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -40,11 +41,12 @@ public class PIDarm extends Command {
 		});
     	this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(2500);
+		pidcontroller.setAbsoluteTolerance(500);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+	  RobotMap.dsArmLock.set(Value.kForward);
       pidcontroller.reset();
       pidcontroller.setSetpoint(target);
       pidcontroller.enable();

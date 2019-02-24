@@ -84,9 +84,12 @@ public class Robot extends TimedRobot {
 		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 		RobotMap.lift3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
+		RobotMap.armRight.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+		RobotMap.armLeft.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+
 		// RobotMap.ds8inch.set(Value.kForward);
-		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();

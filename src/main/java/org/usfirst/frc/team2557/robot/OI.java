@@ -67,11 +67,11 @@ public class OI {
 		//encoder to inch = 5556
 		// my.whileHeld(new PIDup(750000)); //top
 
-		ma.whileHeld(new PIDarm(-1875));
-		mb.whileHeld(new PIDarm(-5400));
+		ma.whileHeld(new PIDarm(2400)); //intake
+		mb.whileHeld(new PIDarm(-5450)); //back outtake
 		// my.whileHeld(new IntakeLolz());
-		mx.whileHeld(new PIDarm(5400));
-		my.whileHeld(new PIDarm(6300));
+		mx.whileHeld(new PIDarm(5500)); //front outtake
+		my.whileHeld(new PIDarm(-6350)); //back top
 		
 		//up on 
 
