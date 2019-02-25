@@ -4,21 +4,19 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ArmWithAxis());
-    }
+    // setDefaultCommand(new ArmWithAxis());
+  }
 
   // the arm does lock. Reverse is locked. Foward is unlocked
   public void arm(double power) {
-
-
     double mult = 0.75;
     // if(power > 0){
     //   mult =.75;
@@ -28,8 +26,10 @@ public class Arm extends Subsystem {
 
     if (Robot.m_oi.mbumperRight.get()) {
       RobotMap.dsArmLock.set(Value.kReverse);
+      SmartDashboard.putString("I'm in the arm subsystem. R", "ahah");
     } else if (Robot.m_oi.mbumperLeft.get()) {
       RobotMap.dsArmLock.set(Value.kForward);
+      SmartDashboard.putString("I'm in the arm subsystem. R", "ahaha");
     }
     RobotMap.armLeft.set(power * mult);
     RobotMap.armRight.set(-power * mult);

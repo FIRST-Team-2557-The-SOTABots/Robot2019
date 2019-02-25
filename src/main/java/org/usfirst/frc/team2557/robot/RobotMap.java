@@ -13,6 +13,8 @@ import jaci.pathfinder.Pathfinder;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
+	public static double armTarget = 2400;
+
 	public static double JOYSTICK_DEADBAND = 0.05;
 	public static double TRIGGER_DEADBAND = 0.2;
 
@@ -80,6 +82,7 @@ public class RobotMap {
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+
 
 	}
 }

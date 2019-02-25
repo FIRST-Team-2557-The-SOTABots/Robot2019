@@ -12,14 +12,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDarm extends Command {
 	PIDController pidcontroller;
-	double target;
+	// double target;
 
-	public PIDarm(double target) {
+	public void armPositions(){
+		if(Robot.m_oi.joystick2.getPOV() == 315){
+		  RobotMap.armTarget = -6350;
+		}else if(Robot.m_oi.joystick2.getPOV() == 270){
+		  RobotMap.armTarget = -5450;
+		}else if(Robot.m_oi.joystick2.getPOV() == 180){
+		  RobotMap.armTarget = 2400;
+		}else if(Robot.m_oi.joystick2.getPOV() == 90){
+		  RobotMap.armTarget = 5500;
+		}
+	  }
 
-	requires(Robot.arm);
+	public PIDarm() {
+		requires(Robot.arm);
     
 		//make sure go any direction and see how much wiggle.
-			pidcontroller = new PIDController(0.08, -0.00008, 0.00, new PIDSource(){
+		pidcontroller = new PIDController(0.08, -0.00008, 0.00, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -39,7 +50,7 @@ public class PIDarm extends Command {
 				Robot.arm.arm(-output*0.7);
 			}
 		});
-    	this.target = target;
+    	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
 		pidcontroller.setAbsoluteTolerance(500);
 	}
@@ -48,19 +59,24 @@ public class PIDarm extends Command {
 	protected void initialize() {
 	  RobotMap.dsArmLock.set(Value.kForward);
       pidcontroller.reset();
-      pidcontroller.setSetpoint(target);
+      pidcontroller.setSetpoint(RobotMap.armTarget);
       pidcontroller.enable();
 	}
 	
 	protected void execute(){
+
+		// if()
+		armPositions();
+		pidcontroller.setSetpoint(RobotMap.armTarget);
 		// SmartDashboard.putNumber("Arm encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("arm target", target);
+		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
 		// SmartDashboard.putNumber("arm output", output);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return pidcontroller.onTarget();
+		// return false;
 	}
 
 	// Called once after isFinished returns true

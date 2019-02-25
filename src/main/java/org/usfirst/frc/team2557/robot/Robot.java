@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
+import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
@@ -24,6 +26,9 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Arm arm;
 	public static Climber climb;
+
+	PIDarm pidarm;
+	ArmWithAxis awa;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
@@ -55,6 +60,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
+		// pidarm.close();
+		// awa.cancel();
 	}
 
 	@Override
@@ -79,6 +86,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		awa = new ArmWithAxis();
 		
 		RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
@@ -98,6 +106,21 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+
+		SmartDashboard.putNumber("dpad val", Robot.m_oi.joystick2.getPOV());
+		SmartDashboard.putNumber("arm target val", RobotMap.armTarget);
+		if(m_oi.joystick2.getPOV() > -1){
+			if(awa != null) { awa.cancel(); }
+			pidarm = new PIDarm();
+			pidarm.start();
+			SmartDashboard.putString("armCmd", "pidarm");
+	
+		}else{
+			if(pidarm != null) { pidarm.cancel(); }
+			awa = new ArmWithAxis();
+			awa.start();
+			SmartDashboard.putString("armCmd", "axis");
+		}
 
 		// setting 12 to foward also seems to make the top ones go up?
 		//foward extends outwards. Reverse to go inward

@@ -5,6 +5,7 @@ import org.usfirst.frc.team2557.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ArmWithAxis extends Command {
   public ArmWithAxis() {
@@ -27,6 +28,8 @@ public class ArmWithAxis extends Command {
       if((Robot.m_oi.joystick2.getRawAxis(1) > 0.1 || Robot.m_oi.joystick2.getRawAxis(1) < 0.1)){
         Robot.arm.arm(Robot.m_oi.joystick2.getRawAxis(1));
        }
+
+       SmartDashboard.putString("I'm in the command", "ewhaha");
     // }
 
     
