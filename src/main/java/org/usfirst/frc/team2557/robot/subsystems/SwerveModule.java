@@ -43,6 +43,8 @@ public class SwerveModule extends Subsystem {
 	// angle and speed should be from -1.0 to 1.0, like a joystick input
 	public void drive (double speed, double angle) {
 		pidController.setSetpoint(angle);
+		// angleMotor.set(angle);
+
 		speedMotor.set (speed);
 		error = pidController.getError();
 		output = pidController.get();

@@ -47,7 +47,9 @@ public class GyroSwerveDrive extends Subsystem {
       fwd = intermediary;
     }
     
-    if(Robot.m_oi.start.get() || Robot.m_oi.back.get()) fcd = !fcd;
+    // if(Robot.m_oi.start.get() || Robot.m_oi.back.get()) fcd = !fcd; //.get() is a while loop and may be cause unpredictable amounts of switching
+    if(Robot.m_oi.back.get()) fcd = false;
+    if(Robot.m_oi.start.get()) fcd = true;
 
     double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);

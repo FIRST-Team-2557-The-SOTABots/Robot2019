@@ -8,9 +8,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import jaci.pathfinder.Pathfinder;
+
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
+	public static double armTarget = 2400;
+
 	public static double JOYSTICK_DEADBAND = 0.05;
 	public static double TRIGGER_DEADBAND = 0.2;
 
@@ -31,7 +35,10 @@ public class RobotMap {
 	public static double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
 	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
+	//practice bot
 	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
+	//real bot
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {1.79, 2.6585, 1.6819, 1.2646};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
@@ -62,9 +69,7 @@ public class RobotMap {
 		intake = new WPI_TalonSRX(9);
 
 		gyro = new AHRS(SPI.Port.kMXP);
-
 		compressor = new Compressor(0);
-		// ds = new DoubleSolenoid(0, 0, 1);
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
@@ -77,5 +82,7 @@ public class RobotMap {
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+
+
 	}
 }

@@ -16,12 +16,16 @@ public class Climber extends Subsystem {
 
   public void climb(){
 
+    //right bumper makes go rectract
     if(Robot.m_oi.bumperRight.get()){
       RobotMap.ds8inch.set(Value.kForward);
     }else if(Robot.m_oi.bumperLeft.get()){
       RobotMap.ds8inch.set(Value.kReverse);
     }
 
+
+
+    //x does the retract
     if(Robot.m_oi.dx.get()){
       RobotMap.ds12inch.set(Value.kForward);
     }else if(Robot.m_oi.dy.get()){

@@ -1,13 +1,16 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
+import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
+import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveDrive;
-import org.usfirst.frc.team2557.robot.TrajectoryGenerator;
+// import org.usfirst.frc.team2557.robot.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,12 +26,18 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Arm arm;
 	public static Climber climb;
+	boolean prevArm;
+
+	PIDarm pidarm;
+	ArmWithAxis awa;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
 
 	@Override
 	public void robotInit() {
+		prevArm = false;
+
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
 
@@ -43,13 +52,19 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		m_chooser = new SendableChooser<>();
 
-		// m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// m_chooser.addObject("My Auto", new MyAutoCommand());
+		RobotMap.ds8inch.set(Value.kForward);
+		RobotMap.ds12inch.set(Value.kForward);
+
+		// m_chooser.addDefault("Default Auto", new Segment1());
+		// m_chooser.addObject("My Auto", new Segment1());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
 	}
 
 	@Override
 	public void disabledInit() {
+		// pidarm.close();
+		// awa.cancel();
 	}
 
 	@Override
@@ -74,9 +89,19 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		RobotMap.ds8inch.set(Value.kForward);
-		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		awa = new ArmWithAxis();
+		awa.start();
+		
+		RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+
+		RobotMap.armRight.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+		RobotMap.armLeft.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+
+		// RobotMap.ds8inch.set(Value.kForward);
+		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
@@ -85,6 +110,23 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+
+		SmartDashboard.putNumber("dpad val", Robot.m_oi.joystick2.getPOV());
+		SmartDashboard.putNumber("arm target val", RobotMap.armTarget);
+		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
+			if(awa != null) { awa.cancel(); }
+			pidarm = new PIDarm();
+			pidarm.start();
+			SmartDashboard.putString("armCmd", "pidarm");
+			prevArm = true;
+		}else if(m_oi.joystick2.getPOV() == -1 && prevArm && (Robot.m_oi.joystick2.getRawAxis(1) <= -RobotMap.JOYSTICK_DEADBAND 
+			|| Robot.m_oi.joystick2.getRawAxis(1) >= RobotMap.JOYSTICK_DEADBAND)){
+			if(pidarm != null) { pidarm.cancel(); }
+			awa = new ArmWithAxis();
+			awa.start();
+			SmartDashboard.putString("armCmd", "axis");
+			prevArm = false;
+		}
 
 		// setting 12 to foward also seems to make the top ones go up?
 		//foward extends outwards. Reverse to go inward
@@ -106,6 +148,11 @@ public class Robot extends TimedRobot {
 
 		//forward shoots in out. Reverse retracts
 		// RobotMap.dsIntake.set(Value.kForward);
+
+		// if(m_oi.joystick2.getPOV() != -1)new This();
+
+		SmartDashboard.putBoolean("1", RobotMap.touch1.get());
+		SmartDashboard.putBoolean("2", RobotMap.touch2.get());
 
 		SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
 		SmartDashboard.putNumber("getting POV stick2 ", Robot.m_oi.joystick2.getPOV());
@@ -129,9 +176,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
 
 		for(int i = 0; i < 4; i++){
-			SmartDashboard.putNumber("Encoder value" + i, RobotMap.swerveMod[i].encoder.pidGet());
-			SmartDashboard.putNumber("Encoder value degrees" + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
-			SmartDashboard.putNumber("Offset to zero" + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
+			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
+			SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
 		}
 		Scheduler.getInstance().run();
 	}

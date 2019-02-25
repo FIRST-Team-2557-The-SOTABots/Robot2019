@@ -12,7 +12,12 @@ public class Intake extends Subsystem {
   }
 
   public void speed (double power) {
-    RobotMap.intake.set(power);
+     RobotMap.intake.set(power);
+  }
+
+  public void speedTele (double power) {
+    if( (RobotMap.touch1.get() || RobotMap.touch2.get() ) && Math.signum(power) == 1 )RobotMap.intake.set(0);
+    else RobotMap.intake.set(power);
   }
 
   // public void sol (boolean fire) {
