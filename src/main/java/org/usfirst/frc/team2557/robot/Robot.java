@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Arm arm;
 	public static Climber climb;
+	boolean prevArm;
 
 	PIDarm pidarm;
 	ArmWithAxis awa;
@@ -35,6 +36,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
+		prevArm = false;
+
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
 
@@ -87,6 +90,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		awa = new ArmWithAxis();
+		awa.start();
 		
 		RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
@@ -109,17 +113,19 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putNumber("dpad val", Robot.m_oi.joystick2.getPOV());
 		SmartDashboard.putNumber("arm target val", RobotMap.armTarget);
-		if(m_oi.joystick2.getPOV() > -1){
+		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
 			if(awa != null) { awa.cancel(); }
 			pidarm = new PIDarm();
 			pidarm.start();
 			SmartDashboard.putString("armCmd", "pidarm");
-	
-		}else{
+			prevArm = true;
+		}else if(m_oi.joystick2.getPOV() == -1 && prevArm && (Robot.m_oi.joystick2.getRawAxis(1) <= -RobotMap.JOYSTICK_DEADBAND 
+			|| Robot.m_oi.joystick2.getRawAxis(1) >= RobotMap.JOYSTICK_DEADBAND)){
 			if(pidarm != null) { pidarm.cancel(); }
 			awa = new ArmWithAxis();
 			awa.start();
 			SmartDashboard.putString("armCmd", "axis");
+			prevArm = false;
 		}
 
 		// setting 12 to foward also seems to make the top ones go up?

@@ -16,6 +16,7 @@ public class ArmWithAxis extends Command {
   @Override
   protected void initialize() {
     Robot.arm.arm(0);
+    RobotMap.dsArmLock.set(Value.kForward);
   }
 
 

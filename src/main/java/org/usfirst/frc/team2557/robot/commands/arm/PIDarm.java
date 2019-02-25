@@ -15,10 +15,11 @@ public class PIDarm extends Command {
 	// double target;
 
 	public void armPositions(){
+		SmartDashboard.putString("armPos", "ran");
 		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = -6350;
-		}else if(Robot.m_oi.joystick2.getPOV() == 270){
 		  RobotMap.armTarget = -5450;
+		}else if(Robot.m_oi.joystick2.getPOV() == 270){
+		  RobotMap.armTarget = -4500;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
 		  RobotMap.armTarget = 2400;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
@@ -30,7 +31,8 @@ public class PIDarm extends Command {
 		requires(Robot.arm);
     
 		//make sure go any direction and see how much wiggle.
-		pidcontroller = new PIDController(0.08, -0.00008, 0.00, new PIDSource(){
+		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){ //this works for sure. Practice bot
+		pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -52,7 +54,7 @@ public class PIDarm extends Command {
 		});
     	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(500);
+		pidcontroller.setAbsoluteTolerance(250);
 	}
 
 	// Called just before this Command runs the first time
@@ -64,7 +66,7 @@ public class PIDarm extends Command {
 	}
 	
 	protected void execute(){
-
+		SmartDashboard.putString("pidarm exec", "ran");
 		// if()
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
@@ -73,8 +75,13 @@ public class PIDarm extends Command {
 		// SmartDashboard.putNumber("arm output", output);
 	}
 
+	boolean done = false;
+
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+		SmartDashboard.putBoolean("arm pidarm done", done);
+		// SmartDashboard.putBoolean("pidarM is finished", Robot.m_oi.joystick2.getRawAxis(1) >= -RobotMap.JOYSTICK_DEADBAND 
+		// && Robot.m_oi.joystick2.getRawAxis(1) <= RobotMap.JOYSTICK_DEADBAND);
 		return pidcontroller.onTarget();
 		// return false;
 	}

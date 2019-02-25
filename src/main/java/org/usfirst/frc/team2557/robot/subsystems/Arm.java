@@ -26,10 +26,10 @@ public class Arm extends Subsystem {
 
     if (Robot.m_oi.mbumperRight.get()) {
       RobotMap.dsArmLock.set(Value.kReverse);
-      SmartDashboard.putString("I'm in the arm subsystem. R", "ahah");
+      SmartDashboard.putString("I'm in the arm subsystem. R", "it is locked");
     } else if (Robot.m_oi.mbumperLeft.get()) {
       RobotMap.dsArmLock.set(Value.kForward);
-      SmartDashboard.putString("I'm in the arm subsystem. R", "ahaha");
+      SmartDashboard.putString("I'm in the arm subsystem. R", "it is unlocked");
     }
     RobotMap.armLeft.set(power * mult);
     RobotMap.armRight.set(-power * mult);
