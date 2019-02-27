@@ -64,33 +64,18 @@ public class OI {
 		mterribleRight = new JoystickButton(joystick2, 10);
 
 
-		//encoder to inch = 5556
-		// my.whileHeld(new PIDup(750000)); //top
-
-		// ma.whileHeld(new PIDarm(2400)); //intake
-		// mb.whileHeld(new PIDarm(-5450)); //back outtake
-		// // my.whileHeld(new IntakeLolz());
-		// mx.whileHeld(new PIDarm(5500)); //front outtake
-		// my.whileHeld(new PIDarm(-6350)); //back top
-		
-		//up on 
-
-		// if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000));
-		// else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
-		// if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(160000));
-		// else mx.whileHeld(new PIDup(300000)); //lower (unkonwn rocket location, placeholder)
-		// if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000));
-		// else ma.whileHeld(new PIDup(300000)); //intake
+		// encoder count to inches = 
+		//if mback {ball} else {disk}
+		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(610000)); //27.5 inches
+		else mx.whileHeld(new PIDup(600000));
+		if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(310000)); //27.5 inches
+		else mb.whileHeld(new PIDup(300000)); //middle (unkonwn rocket location, placeholder)
+		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(160000)); //55.5
+		else mx.whileHeld(new PIDup(150000)); //lower (unkonwn rocket location, placeholder)
+		// if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000)); //83.5
 
 
-		//encoder to degree = 62.5
+		ma.whileHeld(new PIDup(-181000)); //intake
 
-		// mterribleLeft.whileHeld(new PIDarmPlacements());
-
-		// if(joystick2.getPOV() == 315)new PIDarm(-6300);
-		// if(joystick2.getPOV() == 270)new PIDarm(-5625);
-		// if(joystick2.getPOV() == 225)new PIDarm(-1875);
-		// if(joystick2.getPOV() == 180)new PIDarm(0);
-		// if(joystick2.getPOV() == 90) new PIDarm(5625);
 	}
 }

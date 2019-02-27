@@ -16,36 +16,37 @@ public class Lift extends Subsystem {
     setDefaultCommand(new LiftWithAxis());
   }
 
-  //low gear is when you move. High gear is kReverse and when it wants to go slower
-  public void lift (double power){
+  public void initialize(){
+    RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+    RobotMap.lift3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
+  }
 
-    //practice bot has the none being negative
-    //real bot has the second one
+  // low gear is when you move. High gear is kReverse and when it wants to go
+  // slower
+  public void lift(double power) {
 
-    if(Robot.m_oi.mterribleRight.get()){
-      if(Robot.m_oi.mstart.get()){
-        RobotMap.dsLift.set(Value.kForward);
-        RobotMap.lift1.set(power * 0.3);
-        RobotMap.lift2.set(power * 0.3);
-        RobotMap.lift3.set(power * 0.3);
-      }else{
-        RobotMap.dsLift.set(Value.kReverse);
-        RobotMap.lift1.set(power * 0.3);
-        RobotMap.lift2.set(power * 0.3);
-        RobotMap.lift3.set(power * 0.3);
-      }
-    }else{
-      if(Robot.m_oi.mstart.get()){
-        RobotMap.dsLift.set(Value.kForward);
-        RobotMap.lift1.set(power);
-        RobotMap.lift2.set(power);
-        RobotMap.lift3.set(power);
-      }else{
-        RobotMap.dsLift.set(Value.kReverse);
-        RobotMap.lift1.set(power);
-        RobotMap.lift2.set(power);
-        RobotMap.lift3.set(power);
-      }
+    // practice bot has the none being negative
+    // real bot has the second one
+    if (Robot.m_oi.mstart.get()) {
+      RobotMap.dsLift.set(Value.kForward);
+    } else {
+      RobotMap.dsLift.set(Value.kReverse);
     }
+
+    if (Robot.m_oi.mterribleRight.get()) {
+      power *= 0.3;
+    } else {
+      power *= 0.6;
+    }
+
+    if(power > 0){
+      power *= 0.5; 
+    }
+
+    RobotMap.lift1.set(power);
+    RobotMap.lift2.set(power);
+    RobotMap.lift3.set(power);
   }
 }

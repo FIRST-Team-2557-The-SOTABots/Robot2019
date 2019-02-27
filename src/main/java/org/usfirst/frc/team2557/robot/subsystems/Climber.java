@@ -17,27 +17,26 @@ public class Climber extends Subsystem {
   public void climb(){
 
     //right bumper makes go rectract
-    if(Robot.m_oi.bumperRight.get()){
-      RobotMap.ds8inch.set(Value.kForward);
-    }else if(Robot.m_oi.bumperLeft.get()){
-      RobotMap.ds8inch.set(Value.kReverse);
-    }
-
-
-
-    //x does the retract
-    if(Robot.m_oi.dx.get()){
-      RobotMap.ds12inch.set(Value.kForward);
-    }else if(Robot.m_oi.dy.get()){
-      RobotMap.ds12inch.set(Value.kReverse);
-    }
     // if(Robot.m_oi.bumperRight.get()){
     //   RobotMap.ds8inch.set(Value.kForward);
-    //   RobotMap.ds12inch.set(Value.kForward);
     // }else if(Robot.m_oi.bumperLeft.get()){
     //   RobotMap.ds8inch.set(Value.kReverse);
+    // }
+    //x does the retract
+    // if(Robot.m_oi.dx.get()){
+    //   RobotMap.ds12inch.set(Value.kForward);
+    // }else if(Robot.m_oi.dy.get()){
     //   RobotMap.ds12inch.set(Value.kReverse);
     // }
+    //right bumber does retract, left does extrude
+
+    if(Robot.m_oi.bumperRight.get() && Robot.m_oi.mstart.get()){
+      RobotMap.ds8inch.set(Value.kForward);
+      RobotMap.ds12inch.set(Value.kForward);
+    }else if(Robot.m_oi.bumperLeft.get() && Robot.m_oi.mback.get()){
+      RobotMap.ds8inch.set(Value.kReverse);
+      RobotMap.ds12inch.set(Value.kReverse);
+    }
   }
 
   public void cancel() {
