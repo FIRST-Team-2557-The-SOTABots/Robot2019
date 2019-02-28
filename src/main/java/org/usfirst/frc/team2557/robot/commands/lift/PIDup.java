@@ -15,8 +15,8 @@ public class PIDup extends Command {
 
 	public PIDup(double target) {
 		requires(Robot.lift);
-		double multp = 4.22; //.19
-		double multd = 4.22; //.004
+		double multp = 0.19; //.19
+		double multd = 0.004; //.004
 		SmartDashboard.putNumber("P", multp);
 		SmartDashboard.putNumber("I", multp);
 		SmartDashboard.putNumber("D", multp);
@@ -46,7 +46,7 @@ public class PIDup extends Command {
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(5000);
+		pidcontroller.setAbsoluteTolerance(3000);
 	}
 
 	// Called just before this Command runs the first time
@@ -57,9 +57,9 @@ public class PIDup extends Command {
 	}
 	
 	protected void execute(){
-		pidcontroller.setP(SmartDashboard.getNumber("P", 4.22) * 0.0001);
-		pidcontroller.setI(SmartDashboard.getNumber("I", 0.0 * 0.0001));
-		pidcontroller.setD(SmartDashboard.getNumber("D", 4.22)* 0.0001);
+		// pidcontroller.setP(SmartDashboard.getNumber("P", 4.22) * 0.0001);
+		// pidcontroller.setI(SmartDashboard.getNumber("I", 0.0 * 0.0001));
+		// pidcontroller.setD(SmartDashboard.getNumber("D", 4.22)* 0.0001);
 		SmartDashboard.putNumber("LiftCommandAuto encoder position", -RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}

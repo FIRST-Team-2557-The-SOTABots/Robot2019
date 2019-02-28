@@ -16,7 +16,7 @@ public class Intake extends Subsystem {
   }
 
   public void speedTele (double power) {
-    if( (RobotMap.touch1.get() || RobotMap.touch2.get() ) && Math.signum(power) == 1 )RobotMap.intake.set(0);
+    if( (RobotMap.disc.get() || RobotMap.cargo.get() ) && Math.signum(power) == 1 )RobotMap.intake.set(0);
     else RobotMap.intake.set(power);
   }
 

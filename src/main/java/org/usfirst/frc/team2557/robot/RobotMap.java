@@ -42,6 +42,12 @@ public class RobotMap {
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
+	public static int tof1;
+	public static int tof2;
+	public static int IR1;
+	public static int IR2;
+	public static int IR3;
+
 	public static WPI_TalonSRX lift1;
 	public static WPI_TalonSRX lift2;
 	public static WPI_TalonSRX lift3;
@@ -57,8 +63,10 @@ public class RobotMap {
 	public static DoubleSolenoid ds8inch;
 	public static Compressor compressor;
 
-	public static DigitalInput touch1;
-	public static DigitalInput touch2;
+	public static DigitalInput cargo;
+	public static DigitalInput disc;
+
+	// public static SerialPort serial;
 
 	public static void init() {
 		lift1 = new WPI_TalonSRX(4);
@@ -76,12 +84,14 @@ public class RobotMap {
 		ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
 
-		touch1 = new DigitalInput(0);
-		touch2 = new DigitalInput(1);
+		disc = new DigitalInput(0);
+		cargo = new DigitalInput(1);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
+
+		// serial = new SerialPort(9600, SerialPort.Port.kUSB);
 
 
 	}

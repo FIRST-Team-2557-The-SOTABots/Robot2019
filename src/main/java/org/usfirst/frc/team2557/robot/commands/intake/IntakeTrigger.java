@@ -31,7 +31,9 @@ public class IntakeTrigger extends Command {
     }else if(trl > 0.2){
       Robot.intake.speedTele(-trl);
       // Robot.intake.speed(-1);
-      RobotMap.dsIntake.set(Value.kForward);
+      if(!RobotMap.cargo.get()){
+        RobotMap.dsIntake.set(Value.kForward);
+      }
     }else{
       Robot.intake.speedTele(0);
     }

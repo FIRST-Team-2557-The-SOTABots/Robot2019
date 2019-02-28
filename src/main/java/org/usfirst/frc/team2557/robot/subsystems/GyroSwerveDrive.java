@@ -75,8 +75,8 @@ public class GyroSwerveDrive extends Subsystem {
 
   public void setSetpoints(double rot){
     for(int i = 0; i < 4; i++){
-      SmartDashboard.putNumber("angle: " + i, angle[i]);
-      SmartDashboard.putNumber("speed: " + i, speed[i]);
+      // SmartDashboard.putNumber("angle: " + i, angle[i]);
+      // SmartDashboard.putNumber("speed: " + i, speed[i]);
 
       double encCount = RobotMap.swerveMod[i].encoder.pidGet();
       angle[i] = (angle[i] + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 

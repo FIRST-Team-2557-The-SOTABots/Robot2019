@@ -30,8 +30,13 @@ public class Arm extends Subsystem {
     } else if (Robot.m_oi.mbumperLeft.get()) {
       RobotMap.dsArmLock.set(Value.kForward);
     }
-    RobotMap.armLeft.set(power);
-    RobotMap.armRight.set(-power);
+    if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -5500 || (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 5500)){
+      RobotMap.armLeft.set(power);
+      RobotMap.armRight.set(-power);
+    }else{
+      RobotMap.armLeft.set(0);
+      RobotMap.armRight.set(0);
+    }
 
     SmartDashboard.putNumber("armPow", power);
   }

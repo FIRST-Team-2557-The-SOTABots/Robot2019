@@ -4,6 +4,7 @@ import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.AutoDriveCommand;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
+import org.usfirst.frc.team2557.robot.subsystems.ArduinoSensors;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Arm arm;
 	public static Climber climb;
+	public static ArduinoSensors arduinoSensors;
 	public static boolean prevArm;
 	public static boolean defaultUnlockArm;
 
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		arm = new Arm();
 		climb = new Climber();
+		arduinoSensors = new ArduinoSensors();
 
 		// NOTE: oi MUST be constructed after subsystems
 		m_oi = new OI();
@@ -57,8 +60,8 @@ public class Robot extends TimedRobot {
 		RobotMap.ds8inch.set(Value.kForward);
 		RobotMap.ds12inch.set(Value.kForward);
 
-		// m_chooser.addDefault("Default Auto", new Segment1());
-		// m_chooser.addObject("My Auto", new Segment1());
+		// m_chooser.addDefault("Default Auto", null);
+		// m_chooser.addObject("My Auto", new Segment1());        
 		SmartDashboard.putData("Auto mode", m_chooser);
 
 	}
@@ -106,13 +109,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("dpad val", Robot.m_oi.joystick2.getPOV());
-		SmartDashboard.putNumber("arm target val", RobotMap.armTarget);
+		// SmartDashboard.putNumber("dpad val", Robot.m_oi.joystick2.getPOV());
+		// SmartDashboard.putNumber("arm target val", RobotMap.armTarget);
 		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
 			if(awa != null) { awa.cancel(); }
 			pidarm = new PIDarm();
 			pidarm.start();
-			SmartDashboard.putString("armCmd", "pidarm");
+			// SmartDashboard.putString("armCmd", "pidarm");
 			prevArm = true;
 			defaultUnlockArm = true;
 		}else if(m_oi.joystick2.getPOV() == -1 && prevArm && (Robot.m_oi.joystick2.getRawAxis(1) <= -RobotMap.JOYSTICK_DEADBAND 
@@ -120,35 +123,11 @@ public class Robot extends TimedRobot {
 			if(pidarm != null) { pidarm.cancel(); }
 			awa = new ArmWithAxis();
 			awa.start();
-			SmartDashboard.putString("armCmd", "axis");
+			// SmartDashboard.putString("armCmd", "axis");
 			prevArm = false;
 		}
-
-		// setting 12 to foward also seems to make the top ones go up?
-		//foward extends outwards. Reverse to go inward
-		// RobotMap.ds12inch.set(Value.kForward);
-		// RobotMap.ds12inch.set(Value.kReverse);
-
-		//8 inch is the top one. And reverse goes up, maybe
-		//reverse made the lower retract
-		// RobotMap.ds8inch.set(Value.kForward);
-		// RobotMap.ds8inch.set(Value.kReverse);
-
-
-		//the arm does lock. Reverse is locked. Foward is unlocked
-		// RobotMap.dsArmLock.set(Value.kReverse);  
-
-		//high gear is kFoward when you want to lift. position when in low gearlow gear when climb
-		//low gear is when you move. High gear is kFoward and when it wants to go slower
-		// RobotMap.dsLift.set(Value.kForward);
-
-		//forward shoots in out. Reverse retracts
-		// RobotMap.dsIntake.set(Value.kForward);
-
-		// if(m_oi.joystick2.getPOV() != -1)new This();
-
-		// SmartDashboard.putBoolean("1", RobotMap.touch1.get());
-		// SmartDashboard.putBoolean("2", RobotMap.touch2.get());
+		SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
+		SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
 
 		// SmartDashboard.putNumber("getting POV", Robot.m_oi.joystick1.getPOV());
 		// SmartDashboard.putNumber("getting POV stick2 ", Robot.m_oi.joystick2.getPOV());

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDarm extends Command {
 	PIDController pidcontroller;
+	boolean done = false;
 	// double target;
 
 	public void armPositions(){
@@ -19,28 +20,22 @@ public class PIDarm extends Command {
 		if(Robot.m_oi.joystick2.getPOV() == 315){
 		  RobotMap.armTarget = -5450;
 		}else if(Robot.m_oi.joystick2.getPOV() == 270){
-		  RobotMap.armTarget = -4500;
+		  RobotMap.armTarget = -4800;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
 		  RobotMap.armTarget = 2340;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
-		  RobotMap.armTarget = 5500;
+		  RobotMap.armTarget = 5000;
 		}
 	  }
 
 	public PIDarm() {
 		requires(Robot.arm);
-		
-		
-		double kp = 1;
-		double ki = 0.1;
-		double kd = 0.9;
-		SmartDashboard.putNumber("ArmP", kp);
-		SmartDashboard.putNumber("ArmI", ki);
-		SmartDashboard.putNumber("ArmD", kd);
-		SmartDashboard.putBoolean("ArmLock", false);
+		double kp = 0.00025;
+		double ki = 0.000002;
+		double kd = 0.00000005;
 		//make sure go any direction and see how much wiggle.
 		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
-		pidcontroller = new PIDController(1.00 * kp, 1.0 * ki, 1.0 * kd, new PIDSource(){
+		pidcontroller = new PIDController(kp, ki, kd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -63,7 +58,7 @@ public class PIDarm extends Command {
 		});
     	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(250);
+		pidcontroller.setAbsoluteTolerance(150);
 	}
 
 	// Called just before this Command runs the first time
@@ -75,17 +70,18 @@ public class PIDarm extends Command {
 	}
 	
 	protected void execute(){
+		if(RobotMap.dsArmLock.get() == Value.kReverse){
+			RobotMap.dsArmLock.set(Value.kForward);
+		}
 		SmartDashboard.putString("pidarm exec", "ran");
 		// if()
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
-		pidcontroller.setP(SmartDashboard.getNumber("ArmP", 1));
-		pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0.1));
-		pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0.9));
+		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
+		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
+		// pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0));
 	}
-
-	boolean done = false;
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
@@ -100,9 +96,9 @@ public class PIDarm extends Command {
 	protected void end() {
 		Robot.arm.arm(0);
 		// RobotMap.dsArmLock.set(Value.kReverse);
-		if(SmartDashboard.getBoolean("ArmLock", false)){
-			RobotMap.dsArmLock.set(Value.kReverse);
-		}
+		// if(SmartDashboard.getBoolean("ArmLock", false)){
+		RobotMap.dsArmLock.set(Value.kReverse);
+		// }
 		pidcontroller.disable();
 	}
 
