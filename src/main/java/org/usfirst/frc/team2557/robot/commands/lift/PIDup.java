@@ -15,8 +15,8 @@ public class PIDup extends Command {
 
 	public PIDup(double target) {
 		requires(Robot.lift);
-		double multp = 4.22;
-		double multd = 4.22;
+		double multp = 4.22; //.19
+		double multd = 4.22; //.004
 		SmartDashboard.putNumber("P", multp);
 		SmartDashboard.putNumber("I", multp);
 		SmartDashboard.putNumber("D", multp);
@@ -80,6 +80,5 @@ public class PIDup extends Command {
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();
-//		this.
 	}
 }

@@ -29,10 +29,18 @@ public class PIDarm extends Command {
 
 	public PIDarm() {
 		requires(Robot.arm);
-    
+		
+		
+		double kp = 1;
+		double ki = 0.1;
+		double kd = 0.9;
+		SmartDashboard.putNumber("ArmP", kp);
+		SmartDashboard.putNumber("ArmI", ki);
+		SmartDashboard.putNumber("ArmD", kd);
+		SmartDashboard.putBoolean("ArmLock", false);
 		//make sure go any direction and see how much wiggle.
-		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){ //this works for sure. Practice bot
-		pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
+		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
+		pidcontroller = new PIDController(1.00 * kp, 1.0 * ki, 1.0 * kd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -49,7 +57,8 @@ public class PIDarm extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.arm.arm(-output*0.7);
+				// Robot.arm.arm(-output*0.7);
+				Robot.arm.arm(-output);
 			}
 		});
     	// this.target = target;
@@ -70,9 +79,10 @@ public class PIDarm extends Command {
 		// if()
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
-		// SmartDashboard.putNumber("Arm encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
-		// SmartDashboard.putNumber("arm output", output);
+		pidcontroller.setP(SmartDashboard.getNumber("ArmP", 1));
+		pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0.1));
+		pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0.9));
 	}
 
 	boolean done = false;
@@ -89,7 +99,10 @@ public class PIDarm extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.arm.arm(0);
-		RobotMap.dsArmLock.set(Value.kReverse);
+		// RobotMap.dsArmLock.set(Value.kReverse);
+		if(SmartDashboard.getBoolean("ArmLock", false)){
+			RobotMap.dsArmLock.set(Value.kReverse);
+		}
 		pidcontroller.disable();
 	}
 
