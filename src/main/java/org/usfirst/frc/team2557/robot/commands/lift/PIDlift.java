@@ -55,6 +55,10 @@ public class PIDlift extends Command {
 		pidcontroller.setSetpoint(target);
 		pidcontroller.enable();
 	}
+
+	public void setSetpoint(double target){
+		this.target = target;
+	}
 	
 	protected void execute(){
 		// pidcontroller.setP(SmartDashboard.getNumber("P", 4.22) * 0.0001);

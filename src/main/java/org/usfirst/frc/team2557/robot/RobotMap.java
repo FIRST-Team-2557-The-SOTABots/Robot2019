@@ -2,14 +2,10 @@ package org.usfirst.frc.team2557.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
-import jaci.pathfinder.Pathfinder;
-
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
@@ -76,9 +72,9 @@ public class RobotMap {
 
 	public static void init() {
 		lastGamepieceWasDisc = false;
-		highPos = 480000;
+		highPos = 460000;
 		midPos = 205000;
-		lowPos = -178000;
+		lowPos = -165000;
 		defPos = 0;
 
 		lift1 = new WPI_TalonSRX(4);

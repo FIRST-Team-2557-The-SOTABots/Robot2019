@@ -4,7 +4,6 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];

@@ -25,10 +25,10 @@ public class IntakeTrigger extends Command {
     double trl = Robot.m_oi.joystick2.getRawAxis(2);
 
     if(trr > 0.2){
-      Robot.intake.speedTele(trr);
+      Robot.intake.speed(trr);
       RobotMap.dsIntake.set(Value.kReverse);
     }else if(trl > 0.2){
-      Robot.intake.speedTele(-trl);
+      Robot.intake.speed(-trl);
       // Robot.intake.speed(-1);
 
       if(RobotMap.cargo.get()){
@@ -40,7 +40,7 @@ public class IntakeTrigger extends Command {
         RobotMap.dsIntake.set(Value.kForward);
       }
     }else{
-      Robot.intake.speedTele(0);
+      Robot.intake.speed(0);
     }
 
     // if(trr > 0.2){

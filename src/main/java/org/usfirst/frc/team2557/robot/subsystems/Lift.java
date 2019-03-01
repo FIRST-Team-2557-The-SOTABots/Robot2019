@@ -3,7 +3,6 @@ package org.usfirst.frc.team2557.robot.subsystems;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.lift.*;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -38,12 +37,12 @@ public class Lift extends Subsystem {
     if (Robot.m_oi.mterribleRight.get()) {
       power *= 0.3;
     } else {
-      power *= 0.6;
+      power *= 0.8;
     }
 
     //  this ^above then this (below) in this order is important
     if(power > 0){
-      power *= 0.5; 
+      power *= 0.8; 
     }
 
     RobotMap.lift1.set(power);
