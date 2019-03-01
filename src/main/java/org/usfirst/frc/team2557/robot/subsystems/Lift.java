@@ -41,6 +41,7 @@ public class Lift extends Subsystem {
       power *= 0.6;
     }
 
+    //  this ^above then this (below) in this order is important
     if(power > 0){
       power *= 0.5; 
     }

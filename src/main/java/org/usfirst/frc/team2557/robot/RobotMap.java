@@ -15,6 +15,12 @@ import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 public class RobotMap {
 	public static double armTarget = 2400;
 
+	public static boolean lastGamepieceWasDisc;
+	public static double highPos;
+	public static double midPos;
+	public static double lowPos;
+	public static double defPos;
+
 	public static double JOYSTICK_DEADBAND = 0.05;
 	public static double TRIGGER_DEADBAND = 0.2;
 
@@ -69,6 +75,12 @@ public class RobotMap {
 	// public static SerialPort serial;
 
 	public static void init() {
+		lastGamepieceWasDisc = false;
+		highPos = 480000;
+		midPos = 205000;
+		lowPos = -178000;
+		defPos = 0;
+
 		lift1 = new WPI_TalonSRX(4);
 		lift2 = new WPI_TalonSRX(5);
 		lift3 = new WPI_TalonSRX(6);
@@ -84,8 +96,8 @@ public class RobotMap {
 		ds12inch = new DoubleSolenoid(0, 4, 5);
 		ds8inch = new DoubleSolenoid(0, 6, 7);
 
-		disc = new DigitalInput(0);
-		cargo = new DigitalInput(1);
+		disc = new DigitalInput(1);
+		cargo = new DigitalInput(0);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];

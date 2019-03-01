@@ -18,13 +18,15 @@ public class PIDarm extends Command {
 	public void armPositions(){
 		SmartDashboard.putString("armPos", "ran");
 		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = -5450;
+		  RobotMap.armTarget = -5800;
 		}else if(Robot.m_oi.joystick2.getPOV() == 270){
 		  RobotMap.armTarget = -4800;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
-		  RobotMap.armTarget = 2340;
+		  RobotMap.armTarget = 2250;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
 		  RobotMap.armTarget = 5000;
+		}else if(Robot.m_oi.joystick2.getPOV() == 0){
+		  RobotMap.armTarget = 0;
 		}
 	  }
 

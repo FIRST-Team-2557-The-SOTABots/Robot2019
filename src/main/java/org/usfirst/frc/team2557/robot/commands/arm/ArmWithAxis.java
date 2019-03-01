@@ -26,7 +26,7 @@ public class ArmWithAxis extends Command {
       power = 0.0;
     }
     SmartDashboard.putNumber("arm power", power);
-    Robot.arm.arm(power);
+    Robot.arm.arm(power * 0.8); // make arm slower for user to not break things
   }
 
   // Make this return true when this Command no longer needs to run execute()

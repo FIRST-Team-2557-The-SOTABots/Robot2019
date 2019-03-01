@@ -3,11 +3,13 @@ package org.usfirst.frc.team2557.robot;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.intake.IntakeLolz;
 import org.usfirst.frc.team2557.robot.commands.intake.IntakeTrigger;
-import org.usfirst.frc.team2557.robot.commands.lift.PIDdown;
-import org.usfirst.frc.team2557.robot.commands.lift.PIDup;
+import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
+import org.usfirst.frc.team2557.robot.commands.lift.PIDliftToCargo;
+import org.usfirst.frc.team2557.robot.commands.lift.PIDliftToDisc;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
 	public Joystick joystick1;
@@ -63,19 +65,14 @@ public class OI {
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
 
+		// .get doesnt work here cause oi constr doesnt run all the time. .whenPressed() etc are special.
+		//if mback + m? {disc} else m? {ball}
+		mback.whenPressed(new PIDliftToCargo());
+		mback.whenReleased(new PIDliftToDisc());
 
-		// encoder count to inches = 
-		//if mback {ball} else {disk}
-		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(474000)); //83.5
-		else mx.whileHeld(new PIDup(464000));
-		if(mb.get() &&  mback.get()) mb.whileHeld(new PIDup(160000)); //55.5
-		else mb.whileHeld(new PIDup(210000)); //middle (unkonwn rocket location, placeholder)
-		if(mx.get() &&  mback.get()) mx.whileHeld(new PIDup(163000)); //27.5 inches
-		else mx.whileHeld(new PIDup(153000)); //lower (unkonwn cargo location, placeholder)
-		// if(ma.get() &&  mback.get()) ma.whileHeld(new PIDup(110000)); 
-
-
-		ma.whileHeld(new PIDup(-181000)); //intake
-
+		my.whileHeld(new PIDlift(RobotMap.highPos));
+		mb.whileHeld(new PIDlift(RobotMap.midPos));
+		mx.whileHeld(new PIDlift(RobotMap.defPos));
+		ma.whileHeld(new PIDlift(RobotMap.lowPos));
 	}
 }

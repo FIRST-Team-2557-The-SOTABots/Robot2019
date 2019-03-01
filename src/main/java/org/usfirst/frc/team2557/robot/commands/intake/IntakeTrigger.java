@@ -1,12 +1,10 @@
 package org.usfirst.frc.team2557.robot.commands.intake;
 
-import javax.lang.model.util.ElementScanner6;
-
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeTrigger extends Command {
   public IntakeTrigger() {
@@ -22,6 +20,7 @@ public class IntakeTrigger extends Command {
  //forward shoots in out. Reverse retracts
   @Override
   protected void execute() {
+    SmartDashboard.putBoolean("lastGaamepiecewasdisc", RobotMap.lastGamepieceWasDisc);
     double trr = Robot.m_oi.joystick2.getRawAxis(3);
     double trl = Robot.m_oi.joystick2.getRawAxis(2);
 
@@ -31,7 +30,13 @@ public class IntakeTrigger extends Command {
     }else if(trl > 0.2){
       Robot.intake.speedTele(-trl);
       // Robot.intake.speed(-1);
-      if(!RobotMap.cargo.get()){
+
+      if(RobotMap.cargo.get()){
+        RobotMap.lastGamepieceWasDisc = false;
+      }else if(RobotMap.disc.get()){
+        RobotMap.lastGamepieceWasDisc = true;
+      }
+      if(RobotMap.lastGamepieceWasDisc){
         RobotMap.dsIntake.set(Value.kForward);
       }
     }else{

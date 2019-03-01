@@ -138,11 +138,12 @@ public class Robot extends TimedRobot {
 		// SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());
 		// SmartDashboard.putNumber("Get direction radians", Robot.m_oi.joystick1.getDirectionRadians());
 
-		SmartDashboard.putNumber("arm left", RobotMap.armLeft.getSensorCollection().getQuadraturePosition());
-
-		SmartDashboard.putNumber("arm right", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("arm left enc", RobotMap.armLeft.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		
-		SmartDashboard.putNumber("lift 2", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+
+		SmartDashboard.putNumber("high pos target", RobotMap.highPos);
 
 		// SmartDashboard.putNumber("joystick axis 5", m_oi.joystick1.getRawAxis(5));
 		// SmartDashboard.putNumber("gyro % 360: ", RobotMap.gyro.getAngle() % 360);
