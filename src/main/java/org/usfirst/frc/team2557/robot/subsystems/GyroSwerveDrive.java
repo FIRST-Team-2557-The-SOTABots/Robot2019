@@ -8,14 +8,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];
   public double[] angle = new double[4];
-  private boolean fcd = true;
+  public boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
     computeInputs(str, fwd, rot);
     setSetpoints(rot);
     // scaleOutput(); // meant to reduce drift/error
     for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+    // for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, angle[i]);
   }
+
+  // public void autoDrive(double str, double fwd, double rot){
+  //   computeInputs(str, fwd, rot);
+  //   // setSetpoints(rot);
+  //   for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+  // }
 
   public void scaleOutput(){
     double diff = 0;
@@ -40,15 +47,23 @@ public class GyroSwerveDrive extends Subsystem {
 
   public void computeInputs (double str, double fwd, double rot){
     double gyroAngle = -1 * Math.toRadians(RobotMap.gyro.getAngle() % 360);
-    if(fcd){ 
+    // if(fcd){ 
       double intermediary = fwd * Math.cos(gyroAngle) + str * Math.sin(gyroAngle);
       str = -fwd * Math.sin(gyroAngle) + str * Math.cos(gyroAngle);
       fwd = intermediary;
+    // }
+
+    if(Robot.m_oi.joystick1.getPOV() == 0){
+      RobotMap.gyro.reset();
+    }
+
+    if(Robot.m_oi.joystick1.getPOV() == 90){
+      fcd = true;
+    }else if(Robot.m_oi.joystick1.getPOV() == 270){
+      fcd = false;
     }
     
-    // if(Robot.m_oi.start.get() || Robot.m_oi.back.get()) fcd = !fcd; //.get() is a while loop and may be cause unpredictable amounts of switching
-    if(Robot.m_oi.back.get()) fcd = false;
-    if(Robot.m_oi.start.get()) fcd = true;
+    // if(Robot.m_oi.dx.get()) fcd = !fcd; //.get() is a while loop and may be cause unpredictable amounts of switching
 
     double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
 		double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);

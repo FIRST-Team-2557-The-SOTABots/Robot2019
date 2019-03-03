@@ -80,6 +80,8 @@ public class PIDarm extends Command {
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
+
+		// SmartDashboard
 		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
 		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
 		// pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0));
@@ -97,10 +99,7 @@ public class PIDarm extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.arm.arm(0);
-		// RobotMap.dsArmLock.set(Value.kReverse);
-		// if(SmartDashboard.getBoolean("ArmLock", false)){
 		RobotMap.dsArmLock.set(Value.kReverse);
-		// }
 		pidcontroller.disable();
 	}
 

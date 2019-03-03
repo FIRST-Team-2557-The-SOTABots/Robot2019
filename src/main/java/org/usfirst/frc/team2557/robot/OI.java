@@ -34,14 +34,14 @@ public class OI {
 		joystick1 = new Joystick(0);
 		joystick2 = new Joystick(1);
 
-		da = new JoystickButton(joystick1, 1);
-		db = new JoystickButton(joystick1, 2);
-		dx = new JoystickButton(joystick1, 3);
-		dy = new JoystickButton(joystick1, 4);
-		bumperLeft = new JoystickButton(joystick1, 5);
-		bumperRight = new JoystickButton(joystick1, 6);
-		back = new JoystickButton(joystick1, 7);
-		start = new JoystickButton(joystick1, 8);
+		da = new JoystickButton(joystick1, 1); //a is for apathy
+		db = new JoystickButton(joystick1, 2); //b is for belfast
+		dx = new JoystickButton(joystick1, 3); //switch fcd
+		dy = new JoystickButton(joystick1, 4); //emergency unclimb
+		bumperLeft = new JoystickButton(joystick1, 5); //vision forward
+		bumperRight = new JoystickButton(joystick1, 6); //vision backwards
+		back = new JoystickButton(joystick1, 7); //8s
+		start = new JoystickButton(joystick1, 8); //12s
 		terribleLeft = new JoystickButton(joystick1, 9);
 		terribleRight = new JoystickButton(joystick1, 10);
 		
@@ -56,10 +56,5 @@ public class OI {
 		mstart = new JoystickButton(joystick2, 8);
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
-
-		// my.whileHeld(new PIDlift(RobotMap.highPos));
-		// mb.whileHeld(new PIDlift(RobotMap.midPos));
-		// mx.whileHeld(new PIDlift(RobotMap.defPos));
-		// ma.whileHeld(new PIDlift(RobotMap.lowPos));
 	}
 }

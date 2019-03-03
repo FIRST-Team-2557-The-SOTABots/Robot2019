@@ -6,16 +6,18 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
+
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
+	public static String TRAJECTORY_FOLDER = "/home/lvuser/Trajectories/";
+
 	public static double armTarget = 2400;
 
 	public static boolean lastGamepieceWasDisc;
 	public static double highPos;
 	public static double midPos;
 	public static double lowPos;
-	public static double defPos;
 
 	public static double JOYSTICK_DEADBAND = 0.05;
 	public static double TRIGGER_DEADBAND = 0.2;
@@ -23,8 +25,8 @@ public class RobotMap {
 	public static SwerveModule[] swerveMod;
 
 	public static double kP = 0.85;
-	public static double MAX_VEL = 15;
-    public static double MAX_ACC = 10;
+	public static double MAX_VEL = 10;
+    public static double MAX_ACC = 5;
 	public static double WHEELBASE_WIDTH = 0.8;
 	public static double WHEELBASE_LENGTH = 0.8;
 	public static double SWERVE_WHEEL_DIAMETER = 0.05; // in m?
@@ -38,7 +40,8 @@ public class RobotMap {
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
 	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
 	//practice bot
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.067};
 	//real bot
 	// public static final double[] SWERVE_SETPOINT_OFFSET = {1.79, 2.6585, 1.6819, 1.2646};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
@@ -75,7 +78,6 @@ public class RobotMap {
 		highPos = 460000;
 		midPos = 205000;
 		lowPos = -165000;
-		defPos = 0;
 
 		lift1 = new WPI_TalonSRX(4);
 		lift2 = new WPI_TalonSRX(5);
@@ -98,9 +100,6 @@ public class RobotMap {
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
-
 		// serial = new SerialPort(9600, SerialPort.Port.kUSB);
-
-
 	}
 }
