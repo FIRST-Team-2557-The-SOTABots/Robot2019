@@ -41,7 +41,7 @@ public class RobotMap {
 	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
 	//practice bot
 	// public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.067};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.844, 3.486, 2.067};
 	//real bot
 	// public static final double[] SWERVE_SETPOINT_OFFSET = {1.79, 2.6585, 1.6819, 1.2646};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
