@@ -25,7 +25,7 @@ public class GyroSwerveDriveCommand extends Command {
     double axis0 = -Robot.m_oi.joystick1.getRawAxis(0);
     double axis1 = -Robot.m_oi.joystick1.getRawAxis(1);
     double axis4 = -Robot.m_oi.joystick1.getRawAxis(4);
-    double axis5 = Robot.m_oi.joystick1.getRawAxis(5);
+    double axis5 = -Robot.m_oi.joystick1.getRawAxis(5);
     double triggerLeft = Robot.m_oi.joystick1.getRawAxis(2);
     double triggerRight = Robot.m_oi.joystick1.getRawAxis(3);
 
@@ -66,9 +66,9 @@ public class GyroSwerveDriveCommand extends Command {
     double mult = 0.5;
     if(Robot.m_oi.db.get()) mult = 1;
     else if(Robot.m_oi.da.get()) mult = 0.2;
-    // if(triggerRight > 0.2) axis4 = -triggerRight;
-    // else if(triggerLeft > 0.2) axis4 = triggerLeft;
-    Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult);
+    if(triggerRight > 0.2) axis4 = -triggerRight;
+    else if(triggerLeft > 0.2) axis4 = triggerLeft;
+    Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*mult, axis5*mult);
   }
 
   @Override

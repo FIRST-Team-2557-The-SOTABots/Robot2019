@@ -129,7 +129,7 @@ public class Robot extends TimedRobot {
 		}
 		SmartDashboard.putBoolean("armLock", armLock);
 
-		m_oi.dx.whenPressed(new FCDswitch());
+		// m_oi.dx.whenPressed(new FCDswitch());
 
 		if(Robot.m_oi.mback.get()){
 			RobotMap.highPos = 495000;

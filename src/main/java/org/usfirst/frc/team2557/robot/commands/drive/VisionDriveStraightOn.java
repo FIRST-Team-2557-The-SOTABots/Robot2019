@@ -105,7 +105,7 @@ public class VisionDriveStraightOn extends Command {
 
   @Override
   protected void initialize() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0, 0);
     Robot.gyroSwerveDrive.fcd = false;
     pidcontrollerrot.reset();
     pidcontrollerrot.setSetpoint(1);
@@ -168,7 +168,7 @@ public class VisionDriveStraightOn extends Command {
     SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
 
     if(area[0] != -1 && area[1] != -1){
-      Robot.gyroSwerveDrive.gyroDrive(outputstr, fwd, outputrot);
+      Robot.gyroSwerveDrive.gyroDrive(outputstr, fwd, outputrot, 0);
     }
   }
 
@@ -182,6 +182,7 @@ public class VisionDriveStraightOn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.gyroSwerveDrive.fcd = true;
     pidcontrollerrot.disable();
     pidcontrollerstr.disable();
   }
@@ -190,6 +191,7 @@ public class VisionDriveStraightOn extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.gyroSwerveDrive.fcd = true;
     pidcontrollerrot.disable();
     pidcontrollerstr.disable();
 		this.end();

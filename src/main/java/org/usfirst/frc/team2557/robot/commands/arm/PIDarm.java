@@ -54,8 +54,13 @@ public class PIDarm extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				// Robot.arm.arm(-output*0.7);
 				Robot.arm.arm(-output);
+
+				// double enc = RobotMap.armRight.getSensorCollection().getQuadraturePosition();
+				// enc *= Math.PI/10000;
+				// double angle = Math.abs(Math.sin(enc));
+				// SmartDashboard.putNumber("angleForceCounter", angle);
+				// Robot.arm.arm(output * Math.cos(angle));
 			}
 		});
     	// this.target = target;

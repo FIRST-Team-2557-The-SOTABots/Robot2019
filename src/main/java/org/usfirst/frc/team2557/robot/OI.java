@@ -36,7 +36,7 @@ public class OI {
 
 		da = new JoystickButton(joystick1, 1); //a is for apathy
 		db = new JoystickButton(joystick1, 2); //b is for belfast
-		dx = new JoystickButton(joystick1, 3); //switch fcd
+		dx = new JoystickButton(joystick1, 3); 
 		dy = new JoystickButton(joystick1, 4); //emergency unclimb
 		bumperLeft = new JoystickButton(joystick1, 5); //vision forward
 		bumperRight = new JoystickButton(joystick1, 6); //vision backwards
