@@ -13,11 +13,6 @@ public class GyroSwerveDrive extends Subsystem {
   public boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
-    // if(Robot.m_oi.joystick1.getPOV() == 90){
-    //   swerve = true;
-    // }else if(Robot.m_oi.joystick1.getPOV() == 270){
-    //   swerve = false;
-    // }else 
     if(Robot.m_oi.joystick1.getPOV() == 0){
       fcd = true;
       RobotMap.gyro.reset();
@@ -25,28 +20,28 @@ public class GyroSwerveDrive extends Subsystem {
       fcd = false;
     }
 
-    // if(swerve){ 
       computeSwerveInputs(str, fwd, rot);
       setSetpoints(rot); 
-      // scaleOutput(); // meant to reduce drift/error
-    // }else{
-      // computeTankInputs(str, fwd);
-    // }
-    for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(speed[i], angle[i]);
-  }
+    for(int i = 0; i < 4; i++) {
+      // speed[i] = 0;
+      // angle[i] = rot;
+      RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+    }
+    // for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, angle[i]);
+  // }
 
-  public void scaleOutput(){
-    double diff = 0;
-    for(int i = 0; i < 4; i++){
-      if(Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet()) > diff){
-        diff = Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet());
-      }
-    }
-    if(diff > RobotMap.SWERVE_ENC_CIRC/8){
-      for(int i = 0; i < 4; i++){
-        speed[i] *= RobotMap.SWERVE_ENC_CIRC/8 / diff;  // up for changes
-      }
-    }
+  // public void scaleOutput(){
+  //   double diff = 0;
+  //   for(int i = 0; i < 4; i++){
+  //     if(Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet()) > diff){
+  //       diff = Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet());
+  //     }
+  //   }
+  //   if(diff > RobotMap.SWERVE_ENC_CIRC/8){
+  //     for(int i = 0; i < 4; i++){
+  //       speed[i] *= RobotMap.SWERVE_ENC_CIRC/8 / diff;  // up for changes
+  //     }
+  //   }
   }
 
   public double getOppositeAngle(int index){
@@ -58,21 +53,12 @@ public class GyroSwerveDrive extends Subsystem {
 
   public void computeSwerveInputs (double str, double fwd, double rot){
     double gyroAngle = -1 * Math.toRadians(RobotMap.gyro.getAngle() % 360);
-    // if(Robot.m_oi.da.get()){
-    //   rot *= 0.5;
-    // }
 
     if(fcd){
       double intermediary = fwd * Math.cos(gyroAngle) + str * Math.sin(gyroAngle);
       str = -fwd * Math.sin(gyroAngle) + str * Math.cos(gyroAngle);
       fwd = intermediary;
     }
-
-    // if(Robot.m_oi.joystick1.getPOV() == 0){
-    //   RobotMap.gyro.reset();
-    // }
-    
-    // if(Robot.m_oi.dx.get()) fcd = !fcd; //.get() is a while loop and may be cause unpredictable amounts of switching
 
     double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
     double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
@@ -94,23 +80,6 @@ public class GyroSwerveDrive extends Subsystem {
     // if (speed[0] > max) speed[0] = max; 
     // if (speed[3] > max) speed[3] = max;
     // if (max > 1) speed[3] /= max; speed[0] /= max; speed[2] /= max;
-  }
-
-  public void computeTankInputs(double str, double fwd){
-    str *= 2;
-    speed[0] = fwd + str;
-    speed[1] = fwd + str;
-    speed[2] = fwd - str; 
-    speed[3] = fwd - str;
-    for(int i = 0; i < 4; i++){
-      double encCount = RobotMap.swerveMod[i].encoder.pidGet();
-      angle[i] = RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
-      if(angle[i] > RobotMap.SWERVE_ENC_CIRC) {
-        angle[i] -= RobotMap.SWERVE_ENC_CIRC;
-      }
-      SmartDashboard.putNumber("arcade " + i + "speed", speed[i]);
-      SmartDashboard.putNumber("arcade " + i + "angle", angle[i]);
-    }
   }
 
   public void setSetpoints(double rot){

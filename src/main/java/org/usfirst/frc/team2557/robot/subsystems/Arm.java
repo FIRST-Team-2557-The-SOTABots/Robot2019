@@ -48,7 +48,7 @@ public class Arm extends Subsystem {
     //   RobotMap.dsArmLock.set(Value.kForward);
     // }
 
-    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -20000){
+    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -10000){
       if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -200 && power < 0){
         RobotMap.armLeft.set(power);
         RobotMap.armRight.set(-power);
@@ -58,6 +58,7 @@ public class Arm extends Subsystem {
       }else{
         RobotMap.armLeft.set(0);
         RobotMap.armRight.set(0);
+        RobotMap.dsArmLock.set(Value.kReverse);
       }
     }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -5500 || (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 5500)){
       RobotMap.armLeft.set(power);

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
-
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
@@ -25,6 +24,7 @@ public class RobotMap {
 	public static SwerveModule[] swerveMod;
 
 	public static double kP = 0.85;
+	// public static double kP = 0.2;
 	public static double MAX_VEL = 10;
     public static double MAX_ACC = 5;
 	public static double WHEELBASE_WIDTH = 0.8;
@@ -35,17 +35,22 @@ public class RobotMap {
 	public static double SWERVE_LENGTH = 21.5;
 	public static double SWERVE_WIDTH = 21.5;
 	public static double SWERVE_RADIUS = Math.sqrt(Math.pow(SWERVE_LENGTH, 2) + Math.pow(SWERVE_WIDTH, 2));
+	//practice
 	public static double SWERVE_ENC_CIRC = 4.94;
+	//real
+	// public static double SWERVE_ENC_CIRC = 4.927;
 	public static double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
-	// public static double[] SWERVE_SETPOINT_OFFSET = {4.115, 4.788, 3.486, 2.020}; // must be [0, circ)
 	//practice bot
-	// public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 1.725, 3.486, 2.020};
 	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.844, 3.486, 2.067};
 	//real bot
-	// public static final double[] SWERVE_SETPOINT_OFFSET = {1.79, 2.6585, 1.6819, 1.2646};
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {0.709, 4.72, 3.2825, 3.4265};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
+	//practice bot
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
+	//real bot
+	// public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};
+	//if wheels twitch, it's a motor power direction issue. (flip the wires)
 
 	public static int tof1;
 	public static int tof2;

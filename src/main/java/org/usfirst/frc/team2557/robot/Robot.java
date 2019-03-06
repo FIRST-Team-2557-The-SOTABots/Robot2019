@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("armLock", armLock);
 
 		// m_oi.dx.whenPressed(new FCDswitch());
-
+		//practice bot
 		if(Robot.m_oi.mback.get()){
 			RobotMap.highPos = 495000;
 			RobotMap.midPos = 120000; 
@@ -140,6 +140,16 @@ public class Robot extends TimedRobot {
 			RobotMap.midPos = 205000; 
 			RobotMap.lowPos = -165000;
 		}
+		//real bot
+		// if(Robot.m_oi.mback.get()){
+		// 	RobotMap.highPos = 570000;
+		// 	RobotMap.midPos = 320000; 
+		// 	RobotMap.lowPos = -227000;
+		// }else{
+		// 	RobotMap.highPos = 550000;
+		// 	RobotMap.midPos = 186000; 
+		// 	RobotMap.lowPos = -113000;
+		// }
 
 		if(m_oi.bumperLeft.get()){
 			vdso.start();
@@ -205,11 +215,11 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putNumber("high pos target", RobotMap.highPos);
 
-		// for(int i = 0; i < 4; i++){
-		// 	SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
-		// 	SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
-		// 	SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
-		// }
+		for(int i = 0; i < 4; i++){
+			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			// SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
+			// SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
+		}
 		Scheduler.getInstance().run();
 	}
 

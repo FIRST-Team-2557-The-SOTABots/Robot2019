@@ -17,7 +17,6 @@ public class LiftWithAxis extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
       Robot.lift.lift(Robot.m_oi.joystick2.getRawAxis(5));
   }
 

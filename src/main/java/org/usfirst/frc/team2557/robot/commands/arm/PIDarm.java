@@ -36,7 +36,6 @@ public class PIDarm extends Command {
 		double ki = 0.000002;
 		double kd = 0.00000005;
 		//make sure go any direction and see how much wiggle.
-		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
 		pidcontroller = new PIDController(kp, ki, kd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {

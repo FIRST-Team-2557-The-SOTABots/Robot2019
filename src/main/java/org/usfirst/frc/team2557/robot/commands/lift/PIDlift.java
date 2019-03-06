@@ -13,14 +13,21 @@ public class PIDlift extends Command {
 	PIDController pidcontroller;
 	double target;
 
+	//practice bot
+	double multp = 0.19; //.19
+	double multi = 0; //0
+	double multd = 0.004; //.004
+	//real bot
+	// double multp = 0.0717; //.19
+	// double multi = 0; //0
+	// double multd = 0.004; //.004
+
 	public PIDlift(double target) {
 		requires(Robot.lift);
-		double multp = 0.19; //.19
-		double multd = 0.004; //.004
 		SmartDashboard.putNumber("P", multp);
-		SmartDashboard.putNumber("I", multp);
-		SmartDashboard.putNumber("D", multp);
-		pidcontroller = new PIDController(0.0001* multp, 0.0, 0.0001 * multd, new PIDSource(){
+		SmartDashboard.putNumber("I", multi);
+		SmartDashboard.putNumber("D", multd);
+		pidcontroller = new PIDController(0.0001* multp, 0.0001 * multi, 0.0001 * multd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -61,9 +68,9 @@ public class PIDlift extends Command {
 	}
 	
 	protected void execute(){
-		// pidcontroller.setP(SmartDashboard.getNumber("P", 4.22) * 0.0001);
-		// pidcontroller.setI(SmartDashboard.getNumber("I", 0.0 * 0.0001));
-		// pidcontroller.setD(SmartDashboard.getNumber("D", 4.22)* 0.0001);
+		// pidcontroller.setP(SmartDashboard.getNumber("P", multp) * 0.0001);
+		// pidcontroller.setI(SmartDashboard.getNumber("I", multi) * 0.0001);
+		// pidcontroller.setD(SmartDashboard.getNumber("D", multd) * 0.0001);
 		SmartDashboard.putNumber("LiftCommandAuto encoder position", -RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
