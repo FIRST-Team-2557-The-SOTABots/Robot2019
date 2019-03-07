@@ -2,7 +2,6 @@ package org.usfirst.frc.team2557.robot;
 
 import java.io.File;
 import java.io.IOException;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;

@@ -4,7 +4,6 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem {
   boolean prevlock;
@@ -48,7 +47,7 @@ public class Arm extends Subsystem {
     //   RobotMap.dsArmLock.set(Value.kForward);
     // }
 
-    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -10000){
+    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -40000){
       if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -200 && power < 0){
         RobotMap.armLeft.set(power);
         RobotMap.armRight.set(-power);
@@ -67,7 +66,5 @@ public class Arm extends Subsystem {
       RobotMap.armLeft.set(0);
       RobotMap.armRight.set(0);
     }
-
-    SmartDashboard.putNumber("armPow", power);
   }
 }

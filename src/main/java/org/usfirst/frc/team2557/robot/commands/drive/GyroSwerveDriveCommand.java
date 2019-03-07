@@ -11,7 +11,7 @@ public class GyroSwerveDriveCommand extends Command {
 
   @Override
   protected void initialize() {
-    RobotMap.gyro.reset();
+    // RobotMap.gyro.reset();
   }
 
   @Override
@@ -22,10 +22,10 @@ public class GyroSwerveDriveCommand extends Command {
     //   RobotMap.swerveMod[i].drive(Robot.m_oi.joystick1.getRawAxis(1), Robot.m_oi.joystick1.getRawAxis(4));
     // }
 
-    double axis0 = -Robot.m_oi.joystick1.getRawAxis(0);
-    double axis1 = -Robot.m_oi.joystick1.getRawAxis(1);
-    double axis4 = -Robot.m_oi.joystick1.getRawAxis(4);
-    double axis5 = -Robot.m_oi.joystick1.getRawAxis(5);
+    double axis0 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(0);
+    double axis1 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(1);
+    double axis4 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(4);
+    double axis5 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(5);
     double triggerLeft = Robot.m_oi.joystick1.getRawAxis(2);
     double triggerRight = Robot.m_oi.joystick1.getRawAxis(3);
 

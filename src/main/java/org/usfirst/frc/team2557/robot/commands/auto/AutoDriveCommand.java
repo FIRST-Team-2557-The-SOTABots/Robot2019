@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
-import jaci.pathfinder.modifiers.SwerveModifier;
 
 public class AutoDriveCommand extends Command {
   String name;

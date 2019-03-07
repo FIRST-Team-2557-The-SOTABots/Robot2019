@@ -25,7 +25,6 @@ public class ArmWithAxis extends Command {
     if(power > -RobotMap.JOYSTICK_DEADBAND && power < RobotMap.JOYSTICK_DEADBAND){
       power = 0.0;
     }
-    SmartDashboard.putNumber("arm power", power);
     Robot.arm.arm(power * 0.8); // make arm slower for user to not break things
   }
 

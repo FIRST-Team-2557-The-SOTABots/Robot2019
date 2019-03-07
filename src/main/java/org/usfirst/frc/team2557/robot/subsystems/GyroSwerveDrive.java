@@ -4,7 +4,6 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];
@@ -18,6 +17,8 @@ public class GyroSwerveDrive extends Subsystem {
       RobotMap.gyro.reset();
     }else if(Robot.m_oi.joystick1.getPOV() == 270){
       fcd = false;
+    }else if(Robot.m_oi.joystick1.getPOV() == 90){
+      fcd = true;
     }
 
       computeSwerveInputs(str, fwd, rot);

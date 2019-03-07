@@ -13,30 +13,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDarm extends Command {
 	PIDController pidcontroller;
 	boolean done = false;
+	double factor = 0.00001;
 	// double target;
 
 	public void armPositions(){
-		SmartDashboard.putString("armPos", "ran");
 		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = -5800;
+		  RobotMap.armTarget = RobotMap.armHigh;
 		}else if(Robot.m_oi.joystick2.getPOV() == 270){
-		  RobotMap.armTarget = -4800;
+		  RobotMap.armTarget = RobotMap.armBack;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
-		  RobotMap.armTarget = 2250;
+		  RobotMap.armTarget = RobotMap.armIntake;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
-		  RobotMap.armTarget = 5000;
+		  RobotMap.armTarget = RobotMap.armFor;
 		}else if(Robot.m_oi.joystick2.getPOV() == 0){
 		  RobotMap.armTarget = 0;
 		}
 	}
-
 	public PIDarm() {
 		requires(Robot.arm);
-		double kp = 0.00025;
-		double ki = 0.000002;
-		double kd = 0.00000005;
+
+		SmartDashboard.putNumber("PArm", RobotMap.multparm);
+		SmartDashboard.putNumber("IArm", RobotMap.multiarm);
+		SmartDashboard.putNumber("DArm", RobotMap.multdarm);
+
+		double kp = 25;
+		double ki = 0.02;
+		double kd = 0.0005;
 		//make sure go any direction and see how much wiggle.
-		pidcontroller = new PIDController(kp, ki, kd, new PIDSource(){
+		pidcontroller = new PIDController(RobotMap.multparm * factor, RobotMap.multiarm * factor, RobotMap.multdarm * factor, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -48,6 +52,7 @@ public class PIDarm extends Command {
 
 			@Override
 			public double pidGet() {
+		
 				return -RobotMap.armRight.getSensorCollection().getQuadraturePosition();
 			}
 		}, new PIDOutput(){
@@ -79,13 +84,14 @@ public class PIDarm extends Command {
 		if(RobotMap.dsArmLock.get() == Value.kReverse){
 			RobotMap.dsArmLock.set(Value.kForward);
 		}
-		SmartDashboard.putString("pidarm exec", "ran");
-		// if()
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
-		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
+		SmartDashboard.putNumber("arm target", RobotMap.armTarget * -1);
 
-		// SmartDashboard
+		pidcontroller.setP(SmartDashboard.getNumber("PArm", RobotMap.multparm) * factor);
+		pidcontroller.setI(SmartDashboard.getNumber("IArm", RobotMap.multiarm) * factor);
+		pidcontroller.setD(SmartDashboard.getNumber("DArm", RobotMap.multdarm) * factor);
+
 		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
 		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
 		// pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0));
@@ -93,11 +99,7 @@ public class PIDarm extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		SmartDashboard.putBoolean("arm pidarm done", done);
-		// SmartDashboard.putBoolean("pidarM is finished", Robot.m_oi.joystick2.getRawAxis(1) >= -RobotMap.JOYSTICK_DEADBAND 
-		// && Robot.m_oi.joystick2.getRawAxis(1) <= RobotMap.JOYSTICK_DEADBAND);
 		return pidcontroller.onTarget();
-		// return false;
 	}
 
 	// Called once after isFinished returns true
