@@ -9,15 +9,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionDriveStraightOn extends Command {
-  double[] height = new double[2];
+  // double[] height = new double[2];
   double[] centerX = new double[2];
-  double[] centerY = new double[2];
-  double[] elevation = new double[2];
+  // double[] distance = new double[2];
+  // double[] elevation = new double[2];
+  double[] dist = new double[2];
+  double angle = 0;
 
   double pixels_height = 240;
   double pixels_width = 416;
-  double degView = 36.87;
-  double fwd = 0.075;
+  // double degView = 36.87;
+  double fwd = 0.08;
+  // double fwd = 0.05;
   double fwdCmp = 0;
 
   PIDController pidcontrollerrot;
@@ -37,15 +40,15 @@ public class VisionDriveStraightOn extends Command {
   double outputstr;
 
   public VisionDriveStraightOn() {
-    // requires(Robot.gyroSwerveDrive);
+    requires(Robot.gyroSwerveDrive);
 
     outputstr = 0;
     outputrot = 0;
     
-    kProt = 0.01;
-		kIrot = 0.00;
+    kProt = 0.0031;
+		kIrot = 0.00001;
     kDrot = 0.00;
-    tolerancerot = 0.05;
+    tolerancerot = 1.5;
     // kProt = 0.012;
 		// kIrot = 0.00;
     // kDrot = 0.000;
@@ -81,7 +84,7 @@ public class VisionDriveStraightOn extends Command {
 		// kIstr = 0.0000775;
     // kDstr = 0.00006;
     // tolerancestr = 1.5;
-    kPstr = 0.0032;
+    kPstr = 0.004;
 		kIstr = 0.000005;
     kDstr = 0.0000;
     tolerancestr = 1.8;
@@ -116,8 +119,8 @@ public class VisionDriveStraightOn extends Command {
     Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
     Robot.gyroSwerveDrive.fcd = false;
     pidcontrollerrot.reset();
-    pidcontrollerrot.setSetpoint(1);
-    // pidcontrollerrot.setSetpoint(180.0);
+    // pidcontrollerrot.setSetpoint(1);
+    pidcontrollerrot.setSetpoint(0.0);
     pidcontrollerrot.enable();
     pidcontrollerstr.reset();
     pidcontrollerstr.setSetpoint(0);
@@ -129,43 +132,56 @@ public class VisionDriveStraightOn extends Command {
   protected void execute() {
     if(Robot.gyroSwerveDrive.fcd) Robot.gyroSwerveDrive.fcd = false;
     getCamData();
-    getElevation();
     getStrafe();
-    getRotation();
     getForward();
+    getAngle();
 
-      // midrot = 0;
+      midrot = angle;
 
     SmartDashboard.putNumber("vision rot input", midrot);
     SmartDashboard.putNumber("vision rot output", pidcontrollerrot.get());
     SmartDashboard.putNumber("vision str input", midstr);
     SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
-    SmartDashboard.putNumberArray("vision elevation", elevation);
+    SmartDashboard.putNumber("vision angle", angle);
 
-    if(height[0] != -1 && height[1] != -1){
-      // Robot.gyroSwerveDrive.gyroDrive(outputstr, fwdCmp, outputrot);
+    if(centerX[0] != -1 && centerX[1] != -1){
+      Robot.gyroSwerveDrive.gyroDrive(outputstr, fwdCmp, outputrot);
+      // Robot.gyroSwerveDrive.gyroDrive(0, 0, outputrot);
+    }
+  }
+
+  // private void getDistance() {
+  //   for(int i = 0; i < 2; i++){
+  //     dist[i] = elevation[i]*0.000636796+13.369;
+  //   }
+  // }
+
+  private void getAngle() {
+    if(centerX[0] > centerX[1]){
+      angle = Math.toDegrees(Math.asin((dist[1] - dist[0])/12));
+      SmartDashboard.putBoolean("vision angle dir", true);
+    }else{
+      angle = Math.toDegrees(Math.asin((dist[0] - dist[1])/12));
+      SmartDashboard.putBoolean("vision angle dir", false);
     }
   }
 
   private void getForward() {
     fwdCmp = fwd;
-    if(Math.abs(centerX[0] - centerX[1]) > 110){
+    if(Math.abs(centerX[0] - centerX[1]) > 120){
       fwdCmp = 0;
     }
   }
 
-  private void getRotation() {
-  }
-
-  private void getElevation() {
-    for(int i = 0; i < 2; i++){
-      elevation[i] = centerY[i] + height[i]/2;
-    }
-  }
+  // private void getElevation() {
+  //   for(int i = 0; i < 2; i++){
+  //     elevation[i] = distance[i] + height[i]/2;
+  //   }
+  // }
 
   private void getStrafe() {
     if(centerX[0] != -1 && centerX[1] != -1){
-      midstr = (Math.toDegrees(Math.atan(((centerX[0] + centerX[1]) - pixels_height)/2/277.34)));
+      midstr = (Math.toDegrees(Math.atan(((centerX[0] + centerX[1]) - pixels_width)/2/277.34)));
     }else{
       midstr = 0;
     }
@@ -183,25 +199,14 @@ public class VisionDriveStraightOn extends Command {
       }
     }
 
-    String centerYString = SmartDashboard.getString("centerY", "");
-    if(centerYString.length() > 0){ centerYString = centerYString.substring(1, centerYString.length()-1); }
-    String[] strCenterY = centerYString.split(", ");
-    double kmax = Math.min(2, strCenterY.length);
-    centerY[0] = -1; centerY[1] = -1;
+    String distanceString = SmartDashboard.getString("distance", "");
+    if(distanceString.length() > 0){ distanceString = distanceString.substring(1, distanceString.length()-1); }
+    String[] strdistance = distanceString.split(", ");
+    double kmax = Math.min(2, strdistance.length);
+    dist[0] = -1; dist[1] = -1;
     for(int i = 0; i < kmax; i++){
-      if(strCenterY[i].length() > 0){
-        centerY[i] = Double.parseDouble(strCenterY[i]);
-      }
-    }
-
-    String heightString = SmartDashboard.getString("height", "");
-    if(heightString.length() > 0){ heightString = heightString.substring(1, heightString.length()-1); }
-    String[] strheight = heightString.split(", ");
-    double jmax = Math.min(2, strheight.length);
-    height[0] = -1; height[1] = -1;
-    for(int i = 0; i < jmax; i++){
-      if(strheight[i].length() > 0){
-        height[i] = Double.parseDouble(strheight[i]);
+      if(strdistance[i].length() > 0){
+        dist[i] = Double.parseDouble(strdistance[i]);
       }
     }
   }

@@ -17,6 +17,7 @@ public class GyroSwerveDrive extends Subsystem {
       RobotMap.gyro.reset();
     }else if(Robot.m_oi.joystick1.getPOV() == 270){
       fcd = false;
+      
     }else if(Robot.m_oi.joystick1.getPOV() == 90){
       fcd = true;
     }
