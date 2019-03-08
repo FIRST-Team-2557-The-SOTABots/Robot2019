@@ -17,11 +17,6 @@ public class GyroSwerveDriveCommand extends Command {
   @Override
   protected void execute() {
 
-    //this is for testing purposes only
-    // for(int i = 0; i < 4; i++){
-    //   RobotMap.swerveMod[i].drive(Robot.m_oi.joystick1.getRawAxis(1), Robot.m_oi.joystick1.getRawAxis(4));
-    // }
-
     double axis0 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(0);
     double axis1 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(1);
     double axis4 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(4);

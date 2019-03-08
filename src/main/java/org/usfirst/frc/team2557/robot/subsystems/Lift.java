@@ -46,8 +46,6 @@ public class Lift extends Subsystem {
       if(power > 0){
         power *= 0.8; 
       }
-      // practice bot has the none being negative
-      // real bot has the second one
       RobotMap.lift1.set(power);
       RobotMap.lift2.set(power);
       RobotMap.lift3.set(power);

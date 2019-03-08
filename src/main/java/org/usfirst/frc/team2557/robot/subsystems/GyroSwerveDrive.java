@@ -28,9 +28,8 @@ public class GyroSwerveDrive extends Subsystem {
       // speed[i] = 0;
       // angle[i] = rot;
       RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+      // RobotMap.swerveMod[i].drive(0, angle[i]);
     }
-    // for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, angle[i]);
-  // }
 
   // public void scaleOutput(){
   //   double diff = 0;

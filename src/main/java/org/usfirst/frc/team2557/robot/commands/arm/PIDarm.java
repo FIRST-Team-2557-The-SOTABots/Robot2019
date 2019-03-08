@@ -36,9 +36,9 @@ public class PIDarm extends Command {
 		SmartDashboard.putNumber("IArm", RobotMap.multiarm);
 		SmartDashboard.putNumber("DArm", RobotMap.multdarm);
 
-		double kp = 25;
-		double ki = 0.02;
-		double kd = 0.0005;
+		// double kp = 25;
+		// double ki = 0.02;
+		// double kd = 0.0005;
 		//make sure go any direction and see how much wiggle.
 		pidcontroller = new PIDController(RobotMap.multparm * factor, RobotMap.multiarm * factor, RobotMap.multdarm * factor, new PIDSource(){
 			@Override

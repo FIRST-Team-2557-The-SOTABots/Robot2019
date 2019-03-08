@@ -15,14 +15,14 @@ public class PIDlift extends Command {
 	double factor = 0.00001;
 
 	//practice bot
-	double multp = 0.8; //.19
-	double multi = 0.0; //0
-	double multd = 0.0; //.004
+	// double multp = 0.8; //.19
+	// double multi = 0.0; //0
+	// double multd = 0.0; //.004
 
 	//real bot
-	// double multp = 0.8;
-	// double multi = 0.003; 
-	// double multd = 0.0;
+	double multp = 0.8;
+	double multi = 0.003; 
+	double multd = 0.0;
 
 	public PIDlift(double target) {
 		requires(Robot.lift);
