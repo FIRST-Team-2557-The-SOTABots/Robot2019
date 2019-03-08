@@ -90,6 +90,14 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		awa = new ArmWithAxis();
+		awa.start();
+
+		defaultUnlockArm = false;
+
+		lift.initialize();
+		arm.initialize();
+
 		m_autonomousCommand = m_chooser.getSelected();
 
 
@@ -100,6 +108,47 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		boolean armLock = false;
+		if(RobotMap.dsArmLock.get() == Value.kReverse){
+			armLock = true;
+		}
+		if(Robot.m_oi.ma.get()){
+			ma.setSetpoint(RobotMap.lowPos);
+			ma.start();
+		}else{
+			ma.cancel();
+		}
+		if(Robot.m_oi.mb.get()){
+			mb.setSetpoint(RobotMap.midPos);
+			mb.start();
+		}else{
+			mb.cancel();
+		}
+		if(Robot.m_oi.my.get()){
+			my.setSetpoint(RobotMap.highPos);
+			my.start();
+		}else{
+			my.cancel();
+		}
+
+		if(m_oi.bumperLeft.get()){
+			vdso.start();
+			SmartDashboard.putBoolean("VISION", true);
+		}else{
+			vdso.cancel();
+			SmartDashboard.putBoolean("VISION", false);
+		}
+		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
+			if(awa != null) { awa.cancel(); }
+			pidarm.start();
+			prevArm = true;
+			defaultUnlockArm = true;
+		}else if(m_oi.joystick2.getPOV() == -1 && prevArm && (Robot.m_oi.joystick2.getRawAxis(1) <= -RobotMap.JOYSTICK_DEADBAND 
+			|| Robot.m_oi.joystick2.getRawAxis(1) >= RobotMap.JOYSTICK_DEADBAND)){
+			if(pidarm != null) { pidarm.cancel(); }
+			awa.start();
+			prevArm = false;
+		}
 		Scheduler.getInstance().run();
 	}
 
@@ -107,10 +156,9 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		// Robot.tg.trajectory0();
 
-		awa = new ArmWithAxis();
 		awa.start();
 
-		defaultUnlockArm = false;
+		// defaultUnlockArm = false;
 
 		lift.initialize();
 		arm.initialize();
