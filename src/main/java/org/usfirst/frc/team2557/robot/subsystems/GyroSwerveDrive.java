@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];
   public double[] angle = new double[4];
-  // public boolean swerve = true;
   public boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
@@ -17,7 +16,6 @@ public class GyroSwerveDrive extends Subsystem {
       RobotMap.gyro.reset();
     }else if(Robot.m_oi.joystick1.getPOV() == 270){
       fcd = false;
-      
     }else if(Robot.m_oi.joystick1.getPOV() == 90){
       fcd = true;
     }
@@ -25,24 +23,8 @@ public class GyroSwerveDrive extends Subsystem {
       computeSwerveInputs(str, fwd, rot);
       setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
-      // speed[i] = 0;
-      // angle[i] = rot;
       RobotMap.swerveMod[i].drive(speed[i], angle[i]);
-      // RobotMap.swerveMod[i].drive(0, angle[i]);
     }
-
-  // public void scaleOutput(){
-  //   double diff = 0;
-  //   for(int i = 0; i < 4; i++){
-  //     if(Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet()) > diff){
-  //       diff = Math.abs(angle[i] - RobotMap.swerveMod[i].encoder.pidGet());
-  //     }
-  //   }
-  //   if(diff > RobotMap.SWERVE_ENC_CIRC/8){
-  //     for(int i = 0; i < 4; i++){
-  //       speed[i] *= RobotMap.SWERVE_ENC_CIRC/8 / diff;  // up for changes
-  //     }
-  //   }
   }
 
   public double getOppositeAngle(int index){

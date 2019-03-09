@@ -14,13 +14,13 @@ public class Arm extends Subsystem {
     // setDefaultCommand(new ArmWithAxis());
   }
 
-  public void initialize(){
+  public void abc(){
     prevlock = false;
     prevOff = false;
     RobotMap.armRight.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
     RobotMap.armLeft.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-    RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 1);
-		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+    // RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 1);
+		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
   // the arm does lock. Reverse is locked. Foward is unlocked

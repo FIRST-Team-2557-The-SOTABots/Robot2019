@@ -69,7 +69,7 @@ public class PIDarm extends Command {
 		});
     	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(150);
+		pidcontroller.setAbsoluteTolerance(50);
 	}
 
 	// Called just before this Command runs the first time

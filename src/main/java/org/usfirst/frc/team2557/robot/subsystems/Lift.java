@@ -16,11 +16,11 @@ public class Lift extends Subsystem {
     setDefaultCommand(new LiftWithAxis());
   }
 
-  public void initialize(){
+  public void abc(){
     RobotMap.lift1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 		RobotMap.lift2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
     RobotMap.lift3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
   // low gear is when you move. High gear is kReverse and when it wants to go slower

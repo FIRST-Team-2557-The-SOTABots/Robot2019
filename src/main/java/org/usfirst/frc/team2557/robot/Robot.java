@@ -2,7 +2,6 @@ package org.usfirst.frc.team2557.robot;
 
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
-import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.ArduinoSensors;
@@ -72,13 +71,16 @@ public class Robot extends TimedRobot {
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
 
-		RobotMap.ds8inch.set(Value.kForward);
+		RobotMap.ds8inch.set(Value.kReverse);
 		RobotMap.ds12inch.set(Value.kForward);
 
 		m_chooser.addOption("Default Auto", null);
 		// m_chooser.addOption("My Auto", new Segment1());        
 		SmartDashboard.putData("Auto mode", m_chooser);
 
+		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 
 	@Override
@@ -97,15 +99,16 @@ public class Robot extends TimedRobot {
 
 		defaultUnlockArm = false;
 
-		lift.initialize();
-		arm.initialize();
+		lift.abc();
+		arm.abc();
 
 		m_autonomousCommand = m_chooser.getSelected();
-
 
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
+		RobotMap.gyro.reset();
 	}
 
 	@Override
@@ -169,8 +172,8 @@ public class Robot extends TimedRobot {
 		awa.start();
 		defaultUnlockArm = false;
 
-		lift.initialize();
-		arm.initialize();
+		// lift.initialize();
+		// arm.initialize();
 
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();

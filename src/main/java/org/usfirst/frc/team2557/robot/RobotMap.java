@@ -53,9 +53,9 @@ public class RobotMap {
 	// public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
 	//real bot arm PID
-	public static double multparm = 275;
-	public static double multiarm = 0.2; 
-	public static double multdarm = 0.006;
+	public static double multparm = 250;
+	public static double multiarm = 0.17; 
+	public static double multdarm = 0.007;
 
 	//real bot lift PID
 	public static double multplift = 0.8;
@@ -66,19 +66,27 @@ public class RobotMap {
 	public static double driveMult = 1;
 
 	//real bot lift positions
-	public static double highPosHatch = 450000;
-	public static double midPosHatch = -54000; //good
-	public static double lowPosHatch = -280000;
-	public static double highPosCargo = 505000;
-	public static double midPosCargo = 200000;
-	public static double lowPosCargo = -173000;
-	public static double intakePosCargo = -301000; //good
+	// public static double highPosHatch = 450000;
+	// public static double midPosHatch = -54000; //good
+	// public static double lowPosHatch = -180000;
+	// public static double highPosCargo = 505000;
+	// public static double midPosCargo = 200000;
+	// public static double lowPosCargo = -173000;
+	// public static double intakePosCargo = -280000; //good
+	
+	public static double highPosHatch = 465000;
+	public static double midPosHatch = 85000; 
+	public static double lowPosHatch = -278000;
+	public static double highPosCargo = 508000;
+	public static double midPosCargo = 203000;
+	public static double lowPosCargo = -137000;
+	public static double intakePosCargo = -307000;
 
 	//real bot arm positions
-	public static double armHigh = -6150; //not this
-	public static double armBack = -4750; //not this
-	public static double armFor = 6200; //good
-	public static double armIntake = 4960; //good
+	public static double armHigh = -6150;
+	public static double armBack = -4750;
+	public static double armFor = 6200;
+	public static double armIntake = 4960;
 
 	//real bot kP for swerve
 	public static double kP = 1;

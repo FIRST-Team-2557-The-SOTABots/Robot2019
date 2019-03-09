@@ -16,7 +16,7 @@ public class Climber extends Subsystem {
   public void climb(){
     //  dydoes all retract
     if(Robot.m_oi.dy.get()){
-      RobotMap.ds8inch.set(Value.kForward);
+      RobotMap.ds8inch.set(Value.kReverse);
       RobotMap.ds12inch.set(Value.kForward);
     }
     //dstart does 12" extrude
@@ -25,7 +25,7 @@ public class Climber extends Subsystem {
     // }
     //dback does  8" extrude
     if(Robot.m_oi.back.get()){
-      RobotMap.ds8inch.set(Value.kReverse);
+      RobotMap.ds8inch.set(Value.kForward);
     }
   }
 
