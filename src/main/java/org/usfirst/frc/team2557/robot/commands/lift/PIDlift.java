@@ -14,22 +14,12 @@ public class PIDlift extends Command {
 	double target;
 	double factor = 0.00001;
 
-	//practice bot
-	// double multp = 0.8; //.19
-	// double multi = 0.0; //0
-	// double multd = 0.0; //.004
-
-	//real bot
-	double multp = 0.8;
-	double multi = 0.003; 
-	double multd = 0.0;
-
 	public PIDlift(double target) {
 		requires(Robot.lift);
-		SmartDashboard.putNumber("P", multp);
-		SmartDashboard.putNumber("I", multi);
-		SmartDashboard.putNumber("D", multd);
-		pidcontroller = new PIDController(factor* multp, factor * multi, factor * multd, new PIDSource(){
+		SmartDashboard.putNumber("P lift", RobotMap.multplift);
+		SmartDashboard.putNumber("I lift", RobotMap.multilift);
+		SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+		pidcontroller = new PIDController(factor* RobotMap.multplift, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -70,9 +60,9 @@ public class PIDlift extends Command {
 	}
 	
 	protected void execute(){
-		pidcontroller.setP(SmartDashboard.getNumber("P", multp) * factor);
-		pidcontroller.setI(SmartDashboard.getNumber("I", multi) * factor);
-		pidcontroller.setD(SmartDashboard.getNumber("D", multd) * factor);
+		pidcontroller.setP(SmartDashboard.getNumber("P lift", RobotMap.multplift) * factor);
+		pidcontroller.setI(SmartDashboard.getNumber("I lift", RobotMap.multilift) * factor);
+		pidcontroller.setD(SmartDashboard.getNumber("D lift", RobotMap.multdlift) * factor);
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 

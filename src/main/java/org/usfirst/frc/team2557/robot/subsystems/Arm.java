@@ -26,10 +26,10 @@ public class Arm extends Subsystem {
   // the arm does lock. Reverse is locked. Foward is unlocked
   // do not mess with lock code bc it is very breakable. switch to the commented out if else for bumpers instead of mx
   public void arm(double power) {
-    boolean on = Robot.m_oi.mx.get();
+    boolean on = Robot.m_oi.mbumperRight.get();
     if(on && !prevlock && prevOff){
       RobotMap.dsArmLock.set(Value.kReverse);
-    }else if(Robot.m_oi.mx.get() && prevlock && prevOff){
+    }else if(Robot.m_oi.mbumperRight.get() && prevlock && prevOff){
       RobotMap.dsArmLock.set(Value.kForward);
     }
 
@@ -47,24 +47,24 @@ public class Arm extends Subsystem {
     //   RobotMap.dsArmLock.set(Value.kForward);
     // }
 
-    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -40000){
-      if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -200 && power < 0){
-        RobotMap.armLeft.set(power);
-        RobotMap.armRight.set(-power);
-      }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > 200 && power > 0){
-        RobotMap.armLeft.set(power);
-        RobotMap.armRight.set(-power);
-      }else{
-        RobotMap.armLeft.set(0);
-        RobotMap.armRight.set(0);
-        RobotMap.dsArmLock.set(Value.kReverse);
-      }
-    }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -5500 || (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 5500)){
+    // if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -40000){
+    //   if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -200 && power < 0){
+    //     RobotMap.armLeft.set(power);
+    //     RobotMap.armRight.set(-power);
+    //   }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > 200 && power > 0){
+    //     RobotMap.armLeft.set(power);
+    //     RobotMap.armRight.set(-power);
+    //   }else{
+    //     RobotMap.armLeft.set(0);
+    //     RobotMap.armRight.set(0);
+    //     // RobotMap.dsArmLock.set(Value.kReverse);
+      // }
+    // }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -5500 || (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 5500)){
       RobotMap.armLeft.set(power);
       RobotMap.armRight.set(-power);
-    }else{
-      RobotMap.armLeft.set(0);
-      RobotMap.armRight.set(0);
-    }
+    // }else{
+      // RobotMap.armLeft.set(0);
+      // RobotMap.armRight.set(0);
+    // }
   }
 }

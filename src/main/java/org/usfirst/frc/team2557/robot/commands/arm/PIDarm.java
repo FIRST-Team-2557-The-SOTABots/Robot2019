@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDarm extends Command {
 	PIDController pidcontroller;
 	boolean done = false;
-	double factor = 0.00001;
+	double factor = 0.000001;
 	// double target;
 
 	public void armPositions(){

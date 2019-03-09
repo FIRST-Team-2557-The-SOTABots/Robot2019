@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
 	PIDlift ma;
 	PIDlift mb;
 	PIDlift my;
+	PIDlift mx;
 	VisionDriveStraightOn vdso;
 
 	PIDarm pidarm;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
 		ma = new PIDlift(RobotMap.lowPos);
 		mb = new PIDlift(RobotMap.midPos);
 		my = new PIDlift(RobotMap.highPos);
+		mx = new PIDlift(RobotMap.intakePosCargo);
 
 		vdso = new VisionDriveStraightOn();
 
@@ -112,6 +114,7 @@ public class Robot extends TimedRobot {
 		if(RobotMap.dsArmLock.get() == Value.kReverse){
 			armLock = true;
 		}
+		SmartDashboard.putBoolean("armLock", armLock);
 		if(Robot.m_oi.ma.get()){
 			ma.setSetpoint(RobotMap.lowPos);
 			ma.start();
@@ -130,6 +133,12 @@ public class Robot extends TimedRobot {
 		}else{
 			my.cancel();
 		}
+		if(Robot.m_oi.mx.get()){
+			mx.setSetpoint(RobotMap.intakePosCargo);
+			mx.start();
+		}else{
+			mx.cancel();
+		}
 
 		if(m_oi.bumperLeft.get()){
 			vdso.start();
@@ -138,6 +147,7 @@ public class Robot extends TimedRobot {
 			vdso.cancel();
 			SmartDashboard.putBoolean("VISION", false);
 		}
+
 		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
 			if(awa != null) { awa.cancel(); }
 			pidarm.start();
@@ -157,8 +167,7 @@ public class Robot extends TimedRobot {
 		// Robot.tg.trajectory0();
 
 		awa.start();
-
-		// defaultUnlockArm = false;
+		defaultUnlockArm = false;
 
 		lift.initialize();
 		arm.initialize();
@@ -218,6 +227,12 @@ public class Robot extends TimedRobot {
 		}else{
 			my.cancel();
 		}
+		if(Robot.m_oi.mx.get()){
+			mx.setSetpoint(RobotMap.intakePosCargo);
+			mx.start();
+		}else{
+			mx.cancel();
+		}
 
 		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
 			if(awa != null) { awa.cancel(); }
@@ -232,8 +247,8 @@ public class Robot extends TimedRobot {
 		}
 
 		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
-		SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
-		SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
+		// SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
+		// SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
 		SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 

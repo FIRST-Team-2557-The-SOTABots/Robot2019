@@ -19,7 +19,6 @@ public class IntakeTrigger extends Command {
  //forward shoots in out. Reverse retracts
   @Override
   protected void execute() {
-    SmartDashboard.putBoolean("lastGaamepiecewasdisc", RobotMap.lastGamepieceWasDisc);
     double mtrr = Robot.m_oi.joystick2.getRawAxis(3);
     double mtrl = Robot.m_oi.joystick2.getRawAxis(2);
     // double dtrr = Robot.m_oi.joystick1.getRawAxis(3);
@@ -33,15 +32,8 @@ public class IntakeTrigger extends Command {
         Robot.intake.speed(mtrr);
         RobotMap.dsIntake.set(Value.kReverse);
       }else if(mtrl > 0.2){
+        RobotMap.dsIntake.set(Value.kForward);
         Robot.intake.speed(-mtrl);
-        if(RobotMap.cargo.get()){
-          RobotMap.lastGamepieceWasDisc = false;
-        }else if(RobotMap.disc.get()){
-          RobotMap.lastGamepieceWasDisc = true;
-        }
-        if(RobotMap.lastGamepieceWasDisc){
-          RobotMap.dsIntake.set(Value.kForward);
-        }
       }
     // }else if(dtr > 0.2){
     //   if(dtrr > 0.2){

@@ -30,7 +30,7 @@ public class SwerveModule extends Subsystem {
 
 		pidController.setInputRange(0.0, RobotMap.SWERVE_ENC_CIRC);
 		pidController.setOutputRange(-1.0, 1.0);
-		pidController.setContinuous(true);
+		// pidController.setContinuous(true);
 		pidController.setAbsoluteTolerance(RobotMap.SWERVE_PID_TOLERANCE);
 		pidController.enable();
 
