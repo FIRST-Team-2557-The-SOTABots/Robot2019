@@ -144,7 +144,7 @@ public class RobotMap {
 	public static Compressor compressor;
 
 	public static DigitalInput cargo;
-	public static DigitalInput disc;
+	// public static DigitalInput disc;
 
 	// public static SerialPort serial;
 
@@ -174,8 +174,8 @@ public class RobotMap {
 		// cargo = new DigitalInput(0);
 
 		//real bot
-		disc = new DigitalInput(5);
-		cargo = new DigitalInput(6);
+		// disc = new DigitalInput(5);
+		cargo = new DigitalInput(5);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];

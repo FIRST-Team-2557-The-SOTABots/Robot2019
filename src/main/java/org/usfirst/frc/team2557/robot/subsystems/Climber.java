@@ -20,9 +20,9 @@ public class Climber extends Subsystem {
       RobotMap.ds12inch.set(Value.kForward);
     }
     //dstart does 12" extrude
-    if(Robot.m_oi.start.get()){
-      RobotMap.ds12inch.set(Value.kReverse);
-    }
+    // if(Robot.m_oi.start.get()){
+    //   RobotMap.ds12inch.set(Value.kReverse);
+    // }
     //dback does  8" extrude
     if(Robot.m_oi.back.get()){
       RobotMap.ds8inch.set(Value.kReverse);

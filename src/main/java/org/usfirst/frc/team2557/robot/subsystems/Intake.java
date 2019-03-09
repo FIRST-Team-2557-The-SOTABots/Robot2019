@@ -14,6 +14,10 @@ public class Intake extends Subsystem {
   public void speed (double power) {
     // if( (RobotMap.disc.get() || RobotMap.cargo.get() ) && Math.signum(power) == 1 )RobotMap.intake.set(0);
     // else
-     RobotMap.intake.set(power);
+
+    // if( (RobotMap.cargo.get() ) && Math.signum(power) == 1 )RobotMap.intake.set(0);
+    // else RobotMap.intake.set(power);
+
+    RobotMap.intake.set(power);
   }
 }

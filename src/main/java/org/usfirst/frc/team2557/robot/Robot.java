@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
 		RobotMap.ds12inch.set(Value.kForward);
 
 		m_chooser.addOption("Default Auto", null);
-		m_chooser.addOption("My Auto", new Segment1());        
+		// m_chooser.addOption("My Auto", new Segment1());        
 		SmartDashboard.putData("Auto mode", m_chooser);
 
 	}
@@ -248,7 +248,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
 		// SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
-		// SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
+		SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
 		SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 
