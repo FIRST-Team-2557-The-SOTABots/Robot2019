@@ -2,6 +2,7 @@ package org.usfirst.frc.team2557.robot;
 
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
+import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.ArduinoSensors;
@@ -75,12 +76,12 @@ public class Robot extends TimedRobot {
 		RobotMap.ds12inch.set(Value.kForward);
 
 		m_chooser.addOption("Default Auto", null);
-		// m_chooser.addOption("My Auto", new Segment1());        
+		m_chooser.addOption("My Auto", new Segment1());        
 		SmartDashboard.putData("Auto mode", m_chooser);
 
-		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		// RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 
 	@Override
@@ -101,6 +102,9 @@ public class Robot extends TimedRobot {
 
 		lift.abc();
 		arm.abc();
+		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 
 		m_autonomousCommand = m_chooser.getSelected();
 
@@ -167,8 +171,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// Robot.tg.trajectory0();
-
 		awa.start();
 		defaultUnlockArm = false;
 
@@ -178,6 +180,9 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+
+		// Robot.tg.trajectory0();
+		// System.out.println("trajectory0 written");
 	}
 
 	@Override
@@ -257,6 +262,8 @@ public class Robot extends TimedRobot {
 
 		for(int i = 0; i < 4; i++){
 			// SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+			SmartDashboard.putNumber("spark velocity" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getVelocity());
 			// SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
 			// SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
 		}

@@ -18,13 +18,13 @@ public class PIDarm extends Command {
 
 	public void armPositions(){
 		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = RobotMap.armHigh;
+		  RobotMap.armTarget = RobotMap.armBackCargo;
 		}else if(Robot.m_oi.joystick2.getPOV() == 270){
 		  RobotMap.armTarget = RobotMap.armBack;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
 		  RobotMap.armTarget = RobotMap.armIntake;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
-		  RobotMap.armTarget = RobotMap.armFor;
+		  RobotMap.armTarget = RobotMap.armForCargo;
 		}else if(Robot.m_oi.joystick2.getPOV() == 0){
 		  RobotMap.armTarget = 0;
 		}

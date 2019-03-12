@@ -5,6 +5,7 @@ import java.io.File;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
@@ -48,7 +49,8 @@ public class AutoDriveCommand extends Command {
     RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){
       follower[i].reset();
-      follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);
+      // follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);
+      follower[i].configureEncoder(0, (int) RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition(), RobotMap.SWERVE_WHEEL_DIAMETER);
       follower[i].configurePIDVA(1, 0, 0, 1/RobotMap.MAX_VEL, RobotMap.MAX_ACC);
     }
   }
@@ -57,9 +59,10 @@ public class AutoDriveCommand extends Command {
   @Override
   protected void execute() {
     for(int i = 0; i < 4; i++){
-      double output = follower[i].calculate((int) (RobotMap.swerveMod[i].encoder.pidGet() * 1000));
+      double output = follower[i].calculate((int) RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
       double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()));
-      RobotMap.swerveMod[i].drive(output, heading);
+      // RobotMap.swerveMod[i].drive(output, heading);
+      SmartDashboard.putNumber("spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
     }
   }
 

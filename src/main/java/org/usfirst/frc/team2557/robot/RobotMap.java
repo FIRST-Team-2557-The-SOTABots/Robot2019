@@ -83,9 +83,9 @@ public class RobotMap {
 	public static double intakePosCargo = -307000;
 
 	//real bot arm positions
-	public static double armHigh = -6150;
-	public static double armBack = -4750;
-	public static double armFor = 6200;
+	public static double armBackCargo = -3300;
+	public static double armBack = -4900;
+	public static double armForCargo = 6200;
 	public static double armIntake = 4960;
 
 	//real bot kP for swerve
@@ -95,10 +95,11 @@ public class RobotMap {
 	public static double SWERVE_ENC_CIRC = 4.927;
 
 	//real bot OFFSETS
-	public static final double[] SWERVE_SETPOINT_OFFSET = {0.709, 4.72, 3.2825, 3.482};
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {0.709, 4.72, 3.2825, 3.482};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {0.681, 4.72, 3.2825, 3.482};
 
 	//real bot PID
-	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
+	public static double[][] SWERVE_PID_CONSTANTS = {{kP * 1.2, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 
 	//real bot inverted motors
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};

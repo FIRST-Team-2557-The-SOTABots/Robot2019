@@ -36,7 +36,7 @@ public class Lift extends Subsystem {
         RobotMap.dsLift.set(Value.kReverse);
       }
 
-      if (Robot.m_oi.mterribleRight.get()) {
+      if (Robot.m_oi.mbumperLeft.get()) {
         power *= 0.3;
       } else {
         power *= 0.8;
