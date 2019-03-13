@@ -10,7 +10,7 @@ public class Climber extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new Climb());
+    setDefaultCommand(new ClimbCommandGroup());
   }
 
   public void climb(){

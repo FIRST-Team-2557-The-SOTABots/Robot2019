@@ -5,48 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2557.robot.commands.drive;
+package org.usfirst.frc.team2557.robot.commands.climb;
 
-import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DistanceDriveCommand extends Command {
-  double speed;
-  double distance;
-  public DistanceDriveCommand(double s, double d) {
-    requires(Robot.gyroSwerveDrive);
-    speed = s;
-    distance = d;
+public class Piston8Retract extends Command {
+  public Piston8Retract() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.gyro.resetDisplacement();
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.gyroSwerveDrive.gyroDrive(0, speed, 0);
+    RobotMap.ds8inch.set(Value.kForward);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(RobotMap.gyro.getDisplacementY() > distance){
-      return true;
-    }
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
   }
 
   // Called when another command which requires one or more of the same

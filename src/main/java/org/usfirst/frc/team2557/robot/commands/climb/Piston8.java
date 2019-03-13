@@ -1,11 +1,18 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc.team2557.robot.commands.climb;
 
-import org.usfirst.frc.team2557.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Climb extends Command {
-  public Climb() {
-    requires(Robot.climb);
+public class Piston8 extends Command {
+  public Piston8() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -16,7 +23,9 @@ public class Climb extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climb.climb();
+
+    RobotMap.ds8inch.set(Value.kReverse);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,6 +43,5 @@ public class Climb extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.climb.cancel();
   }
 }
