@@ -14,19 +14,23 @@ public class PIDarm extends Command {
 	PIDController pidcontroller;
 	boolean done = false;
 	double factor = 0.000001;
-	// double target;
 
 	public void armPositions(){
-		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = RobotMap.armBackCargo;
-		}else if(Robot.m_oi.joystick2.getPOV() == 270){
-		  RobotMap.armTarget = RobotMap.armBack;
-		}else if(Robot.m_oi.joystick2.getPOV() == 180){
-		  RobotMap.armTarget = RobotMap.armIntake;
-		}else if(Robot.m_oi.joystick2.getPOV() == 90){
-		  RobotMap.armTarget = RobotMap.armForCargo;
-		}else if(Robot.m_oi.joystick2.getPOV() == 0){
-		  RobotMap.armTarget = 0;
+		// if(Robot.m_oi.joystick2.getPOV() == 315){
+		//   RobotMap.armTarget = RobotMap.armBackCargo;
+		// }else if(Robot.m_oi.joystick2.getPOV() == 270){
+		//   RobotMap.armTarget = RobotMap.armBack;
+		// }else if(Robot.m_oi.joystick2.getPOV() == 180){
+		//   RobotMap.armTarget = RobotMap.armIntake;
+		// }else if(Robot.m_oi.joystick2.getPOV() == 90){
+		//   RobotMap.armTarget = RobotMap.armForCargo;
+		// }else if(Robot.m_oi.joystick2.getPOV() == 0){
+		//   RobotMap.armTarget = 0;
+		// }
+		if (Robot.m_oi.joystick2.getPOV() == 180) {
+			RobotMap.armTarget = RobotMap.armIntake;
+		} else if (Robot.m_oi.joystick2.getPOV() == 90) {
+			RobotMap.armTarget = RobotMap.armForward;
 		}
 	}
 	public PIDarm() {
@@ -67,9 +71,8 @@ public class PIDarm extends Command {
 				// Robot.arm.arm(output * Math.cos(angle));
 			}
 		});
-    	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(50);
+		pidcontroller.setAbsoluteTolerance(60);
 	}
 
 	// Called just before this Command runs the first time

@@ -21,7 +21,7 @@ public class ArmWithAxis extends Command {
   @Override
   protected void execute() {
     double power = Robot.m_oi.joystick2.getRawAxis(1);
-    SmartDashboard.putNumber("arm raw axis", power);
+    // SmartDashboard.putNumber("arm raw axis", power);
     if(power > -RobotMap.JOYSTICK_DEADBAND && power < RobotMap.JOYSTICK_DEADBAND){
       power = 0.0;
     }

@@ -4,6 +4,7 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSwerveDrive extends Subsystem {
   public double[] speed = new double[4];
@@ -11,17 +12,17 @@ public class GyroSwerveDrive extends Subsystem {
   public boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
-    if(Robot.m_oi.joystick1.getPOV() == 0){
+    boolean bumper = Robot.m_oi.bumperRight.get();
+    if(!bumper){
       fcd = true;
-      RobotMap.gyro.reset();
-    }else if(Robot.m_oi.joystick1.getPOV() == 270){
+      // RobotMap.gyro.reset();
+    }else{
       fcd = false;
-    }else if(Robot.m_oi.joystick1.getPOV() == 90){
-      fcd = true;
     }
+    SmartDashboard.putBoolean("FCD", fcd);
 
-      computeSwerveInputs(str, fwd, rot);
-      setSetpoints(rot); 
+    computeSwerveInputs(str, fwd, rot);
+    setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
       RobotMap.swerveMod[i].drive(speed[i], angle[i]);
     }
@@ -57,12 +58,6 @@ public class GyroSwerveDrive extends Subsystem {
     angle[2] = Math.atan2 (a, c) / Math.PI;
     angle[0] = Math.atan2 (b, d) / Math.PI;
     angle[3] = Math.atan2 (b, c) / Math.PI;
-    
-    // double max = speed[1];
-    // if (speed[2] > max) speed[2] = max; 
-    // if (speed[0] > max) speed[0] = max; 
-    // if (speed[3] > max) speed[3] = max;
-    // if (max > 1) speed[3] /= max; speed[0] /= max; speed[2] /= max;
   }
 
   public void setSetpoints(double rot){

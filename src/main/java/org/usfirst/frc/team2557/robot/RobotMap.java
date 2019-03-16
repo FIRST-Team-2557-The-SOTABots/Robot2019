@@ -5,105 +5,73 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
 	public static String TRAJECTORY_FOLDER = "/home/lvuser/Trajectories/";
-	//practice bot PID arm
-	// public static double multparm = 250;
-	// public static double multiarm = 0.2; 
-	// public static double multdarm = 0.005;
-
-	//practice bot lift PID
-	// public static double multplift = 0.8; //.19
-	// public static double multilift = 0.0; //0
-	// public static double multdlift = 0.0; //0.004
-
-	//practice bot
-	// public static double driveMult = -1;
-
-	//practice bot lift positions
-	// public static double highPosHatch = 460000;
-	// public static double midPosHatch = 205000;
-	// public static double lowPosHatch = -165000;
-	// public static double highPosCargo = 495000;
-	// public static double midPosCargo = 120000;
-	// public static double lowPosCargo = -260000;
-
-	//practice bot arm positions
-	// public static double armHigh = -5800;
-	// public static double armBack = -4800;
-	// public static double armFor = 5000;
-	// public static double armIntake = 2250;
-
-	//practice bot kP for swerve
-	// public static double kP = 0.85;
-
-	//practice bot Swerve encoder loop count
-	// public static double SWERVE_ENC_CIRC = 4.94;
-
-	//practice bot OFFSETS
-	// public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.744, 3.486, 2.067};
-
-	//practice bot PID constants
-	// public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.01}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
-
-	//practice bot inverted motors
-	// public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
-
-	//real bot arm PID
-	public static double multparm = 250;
-	public static double multiarm = 0.17; 
-	public static double multdarm = 0.007;
-
-	//real bot lift PID
-	public static double multplift = 0.8;
-	public static double multilift = 0.003;
-	public static double multdlift = 0.0;
-
-	//real bot
-	public static double driveMult = 1;
-
-	//real bot lift positions
-	// public static double highPosHatch = 450000;
-	// public static double midPosHatch = -54000; //good
-	// public static double lowPosHatch = -180000;
-	// public static double highPosCargo = 505000;
-	// public static double midPosCargo = 200000;
-	// public static double lowPosCargo = -173000;
-	// public static double intakePosCargo = -280000; //good
 	
-	public static double highPosHatch = 465000;
-	public static double midPosHatch = 85000; 
-	public static double lowPosHatch = -278000;
-	public static double highPosCargo = 508000;
-	public static double midPosCargo = 203000;
-	public static double lowPosCargo = -137000;
-	public static double intakePosCargo = -307000;
+	//practice bot !!!
+	public static Value solFired = Value.kReverse;
+	public static Value solClosed = Value.kForward;
+	public static double multparm = 240;
+	public static double multiarm = 0.2; 
+	public static double multdarm = 0.0;
+	public static double multplift = 0.8; //.19
+	public static double multilift = 0.0; //0
+	public static double multdlift = 0.0; //0.004
+	public static double driveMult = -1;
+	public static double highPosHatch = 470000;
+	public static double midPosHatch = 225000;
+	public static double lowPosHatch = -155000; //-165000
+	public static double highPosCargo = 500000;
+	public static double midPosCargo = 120000;
+	public static double lowPosCargo = -260000;
+	public static double intakePosCargo = -270000;
+	public static double backX = 80000;
+	// public static double armBackCargo = -5800;
+	// public static double armBack = -4800;
+	public static double armForward = 4600;
+	public static double armIntake = 5650;
+	public static double kP = 0.85;
+	public static double SWERVE_ENC_CIRC = 4.94;
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.744, 3.486, 2.027};
+	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.01}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
+	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
-	//real bot arm positions
-	public static double armBackCargo = -3300;
-	public static double armBack = -4900;
-	public static double armForCargo = 6200;
-	public static double armIntake = 4960;
+	// //real bot !!!
+	// public static Value solFired = Value.kForward;
+	// public static Value solClosed = Value.kReverse;
+	// public static double multparm = 250;
+	// public static double multiarm = 0.17; 
+	// public static double multdarm = 0.007;
+	// public static double multplift = 0.8;
+	// public static double multilift = 0.003;
+	// public static double multdlift = 0.0;
+	// public static double driveMult = 1;
+	// public static double highPosHatch = 465000;
+	// public static double midPosHatch = 85000; 
+	// public static double lowPosHatch = -278000;
+	// public static double highPosCargo = 508000;
+	// public static double midPosCargo = 203000;
+	// public static double lowPosCargo = -137000;
+	// public static double intakePosCargo = -307000;
+	// public static double armBackCargo = -3300;
+	// public static double armBack = -4900;
+	// public static double armForCargo = 6200;
+	// public static double armIntake = 4960;
+	// public static double kP = 1;
+	// public static double SWERVE_ENC_CIRC = 4.927;
+	// // public static final double[] SWERVE_SETPOINT_OFFSET = {0.709, 4.72, 3.2825, 3.482};
+	// public static final double[] SWERVE_SETPOINT_OFFSET = {0.681, 4.72, 3.2825, 3.482};
+	// public static double[][] SWERVE_PID_CONSTANTS = {{kP * 1.2, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
+	// public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};
 
-	//real bot kP for swerve
-	public static double kP = 1;
-
-	//real bot Swerve encoder loop count
-	public static double SWERVE_ENC_CIRC = 4.927;
-
-	//real bot OFFSETS
-	// public static final double[] SWERVE_SETPOINT_OFFSET = {0.709, 4.72, 3.2825, 3.482};
-	public static final double[] SWERVE_SETPOINT_OFFSET = {0.681, 4.72, 3.2825, 3.482};
-
-	//real bot PID
-	public static double[][] SWERVE_PID_CONSTANTS = {{kP * 1.2, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
-
-	//real bot inverted motors
-	public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};
-	//if wheels twitch, it's a motor power direction issue. (flip the wires)
+	// //if wheels twitch, it's a motor power direction issue. (flip the wires)
 
 	//Constants
 	public static double JOYSTICK_DEADBAND = 0.05;
@@ -128,6 +96,7 @@ public class RobotMap {
 	public static double highPos;
 	public static double midPos;
 	public static double lowPos;
+	public static double xPos;
 	
 	public static double armTarget;
 
@@ -143,19 +112,18 @@ public class RobotMap {
 	public static WPI_TalonSRX armLeft;
 	public static WPI_TalonSRX armRight;
 	public static WPI_TalonSRX intake;
+	public static WPI_TalonSRX climber;
 
 	public static AHRS gyro;
 	public static DoubleSolenoid dsLift;
 	public static DoubleSolenoid dsIntake;
 	public static DoubleSolenoid dsArmLock;
-	public static DoubleSolenoid ds12inch;
-	public static DoubleSolenoid ds8inch;
 	public static Compressor compressor;
 
 	public static DigitalInput cargo;
-	// public static DigitalInput disc;
-
-	// public static SerialPort serial;
+	public static DigitalInput cargo2;
+	public static SerialPort serial;
+	// public static I2C tof;
 
 	public static void init() {
 		highPos = highPosHatch;
@@ -169,22 +137,17 @@ public class RobotMap {
 		armLeft = new WPI_TalonSRX(7);
 		armRight = new WPI_TalonSRX(8);
 		intake = new WPI_TalonSRX(9);
+		climber = new WPI_TalonSRX(10);
 
 		gyro = new AHRS(SPI.Port.kMXP);
 		compressor = new Compressor(0);
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
-		ds12inch = new DoubleSolenoid(0, 4, 5);
-		ds8inch = new DoubleSolenoid(0, 6, 7);
-
-		//practice bot
-		// disc = new DigitalInput(1);
-		// cargo = new DigitalInput(0);
 
 		//real bot
-		// disc = new DigitalInput(5);
 		cargo = new DigitalInput(5);
+		cargo2 = new DigitalInput(6);
 
 		// // FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];

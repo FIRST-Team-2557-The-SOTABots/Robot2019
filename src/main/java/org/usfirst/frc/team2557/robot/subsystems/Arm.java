@@ -14,12 +14,11 @@ public class Arm extends Subsystem {
     // setDefaultCommand(new ArmWithAxis());
   }
 
-  public void abc(){
+  public void init(){
     prevlock = false;
     prevOff = false;
     RobotMap.armRight.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
     RobotMap.armLeft.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-    // RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 1);
 		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
@@ -47,24 +46,12 @@ public class Arm extends Subsystem {
     //   RobotMap.dsArmLock.set(Value.kForward);
     // }
 
-    // if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < -40000){
-    //   if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() < -200 && power < 0){
-    //     RobotMap.armLeft.set(power);
-    //     RobotMap.armRight.set(-power);
-    //   }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > 200 && power > 0){
-    //     RobotMap.armLeft.set(power);
-    //     RobotMap.armRight.set(-power);
-    //   }else{
-    //     RobotMap.armLeft.set(0);
-    //     RobotMap.armRight.set(0);
-    //     // RobotMap.dsArmLock.set(Value.kReverse);
-      // }
-    // }else if(RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -5500 || (RobotMap.armRight.getSensorCollection().getQuadraturePosition() < 5500)){
+      if((RobotMap.armRight.getSensorCollection().getQuadraturePosition() > -1000) && power > 0){
+        RobotMap.armLeft.set(0);
+        RobotMap.armRight.set(0);
+      }else{
       RobotMap.armLeft.set(power);
       RobotMap.armRight.set(-power);
-    // }else{
-      // RobotMap.armLeft.set(0);
-      // RobotMap.armRight.set(0);
-    // }
+      }
   }
 }

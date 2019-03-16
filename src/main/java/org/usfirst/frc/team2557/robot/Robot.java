@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot;
 
+import java.nio.ByteBuffer;
+
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
@@ -29,6 +31,7 @@ public class Robot extends TimedRobot {
 	public static ArduinoSensors arduinoSensors;
 	public static boolean prevArm;
 	public static boolean defaultUnlockArm;
+	public static String str = "";
 
 	PIDlift ma;
 	PIDlift mb;
@@ -72,16 +75,9 @@ public class Robot extends TimedRobot {
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
 
-		RobotMap.ds8inch.set(Value.kReverse);
-		RobotMap.ds12inch.set(Value.kForward);
-
 		m_chooser.addOption("Default Auto", null);
 		m_chooser.addOption("My Auto", new Segment1());        
 		SmartDashboard.putData("Auto mode", m_chooser);
-
-		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
-		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
-		// RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 
 	@Override
@@ -100,11 +96,12 @@ public class Robot extends TimedRobot {
 
 		defaultUnlockArm = false;
 
-		lift.abc();
-		arm.abc();
-		RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		lift.init();
+		arm.init();
+		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
+		RobotMap.climber.getSensorCollection().setQuadraturePosition(0, 10);
 
 		m_autonomousCommand = m_chooser.getSelected();
 
@@ -147,13 +144,13 @@ public class Robot extends TimedRobot {
 			mx.cancel();
 		}
 
-		if(m_oi.bumperLeft.get()){
-			vdso.start();
-			SmartDashboard.putBoolean("VISION", true);
-		}else{
-			vdso.cancel();
-			SmartDashboard.putBoolean("VISION", false);
-		}
+		// if(m_oi.bumperLeft.get()){
+		// 	vdso.start();
+		// 	SmartDashboard.putBoolean("VISION", true);
+		// }else{
+		// 	vdso.cancel();
+		// 	SmartDashboard.putBoolean("VISION", false);
+		// }
 
 		if(m_oi.joystick2.getPOV() > -1 && !prevArm){
 			if(awa != null) { awa.cancel(); }
@@ -197,24 +194,20 @@ public class Robot extends TimedRobot {
 			RobotMap.highPos = RobotMap.highPosCargo;
 			RobotMap.midPos = RobotMap.midPosCargo; 
 			RobotMap.lowPos = RobotMap.lowPosCargo;
+			RobotMap.xPos = RobotMap.backX;
 		}else{
 			RobotMap.highPos = RobotMap.highPosHatch;
 			RobotMap.midPos = RobotMap.midPosHatch; 
 			RobotMap.lowPos = RobotMap.lowPosHatch;
+			RobotMap.xPos = RobotMap.intakePosCargo;
 		}
 
-		if(m_oi.bumperLeft.get()){
-			vdso.start();
-			SmartDashboard.putBoolean("VISION", true);
-		}else{
-			vdso.cancel();
-			SmartDashboard.putBoolean("VISION", false);
-		}
-
-		// if(m_oi.bumperRight.get()){
-		// 	vdb.start();
+		// if(m_oi.bumperLeft.get()){
+		// 	vdso.start();
+		// 	SmartDashboard.putBoolean("VISION", true);
 		// }else{
-		// 	vdb.cancel();
+		// 	vdso.cancel();
+		// 	SmartDashboard.putBoolean("VISION", false);
 		// }
 		
 		if(Robot.m_oi.ma.get()){
@@ -255,19 +248,31 @@ public class Robot extends TimedRobot {
 		}
 
 		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
-		// SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
-		SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
+		SmartDashboard.putBoolean("Touch cargo1", RobotMap.cargo.get());
+		SmartDashboard.putBoolean("Touch cargo2", RobotMap.cargo2.get());
 		SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("climb", RobotMap.climber.getSensorCollection().getQuadraturePosition());
 
 		for(int i = 0; i < 4; i++){
-			// SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
-			SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
-			SmartDashboard.putNumber("spark velocity" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getVelocity());
+			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			// SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+			// SmartDashboard.putNumber("spark velocity" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getVelocity());
 			// SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
 			// SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
 		}
 		Scheduler.getInstance().run();
+
+		// if(RobotMap.serial.getBytesReceived() == 0){
+		// 	return;
+		// }
+		// str += RobotMap.serial.readString();
+		// String[] tof1Vals = str.split("tof number 1:([0-9]*\n");
+		// String[] tof2Vals = str.split("tof number 2:([0-9]*\n");
+		// int next = str.lastIndexOf('\n');
+		// if(next != -1){
+		// 	str = str.substring(next);
+		// }
 	}
 
 	@Override
