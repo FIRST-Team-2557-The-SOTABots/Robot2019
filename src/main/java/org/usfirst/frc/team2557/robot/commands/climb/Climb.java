@@ -34,7 +34,7 @@ public class Climb extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (RobotMap.climb.getSensorCollection().getQuadraturePosition() >= setpoint - 100 || RobotMap.climb.getSensorCollection().getQuadraturePosition() <= setpoint + 1000) {
+    if (RobotMap.climb.getSensorCollection().getQuadraturePosition() >= setpoint - 100 || RobotMap.climb.getSensorCollection().getQuadraturePosition() <= setpoint + 100) {
       return true;
     } else {
       return false;

@@ -8,6 +8,7 @@
 package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
+import org.usfirst.frc.team2557.robot.commands.lift.LiftEncoder;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -23,7 +24,7 @@ public class ClimbCommandGroup extends CommandGroup {
     // these will run in order.
 
     //go to top and angle arm
-    addSequential(new PIDlift(0));
+    addSequential(new LiftEncoder(0));
     addSequential(new UsefulPIDarm(5000));
 
     //lower lift to 6" above ground (touching level 2)
@@ -31,7 +32,7 @@ public class ClimbCommandGroup extends CommandGroup {
 
     //lower arm and climber simultaneously
     addParallel(new Climb(-6500));
-    addSequential(new PIDlift(-233000));
+    addSequential(new LiftEncoder(-0));
     
     // run outake to go forward
     addSequential(new ForwardClimb(5));
