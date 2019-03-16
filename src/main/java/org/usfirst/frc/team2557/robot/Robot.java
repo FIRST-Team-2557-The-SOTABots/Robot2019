@@ -191,15 +191,15 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("armLock", armLock);
 
 		if(Robot.m_oi.mback.get()){
-			RobotMap.highPos = RobotMap.highPosCargo;
-			RobotMap.midPos = RobotMap.midPosCargo; 
-			RobotMap.lowPos = RobotMap.lowPosCargo;
+			RobotMap.highPos = RobotMap.backY;
+			RobotMap.midPos = RobotMap.backB; 
+			RobotMap.lowPos = RobotMap.backA;
 			RobotMap.xPos = RobotMap.backX;
 		}else{
-			RobotMap.highPos = RobotMap.highPosHatch;
-			RobotMap.midPos = RobotMap.midPosHatch; 
-			RobotMap.lowPos = RobotMap.lowPosHatch;
-			RobotMap.xPos = RobotMap.intakePosCargo;
+			RobotMap.highPos = RobotMap.Y;
+			RobotMap.midPos = RobotMap.B; 
+			RobotMap.lowPos = RobotMap.A;
+			RobotMap.xPos = RobotMap.X;
 		}
 
 		// if(m_oi.bumperLeft.get()){
