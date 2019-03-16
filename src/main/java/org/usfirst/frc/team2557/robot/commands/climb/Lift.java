@@ -10,46 +10,43 @@ package org.usfirst.frc.team2557.robot.commands.climb;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ForwardClimb extends Command {
-  double time;
-  Timer timer = new Timer();
-  public ForwardClimb(double time) {
+public class Lift extends Command {
+  double power;
+  public Lift(double power) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.lift);
+    power = this.power;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.intake.set(-0.5);
+    RobotMap.lift2.set(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(timer.get() > time){
-      return true;
-    }
     return false;
   }
-  
-    // Called once after isFinished returns true
+
+  // Called once after isFinished returns true
   @Override
   protected void end() {
-    RobotMap.intake.set(0.0);
+    RobotMap.lift2.set(0);
   }
-  
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-
   }
 }

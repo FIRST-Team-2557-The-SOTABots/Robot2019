@@ -7,9 +7,7 @@
 
 package org.usfirst.frc.team2557.robot.commands.climb;
 
-import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
-import org.usfirst.frc.team2557.robot.commands.drive.DistanceDriveCommand;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -35,6 +33,7 @@ public class ClimbCommandGroup extends CommandGroup {
     addParallel(new Climb(-6500));
     addSequential(new PIDlift(-233000));
     
+    // run outake to go forward
     addSequential(new ForwardClimb(5));
 
     // addSequential(new DistanceDriveCommand(10));
