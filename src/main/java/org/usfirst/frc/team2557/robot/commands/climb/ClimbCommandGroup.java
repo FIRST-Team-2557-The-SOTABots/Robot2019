@@ -23,18 +23,22 @@ public class ClimbCommandGroup extends CommandGroup {
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
+
+    //go to top and angle arm
     addSequential(new PIDlift(0));
+    addSequential(new UsefulPIDarm(5000));
 
-    addSequential(new UsefulPIDarm(-3536));
-    addSequential(new PIDlift(-153000));
+    //lower lift to 6" above ground (touching level 2)
+    addSequential(new PIDlift(-223000));
 
-    // addParallel(new Piston8());
-    // addSequential(new PIDlift(-244874));
-
-    // addSequential(new DistanceDriveCommand(0.09, 0.66));
-    // addSequential(new Piston8Retract());
-
+    //lower arm and climber simultaneously
+    addParallel(new Climb(-6500));
+    addSequential(new PIDlift(-233000));
     
+    addSequential(new ForwardClimb(5));
+
+    // addSequential(new DistanceDriveCommand(10));
+
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
@@ -44,7 +48,7 @@ public class ClimbCommandGroup extends CommandGroup {
     // A command group will require all of the subsystems that each member
     // would require.
     // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
+    // a CommandGroup csontaining them would require both the chassis and the
     // arm.
   }
 }

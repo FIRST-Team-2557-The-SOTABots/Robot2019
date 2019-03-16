@@ -3,6 +3,7 @@ package org.usfirst.frc.team2557.robot;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
+import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.drive.FCDswitch;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
 	public static ArduinoSensors arduinoSensors;
 	public static boolean prevArm;
 	public static boolean defaultUnlockArm;
+	public static boolean climbed;
 
 	PIDlift ma;
 	PIDlift mb;
@@ -40,6 +42,8 @@ public class Robot extends TimedRobot {
 	PIDarm pidarm;
 	ArmWithAxis awa;
 
+	ClimbCommandGroup ccg;
+
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
 
@@ -47,6 +51,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		prevArm = false;
 		defaultUnlockArm = false;
+		climbed = false;
 
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
@@ -68,6 +73,7 @@ public class Robot extends TimedRobot {
 		my = new PIDlift(RobotMap.highPos);
 
 		vdso = new VisionDriveStraightOn();
+		ccg = new ClimbCommandGroup();
 
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
@@ -154,7 +160,7 @@ public class Robot extends TimedRobot {
 		// }else{
 		// 	vdb.cancel();
 		// }
-
+		
 		if(Robot.m_oi.ma.get()){
 			ma.setSetpoint(RobotMap.lowPos);
 			ma.start();
@@ -196,6 +202,13 @@ public class Robot extends TimedRobot {
 			// SmartDashboard.putString("armCmd", "axis");
 			prevArm = false;
 		}
+
+		if (m_oi.dy.get() && !climbed) {
+			ccg.start();
+		} else if (!m_oi.dy.get()) {
+			ccg.cancel();
+		}
+
 		SmartDashboard.putBoolean("Touch disc", RobotMap.disc.get());
 		SmartDashboard.putBoolean("Touch cargo", RobotMap.cargo.get());
 

@@ -10,34 +10,33 @@ package org.usfirst.frc.team2557.robot.commands.drive;
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DistanceDriveCommand extends Command {
-  double speed;
-  double distance;
-  public DistanceDriveCommand(double s, double d) {
+  double time;
+  Timer timer = new Timer();
+  public DistanceDriveCommand(double time) {
     requires(Robot.gyroSwerveDrive);
-    speed = s;
-    distance = d;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     RobotMap.gyro.resetDisplacement();
-
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.gyroSwerveDrive.gyroDrive(0, speed, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0.08, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(RobotMap.gyro.getDisplacementY() > distance){
+    if(timer.get() > time){
       return true;
     }
     return false;

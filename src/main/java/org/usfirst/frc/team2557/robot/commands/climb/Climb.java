@@ -9,13 +9,15 @@ package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Piston8 extends Command {
-  public Piston8() {
+public class Climb extends Command {
+  double setpoint;
+  public Climb(double setpoint) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    // requires(climbSub)
+    this.setpoint = setpoint;
   }
 
   // Called just before this Command runs the first time
@@ -26,15 +28,17 @@ public class Piston8 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    RobotMap.ds8inch.set(Value.kReverse);
-
+    RobotMap.climb.set(0.45);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (RobotMap.climb.getSensorCollection().getQuadraturePosition() >= setpoint - 100 || RobotMap.climb.getSensorCollection().getQuadraturePosition() <= setpoint + 1000) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true

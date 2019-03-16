@@ -60,6 +60,8 @@ public class RobotMap {
 	public static WPI_TalonSRX armRight;
 	public static WPI_TalonSRX intake;
 
+	public static WPI_TalonSRX climb;
+
 	public static AHRS gyro;
 	public static DoubleSolenoid dsLift;
 	public static DoubleSolenoid dsIntake;
@@ -85,6 +87,8 @@ public class RobotMap {
 		armLeft = new WPI_TalonSRX(7);
 		armRight = new WPI_TalonSRX(8);
 		intake = new WPI_TalonSRX(9);
+
+		climb = new WPI_TalonSRX(666);
 
 		gyro = new AHRS(SPI.Port.kMXP);
 		compressor = new Compressor(0);
