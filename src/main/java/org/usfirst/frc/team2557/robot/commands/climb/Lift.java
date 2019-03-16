@@ -5,47 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2557.robot.commands.drive;
+package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DistanceDriveCommand extends Command {
-  double time;
-  Timer timer = new Timer();
-  public DistanceDriveCommand(double time) {
-    requires(Robot.gyroSwerveDrive);
+public class Lift extends Command {
+  double power;
+  public Lift(double power) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.lift);
+    power = this.power;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.gyro.resetDisplacement();
-    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0.08, 0);
+    RobotMap.lift2.set(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(timer.get() > time){
-      return true;
-    }
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
+    RobotMap.lift2.set(0);
   }
 
   // Called when another command which requires one or more of the same

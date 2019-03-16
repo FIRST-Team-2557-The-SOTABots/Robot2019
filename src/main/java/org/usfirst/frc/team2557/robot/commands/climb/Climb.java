@@ -1,11 +1,23 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc.team2557.robot.commands.climb;
 
-import org.usfirst.frc.team2557.robot.Robot;
+import org.usfirst.frc.team2557.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Climb extends Command {
-  public Climb() {
-    requires(Robot.climb);
+  double setpoint;
+  public Climb(double setpoint) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    // requires(climbSub)
+    this.setpoint = setpoint;
   }
 
   // Called just before this Command runs the first time
@@ -16,13 +28,17 @@ public class Climb extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climb.climb();
+    RobotMap.climb.set(0.45);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (RobotMap.climb.getSensorCollection().getQuadraturePosition() >= setpoint - 100 || RobotMap.climb.getSensorCollection().getQuadraturePosition() <= setpoint + 1000) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
@@ -34,6 +50,5 @@ public class Climb extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.climb.cancel();
   }
 }

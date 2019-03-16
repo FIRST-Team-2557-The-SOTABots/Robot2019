@@ -12,27 +12,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDarm extends Command {
 	PIDController pidcontroller;
+	boolean done = false;
 	// double target;
 
 	public void armPositions(){
 		SmartDashboard.putString("armPos", "ran");
 		if(Robot.m_oi.joystick2.getPOV() == 315){
-		  RobotMap.armTarget = -5450;
+		  RobotMap.armTarget = -5800;
 		}else if(Robot.m_oi.joystick2.getPOV() == 270){
-		  RobotMap.armTarget = -4500;
+		  RobotMap.armTarget = -4800;
 		}else if(Robot.m_oi.joystick2.getPOV() == 180){
-		  RobotMap.armTarget = 2400;
+		  RobotMap.armTarget = 2250;
 		}else if(Robot.m_oi.joystick2.getPOV() == 90){
-		  RobotMap.armTarget = 5500;
+		  RobotMap.armTarget = 5000;
+		}else if(Robot.m_oi.joystick2.getPOV() == 0){
+		  RobotMap.armTarget = 0;
 		}
-	  }
+	}
 
 	public PIDarm() {
 		requires(Robot.arm);
-    
+		double kp = 0.00025;
+		double ki = 0.000002;
+		double kd = 0.00000005;
 		//make sure go any direction and see how much wiggle.
-		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){ //this works for sure. Practice bot
-		pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
+		//pidcontroller = new PIDController(1.00, 0.10, 0.9, new PIDSource(){
+		pidcontroller = new PIDController(kp, ki, kd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -49,12 +54,18 @@ public class PIDarm extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.arm.arm(-output*0.7);
+				Robot.arm.arm(-output);
+
+				// double enc = RobotMap.armRight.getSensorCollection().getQuadraturePosition();
+				// enc *= Math.PI/10000;
+				// double angle = Math.abs(Math.sin(enc));
+				// SmartDashboard.putNumber("angleForceCounter", angle);
+				// Robot.arm.arm(output * Math.cos(angle));
 			}
 		});
     	// this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(250);
+		pidcontroller.setAbsoluteTolerance(150);
 	}
 
 	// Called just before this Command runs the first time
@@ -66,16 +77,20 @@ public class PIDarm extends Command {
 	}
 	
 	protected void execute(){
+		if(RobotMap.dsArmLock.get() == Value.kReverse){
+			RobotMap.dsArmLock.set(Value.kForward);
+		}
 		SmartDashboard.putString("pidarm exec", "ran");
 		// if()
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
-		// SmartDashboard.putNumber("Arm encoder position", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget);
-		// SmartDashboard.putNumber("arm output", output);
-	}
 
-	boolean done = false;
+		// SmartDashboard
+		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
+		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
+		// pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0));
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {

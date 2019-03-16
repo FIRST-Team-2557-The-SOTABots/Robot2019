@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot.commands.auto;
 
+import java.io.File;
+
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,12 +11,16 @@ import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.SwerveModifier;
 
 public class AutoDriveCommand extends Command {
+  String name;
   EncoderFollower[] follower;
-  Trajectory tr;
+  Trajectory br;
+  Trajectory bl;
+  Trajectory fr;
+  Trajectory fl;
   
-  public AutoDriveCommand(Trajectory tr) {
-    this.tr = tr;
+  public AutoDriveCommand(String name) {
     requires(Robot.gyroSwerveDrive);
+    this.name = name;
   }
 
   // Called just before this Command runs the first time
@@ -24,16 +30,21 @@ public class AutoDriveCommand extends Command {
 
     // The swerve mode to generate will be the 'default' mode, where the 
     // robot will constantly be facing forward and 'sliding' sideways to  follow a curved path.
-    SwerveModifier.Mode mode = SwerveModifier.Mode.SWERVE_DEFAULT;
-    SwerveModifier modifier = new SwerveModifier(tr);
+    // SwerveModifier.Mode mode = SwerveModifier.Mode.SWERVE_DEFAULT;
+    // SwerveModifier modifier = new SwerveModifier(tr);
 
     // Generate the individual wheel trajectories using the original trajectory as the centre
-    modifier.modify(RobotMap.WHEELBASE_WIDTH, RobotMap.WHEELBASE_LENGTH, mode);
+    // modifier.modify(RobotMap.WHEELBASE_WIDTH, RobotMap.WHEELBASE_LENGTH, mode);
 
-    follower[0] = new EncoderFollower(modifier.getFrontRightTrajectory());
-    follower[1] = new EncoderFollower(modifier.getBackRightTrajectory());
-    follower[2] = new EncoderFollower(modifier.getBackLeftTrajectory());
-    follower[3] = new EncoderFollower(modifier.getFrontLeftTrajectory());
+    br = Pathfinder.readFromFile(new File(RobotMap.TRAJECTORY_FOLDER + "br" + name + ".t"));
+    bl = Pathfinder.readFromFile(new File(RobotMap.TRAJECTORY_FOLDER + "bl" + name + ".t"));
+    fr = Pathfinder.readFromFile(new File(RobotMap.TRAJECTORY_FOLDER + "fr" + name + ".t"));
+    fl = Pathfinder.readFromFile(new File(RobotMap.TRAJECTORY_FOLDER + "fl" + name + ".t"));
+
+    follower[0] = new EncoderFollower(fr);
+    follower[1] = new EncoderFollower(br);
+    follower[2] = new EncoderFollower(bl);
+    follower[3] = new EncoderFollower(fl);
     
     RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){

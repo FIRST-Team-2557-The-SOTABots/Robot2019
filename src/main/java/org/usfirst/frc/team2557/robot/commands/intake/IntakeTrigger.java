@@ -1,19 +1,16 @@
 package org.usfirst.frc.team2557.robot.commands.intake;
 
-import javax.lang.model.util.ElementScanner6;
-
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeTrigger extends Command {
   public IntakeTrigger() {
     requires(Robot.intake);
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.intake.speed(0);
@@ -22,50 +19,60 @@ public class IntakeTrigger extends Command {
  //forward shoots in out. Reverse retracts
   @Override
   protected void execute() {
-    double trr = Robot.m_oi.joystick2.getRawAxis(3);
-    double trl = Robot.m_oi.joystick2.getRawAxis(2);
+    SmartDashboard.putBoolean("lastGaamepiecewasdisc", RobotMap.lastGamepieceWasDisc);
+    double mtrr = Robot.m_oi.joystick2.getRawAxis(3);
+    double mtrl = Robot.m_oi.joystick2.getRawAxis(2);
+    // double dtrr = Robot.m_oi.joystick1.getRawAxis(3);
+    // double dtrl = Robot.m_oi.joystick1.getRawAxis(2);
 
-    if(trr > 0.2){
-      Robot.intake.speedTele(trr);
-      RobotMap.dsIntake.set(Value.kReverse);
-    }else if(trl > 0.2){
-      Robot.intake.speedTele(-trl);
-      // Robot.intake.speed(-1);
-      RobotMap.dsIntake.set(Value.kForward);
+    double mtr = Math.max(mtrr, mtrl);
+    // double dtr = Math.max(dtrr, dtrl);
+
+    if(mtr > 0.2){
+      if(mtrr > 0.2){
+        Robot.intake.speed(mtrr);
+        RobotMap.dsIntake.set(Value.kReverse);
+      }else if(mtrl > 0.2){
+        Robot.intake.speed(-mtrl);
+        if(RobotMap.cargo.get()){
+          RobotMap.lastGamepieceWasDisc = false;
+        }else if(RobotMap.disc.get()){
+          RobotMap.lastGamepieceWasDisc = true;
+        }
+        if(RobotMap.lastGamepieceWasDisc){
+          RobotMap.dsIntake.set(Value.kForward);
+        }
+      }
+    // }else if(dtr > 0.2){
+    //   if(dtrr > 0.2){
+    //     Robot.intake.speed(dtrr);
+    //     RobotMap.dsIntake.set(Value.kReverse);
+    //   }else if(dtrl > 0.2){
+    //     Robot.intake.speed(-dtrl);
+    //     if(RobotMap.cargo.get()){
+    //       RobotMap.lastGamepieceWasDisc = false;
+    //     }else if(RobotMap.disc.get()){
+    //       RobotMap.lastGamepieceWasDisc = true;
+    //     }
+    //     if(RobotMap.lastGamepieceWasDisc){
+    //       RobotMap.dsIntake.set(Value.kForward);
+    //     }
+    //   }
     }else{
-      Robot.intake.speedTele(0);
+      Robot.intake.speed(0);
     }
-
-    // if(trr > 0.2){
-    //   Robot.intake.speed(trr);
-    //   RobotMap.dsIntake.set(Value.kReverse);
-    // }else if(trl > 0.2){
-    //   // Robot.intake.speed(-trl);
-    //   Robot.intake.speed(-1);
-    //   RobotMap.dsIntake.set(Value.kForward);
-    // }else if(Robot.m_oi.joystick2.getPOV() == 0){
-    //   Robot.intake.speed(1.0);
-    // }else if(Robot.m_oi.joystick2.getPOV() == 45){
-    //   Robot.intake.speed(0.5);
-    // }else{
-    //   Robot.intake.speed(0.0);
-    // }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.intake.speed(0);
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     Robot.intake.speed(0);

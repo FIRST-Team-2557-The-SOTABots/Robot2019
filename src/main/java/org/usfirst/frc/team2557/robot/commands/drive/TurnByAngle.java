@@ -9,7 +9,6 @@ package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnByAngle extends Command {
@@ -26,6 +25,7 @@ public class TurnByAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    // TAKE THIS OUT, INSTEAD SUBTRACT GYRO READING, NO RESET!!
     RobotMap.gyro.reset();
   }
 

@@ -1,24 +1,22 @@
-package org.usfirst.frc.team2557.robot.commands.lift;
+package org.usfirst.frc.team2557.robot.commands.Arduino;
 
-import org.usfirst.frc.team2557.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftWithAxis extends Command {
-  public LiftWithAxis() {
-    requires(Robot.lift);
+public class ArduinoCommand extends Command {
+  public ArduinoCommand() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lift.lift(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-      Robot.lift.lift(Robot.m_oi.joystick2.getRawAxis(5));
+    // Robot.arduinoSensors.sensors();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -30,13 +28,11 @@ public class LiftWithAxis extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lift.lift(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.lift.lift(0);
   }
 }

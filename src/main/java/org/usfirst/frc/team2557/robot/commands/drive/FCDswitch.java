@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2557.robot.commands.intake;
+package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeLolz extends Command {
-  public IntakeLolz() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class FCDswitch extends Command {
+  boolean prev;
+  boolean startValSet;
+  public FCDswitch() {
+    startValSet = false;
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +25,11 @@ public class IntakeLolz extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.speed(0.3);
+    if(!startValSet){
+      prev = Robot.gyroSwerveDrive.fcd;
+      startValSet = true;
+    }
+    Robot.gyroSwerveDrive.fcd = !prev;
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,7 +41,7 @@ public class IntakeLolz extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.speed(0.0);
+    startValSet = false;
   }
 
   // Called when another command which requires one or more of the same

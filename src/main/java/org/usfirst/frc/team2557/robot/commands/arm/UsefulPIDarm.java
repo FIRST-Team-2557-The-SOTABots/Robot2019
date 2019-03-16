@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2557.robot.commands.lift;
+package org.usfirst.frc.team2557.robot.commands.arm;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
@@ -9,15 +9,16 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PIDup extends Command {
+public class UsefulPIDarm extends Command {
 	PIDController pidcontroller;
 	double target;
 
-	public PIDup(double target) {
+	public UsefulPIDarm(double target) {
 		requires(Robot.lift);
-		
-		// pidcontroller = new PIDController(0.008, 0.004, 0.008, new PIDSource(){
-			pidcontroller = new PIDController(0.008, -0.008, 0.00, new PIDSource(){
+		double kp = 0.00025;
+		double ki = 0.000002;
+		double kd = 0.00000005;
+		pidcontroller = new PIDController(kp, ki, kd, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -34,12 +35,16 @@ public class PIDup extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.lift.lift(-output*0.5);
+				double power = -output;
+				if(power <= 0){
+					power *= 0.9;
+				}
+				Robot.lift.lift(power);
 			}
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(36000);
+		pidcontroller.setAbsoluteTolerance(3000);
 	}
 
 	// Called just before this Command runs the first time
@@ -48,9 +53,17 @@ public class PIDup extends Command {
 		pidcontroller.setSetpoint(target);
 		pidcontroller.enable();
 	}
+
+	public void setSetpoint(double target){
+		this.target = target;
+	}
 	
 	protected void execute(){
-		SmartDashboard.putNumber("LiftCommandAuto encoder position", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+		// pidcontroller.setP(SmartDashboard.getNumber("P", 4.22) * 0.0001);
+		// pidcontroller.setI(SmartDashboard.getNumber("I", 0.0 * 0.0001));
+		// pidcontroller.setD(SmartDashboard.getNumber("D", 4.22)* 0.0001);
+		SmartDashboard.putNumber("LiftCommandAuto encoder position", -RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -69,6 +82,5 @@ public class PIDup extends Command {
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();
-//		this.
 	}
 }
