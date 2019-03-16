@@ -126,9 +126,10 @@ public class RobotMap {
 	// public static I2C tof;
 
 	public static void init() {
-		highPos = highPosHatch;
-		midPos = midPosHatch;
-		lowPos = lowPosHatch;
+		highPos = Y;
+		midPos = B;
+		lowPos = A;
+		xPos = X;
 		armTarget = 0;
 
 		lift1 = new WPI_TalonSRX(4);

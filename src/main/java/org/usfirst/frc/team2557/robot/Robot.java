@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
 		ma = new PIDlift(RobotMap.lowPos);
 		mb = new PIDlift(RobotMap.midPos);
 		my = new PIDlift(RobotMap.highPos);
-		mx = new PIDlift(RobotMap.intakePosCargo);
+		mx = new PIDlift(RobotMap.xPos);
 
 		vdso = new VisionDriveStraightOn();
 
@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
 			my.cancel();
 		}
 		if(Robot.m_oi.mx.get()){
-			mx.setSetpoint(RobotMap.intakePosCargo);
+			mx.setSetpoint(RobotMap.xPos);
 			mx.start();
 		}else{
 			mx.cancel();
@@ -229,7 +229,7 @@ public class Robot extends TimedRobot {
 			my.cancel();
 		}
 		if(Robot.m_oi.mx.get()){
-			mx.setSetpoint(RobotMap.intakePosCargo);
+			mx.setSetpoint(RobotMap.xPos);
 			mx.start();
 		}else{
 			mx.cancel();
@@ -255,8 +255,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("climb", RobotMap.climber.getSensorCollection().getQuadraturePosition());
 
 		for(int i = 0; i < 4; i++){
-			SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
-			// SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+			// SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+			SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
 			// SmartDashboard.putNumber("spark velocity" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getVelocity());
 			// SmartDashboard.putNumber("Encoder value degrees " + i, RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
 			// SmartDashboard.putNumber("Offset to zero " + i, (360 - RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) * RobotMap.SWERVE_ENC_CIRC/360);	
