@@ -28,7 +28,7 @@ public class ClimbCommandGroup extends CommandGroup {
     addSequential(new UsefulPIDarm(5000));
 
     //lower lift to 6" above ground (touching level 2)
-    addSequential(new PIDlift(-223000));
+    addSequential(new LiftEncoder(-223000));
 
     //lower arm and climber simultaneously
     addParallel(new Climb(-6500));
