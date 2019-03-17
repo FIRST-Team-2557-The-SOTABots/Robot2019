@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeTrigger extends Command {
+
+  boolean letGo = false;
+
   public IntakeTrigger() {
     requires(Robot.intake);
   }
@@ -28,6 +31,19 @@ public class IntakeTrigger extends Command {
     double mtr = Math.max(mtrr, mtrl);
     // double dtr = Math.max(dtrr, dtrl);
 
+    // if(Robot.m_oi.mbumperLeft.get()){
+    //   if(RobotMap.TIMEOFFLIGHT1 < 5 && RobotMap.TIMEOFFLIGHT2 < 5){
+    //     RobotMap.dsIntake.set(Value.kForward);
+    //     letGo = true;
+    //   }
+    // }
+
+    // if(letGo){
+    //   RobotMap.dsIntake.set(Value.kForward);
+    //   letGo = false;
+    // }
+
+
     if(mtr > 0.2){
       if(mtrr > 0.2){
         Robot.intake.speed(mtrr);
@@ -43,21 +59,6 @@ public class IntakeTrigger extends Command {
           RobotMap.dsIntake.set(Value.kForward);
         }
       }
-    // }else if(dtr > 0.2){
-    //   if(dtrr > 0.2){
-    //     Robot.intake.speed(dtrr);
-    //     RobotMap.dsIntake.set(Value.kReverse);
-    //   }else if(dtrl > 0.2){
-    //     Robot.intake.speed(-dtrl);
-    //     if(RobotMap.cargo.get()){
-    //       RobotMap.lastGamepieceWasDisc = false;
-    //     }else if(RobotMap.disc.get()){
-    //       RobotMap.lastGamepieceWasDisc = true;
-    //     }
-    //     if(RobotMap.lastGamepieceWasDisc){
-    //       RobotMap.dsIntake.set(Value.kForward);
-    //     }
-    //   }
     }else{
       Robot.intake.speed(0);
     }
