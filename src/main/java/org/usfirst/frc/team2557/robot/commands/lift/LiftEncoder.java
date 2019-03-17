@@ -5,43 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2557.robot.commands.climb;
+package org.usfirst.frc.team2557.robot.commands.lift;
 
+import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Climb extends Command {
+public class LiftEncoder extends Command {
   double setpoint;
-  public Climb(double setpoint) {
+  public LiftEncoder(double setpoint) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    // requires(climbSub)
     this.setpoint = setpoint;
   }
 
+  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
   }
 
+  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.climb.set(0.45);
+    if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() < setpoint){
+      Robot.lift.lift(0.2);
+    }
+
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (RobotMap.climb.getSensorCollection().getQuadraturePosition() >= setpoint - 100 || RobotMap.climb.getSensorCollection().getQuadraturePosition() <= setpoint + 100) {
+    if(Math.abs(RobotMap.lift2.getSensorCollection().getQuadraturePosition() - setpoint) > 5000){
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
+  // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.lift.lift(0.0);
   }
 
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }

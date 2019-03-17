@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
+import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.ArduinoSensors;
@@ -13,6 +14,7 @@ import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
 	public static boolean defaultUnlockArm;
 	public static String str = "";
 	public static ArrayList<String> list = new ArrayList<String>();
+	public static boolean climbed;
 
 	PIDlift ma;
 	PIDlift mb;
@@ -43,6 +46,8 @@ public class Robot extends TimedRobot {
 	PIDarm pidarm;
 	ArmWithAxis awa;
 
+	ClimbCommandGroup ccg;
+
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
 
@@ -50,6 +55,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		prevArm = false;
 		defaultUnlockArm = false;
+		climbed = false;
 
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
@@ -74,6 +80,7 @@ public class Robot extends TimedRobot {
 		mx = new PIDlift(RobotMap.xPos);
 
 		vdso = new VisionDriveStraightOn();
+		ccg = new ClimbCommandGroup();
 
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
@@ -216,7 +223,6 @@ public class Robot extends TimedRobot {
 		// vdso.cancel();
 		// SmartDashboard.putBoolean("VISION", false);
 		// }
-
 		if (Robot.m_oi.ma.get()) {
 			ma.setSetpoint(RobotMap.lowPos);
 			ma.start();
@@ -267,6 +273,12 @@ public class Robot extends TimedRobot {
 			}
 			awa.start();
 			prevArm = false;
+		}
+
+		if (m_oi.dy.get() && !climbed) {
+			ccg.start();
+		} else if (!m_oi.dy.get()) {
+			ccg.cancel();
 		}
 
 		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);

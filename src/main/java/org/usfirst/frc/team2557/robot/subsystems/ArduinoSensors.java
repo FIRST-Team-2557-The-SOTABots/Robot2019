@@ -13,14 +13,18 @@ public class ArduinoSensors extends Subsystem {
   public MyPair parseInput(String input){
     MyPair pair = new MyPair();
 
-    pair.id = input.charAt(0);
+    if(input.length() >= 2){
+      pair.id = input.charAt(0);
 
-    if(pair.id > 'z' || pair.id < 'a'){
+      if(pair.id > 'z' || pair.id < 'a'){
+        return null;
+      }
+
+      pair.value = Integer.parseInt(input.substring(1, input.length() - 1));
+      return pair;
+    }else{
       return null;
     }
-
-    pair.value = Integer.parseInt(input.substring(1, input.length() - 1));
-    return pair;
   }
 
   // public void sensors(){
