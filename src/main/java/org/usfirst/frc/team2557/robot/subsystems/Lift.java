@@ -41,6 +41,9 @@ public class Lift extends Subsystem {
       if(power > 0){
         power *= 0.8; 
       }
+      if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() <= -327000 && Math.signum(power) == 1){
+        power = 0;
+      }
       RobotMap.lift1.set(power);
       RobotMap.lift2.set(power);
       RobotMap.lift3.set(power);

@@ -53,5 +53,6 @@ public class Arm extends Subsystem {
       RobotMap.armLeft.set(power);
       RobotMap.armRight.set(-power);
       }
+      
   }
 }

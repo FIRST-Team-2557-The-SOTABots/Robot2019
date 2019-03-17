@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
@@ -16,8 +15,6 @@ public class RobotMap {
 	public static String TRAJECTORY_FOLDER = "/home/lvuser/Trajectories/";
 	
 	//practice bot !!!
-	public static Value solFired = Value.kReverse;
-	public static Value solClosed = Value.kForward;
 	public static double multparm = 240;
 	public static double multiarm = 0.2; 
 	public static double multdarm = 0.0;
@@ -36,7 +33,7 @@ public class RobotMap {
 	// public static double armBackCargo = -5800;
 	// public static double armBack = -4800;
 	public static double armForward = 4600;
-	public static double armIntake = 5650;
+	public static double armIntake = 6750;
 	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
 	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.744, 3.486, 2.027};
@@ -44,8 +41,6 @@ public class RobotMap {
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 
 	// //real bot !!!
-	// public static Value solFired = Value.kForward;
-	// public static Value solClosed = Value.kReverse;
 	// public static double multparm = 250;
 	// public static double multiarm = 0.17; 
 	// public static double multdarm = 0.007;
@@ -53,15 +48,16 @@ public class RobotMap {
 	// public static double multilift = 0.003;
 	// public static double multdlift = 0.0;
 	// public static double driveMult = 1;
-	// public static double highPosHatch = 465000;
-	// public static double midPosHatch = 85000; 
-	// public static double lowPosHatch = -278000;
-	// public static double highPosCargo = 508000;
-	// public static double midPosCargo = 203000;
-	// public static double lowPosCargo = -137000;
-	// public static double intakePosCargo = -307000;
-	// public static double armBackCargo = -3300;
-	// public static double armBack = -4900;
+	// public static double Y = 465000;
+	// public static double B = 85000; 
+	// public static double A = -278000;
+	// public static double X = -307000;
+	// public static double backY = 508000;
+	// public static double backB = 203000;
+	// public static double backA = -137000;
+	// public static double backX = 80000;
+	// // public static double armBackCargo = -3300;
+	// // public static double armBack = -4900;
 	// public static double armForCargo = 6200;
 	// public static double armIntake = 4960;
 	// public static double kP = 1;
