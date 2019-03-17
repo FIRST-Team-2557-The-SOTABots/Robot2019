@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2557.robot;
 
+import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Compressor;
@@ -13,18 +14,19 @@ import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
 	public static String TRAJECTORY_FOLDER = "/home/lvuser/Trajectories/";
+	public static HashMap<String, Double> arduino;
 	
 	//practice bot !!!
 	public static double multparm = 240;
-	public static double multiarm = 0.2; 
-	public static double multdarm = 0.0;
-	public static double multplift = 0.8; //.19
-	public static double multilift = 0.0; //0
+	public static double multiarm = 0.075; 
+	public static double multdarm = 0.00225;
+	public static double multplift = 0.45; //.19
+	public static double multilift = 0.005; //0
 	public static double multdlift = 0.0; //0.004
 	public static double driveMult = -1;
-	public static double Y = 470000;
-	public static double B = 225000;
-	public static double A = -155000; //-165000
+	public static double Y = 430000;
+	public static double B = 130000;
+	public static double A = -240000; //-165000
 	public static double X = -270000;
 	public static double backY = 500000;
 	public static double backB = 120000;
@@ -122,6 +124,8 @@ public class RobotMap {
 	// public static I2C tof;
 
 	public static void init() {
+		arduino = new HashMap<String, Double>();
+		
 		highPos = Y;
 		midPos = B;
 		lowPos = A;
@@ -150,6 +154,6 @@ public class RobotMap {
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 
-		// serial = new SerialPort(9600, SerialPort.Port.kUSB);
+		serial = new SerialPort(9600, SerialPort.Port.kUSB);
 	}
 }

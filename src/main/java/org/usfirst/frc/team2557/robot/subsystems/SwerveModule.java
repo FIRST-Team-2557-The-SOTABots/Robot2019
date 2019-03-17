@@ -19,7 +19,7 @@ public class SwerveModule extends Subsystem {
 	public AnalogInput encoder;
 
 	public SwerveModule(int swerveModIndex, boolean angleMotorInverted) {
-		speedMotor = new CANSparkMax(swerveModIndex, MotorType.kBrushless);
+		speedMotor = new CANSparkMax(swerveModIndex + 11, MotorType.kBrushless);
 		angleMotor = new WPI_TalonSRX(swerveModIndex);
 		angleMotor.setInverted(angleMotorInverted);
 		encoder = new AnalogInput(swerveModIndex);
