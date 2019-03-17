@@ -28,7 +28,7 @@ public class PIDarm extends Command {
 		//   RobotMap.armTarget = 0;
 		// }
 		if (Robot.m_oi.joystick2.getPOV() == 0) {
-			RobotMap.armTarget = RobotMap.armIntake;
+			RobotMap.armTarget = RobotMap.armHigh;
 		} else if (Robot.m_oi.joystick2.getPOV() == 90) {
 			RobotMap.armTarget = RobotMap.armForward;
 		}

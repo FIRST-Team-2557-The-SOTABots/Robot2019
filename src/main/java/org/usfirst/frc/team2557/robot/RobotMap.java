@@ -33,7 +33,7 @@ public class RobotMap {
 	// public static double armBackCargo = -5800;
 	// public static double armBack = -4800;
 	public static double armForward = 4600;
-	public static double armIntake = 6750;
+	public static double armHigh = 6750;
 	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
 	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.744, 3.486, 2.027};
