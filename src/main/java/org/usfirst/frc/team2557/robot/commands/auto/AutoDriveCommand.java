@@ -60,10 +60,26 @@ public class AutoDriveCommand extends Command {
   protected void execute() {
     for(int i = 0; i < 4; i++){
       double output = follower[i].calculate((int) RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
-      double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()));
-      // RobotMap.swerveMod[i].drive(output, heading);
+      double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()))/360;
+      double encCount = RobotMap.swerveMod[i].encoder.pidGet();
+      heading = (heading + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
+      if(heading > RobotMap.SWERVE_ENC_CIRC) heading -= RobotMap.SWERVE_ENC_CIRC;
+
+      double degreesBeforeFlip = 90.0;
+      if(Math.abs(encCount - heading) > RobotMap.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
+        heading = getOppositeAngle(i);
+        output *= -1;
+      }
+      RobotMap.swerveMod[i].drive(output, heading);
       SmartDashboard.putNumber("spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
     }
+  }
+
+  public double getOppositeAngle(int heading){
+    double opp = heading;
+    if(opp < RobotMap.SWERVE_ENC_CIRC/2) opp += RobotMap.SWERVE_ENC_CIRC/2;
+    else opp -= RobotMap.SWERVE_ENC_CIRC/2;
+    return opp;
   }
 
   // Make this return true when this Command no longer needs to run execute()

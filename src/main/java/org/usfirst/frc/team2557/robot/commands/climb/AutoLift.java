@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2557.robot.commands.arm;
+package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
@@ -7,22 +7,15 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class UsefulPIDarm extends Command {
-	PIDController pidcontroller;
-	boolean done = false;
-	double factor = 0.000001;
-	double multp = 0;
-	double multi = 0;
-	double multd = 0;
+public class AutoLift extends Command {
+  PIDController pidcontroller;
 	double target;
+	double factor = 0.000012;
 
-	public UsefulPIDarm(double target) {
-		requires(Robot.arm);
-		this.target = target;
-
-		pidcontroller = new PIDController(RobotMap.multparm * factor, RobotMap.multiarm * factor, RobotMap.multdarm * factor, new PIDSource(){
+	public AutoLift(double target) {
+		requires(Robot.lift);
+		pidcontroller = new PIDController(factor* RobotMap.multplift, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -34,30 +27,38 @@ public class UsefulPIDarm extends Command {
 
 			@Override
 			public double pidGet() {
-		
-				return -RobotMap.armRight.getSensorCollection().getQuadraturePosition();
+				return RobotMap.lift2.getSensorCollection().getQuadraturePosition();
 			}
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				double enc = RobotMap.armRight.getSensorCollection().getQuadraturePosition()*Math.PI/10000;
-				Robot.arm.arm(-output + RobotMap.pidarmStall*Math.sin(enc));
+				double power = -output;
+				if(power <= 0){
+					power *= 0.9;
+				}
+				if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() > 0){
+					power *= RobotMap.pidliftStall;
+				}
+				Robot.lift.lift(power);
 			}
 		});
+		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(250);
+		pidcontroller.setAbsoluteTolerance(20000);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-	//   RobotMap.dsArmLock.set(Value.kForward);
-      pidcontroller.reset();
-      pidcontroller.setSetpoint(target);
-      pidcontroller.enable();
+		pidcontroller.reset();
+		pidcontroller.setSetpoint(target);
+		pidcontroller.enable();
+	}
+
+	public void setSetpoint(double target){
+		this.target = target;
 	}
 	
 	protected void execute(){
-		pidcontroller.setSetpoint(target);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -67,7 +68,7 @@ public class UsefulPIDarm extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.arm.arm(0);
+		Robot.lift.lift(0);
 		pidcontroller.disable();
 	}
 

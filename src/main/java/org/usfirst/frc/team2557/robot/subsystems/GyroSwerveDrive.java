@@ -24,7 +24,11 @@ public class GyroSwerveDrive extends Subsystem {
     computeSwerveInputs(str, fwd, rot);
     setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
-      RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+      // if(Robot.m_oi.terribleRight.get()){
+      // RobotMap.swerveMod[i].drive(0, angle[i]);
+      // }else{
+        RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+      // }
     }
   }
 

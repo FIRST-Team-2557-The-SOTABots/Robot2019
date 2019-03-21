@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot.commands.Arduino;
 
+import org.usfirst.frc.team2557.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArduinoCommand extends Command {

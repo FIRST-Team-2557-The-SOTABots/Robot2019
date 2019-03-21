@@ -40,6 +40,9 @@ public class PIDlift extends Command {
 				if(power <= 0){
 					power *= 0.9;
 				}
+				if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() > 0){
+					power *= RobotMap.pidliftStall;
+				}
 				Robot.lift.lift(power);
 			}
 		});

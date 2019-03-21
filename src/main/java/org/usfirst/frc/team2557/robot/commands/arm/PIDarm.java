@@ -14,23 +14,26 @@ public class PIDarm extends Command {
 	PIDController pidcontroller;
 	boolean done = false;
 	double factor = 0.000001;
+	double multp = 0;
+	double multi = 0;
+	double multd = 0;
 
 	public void armPositions(){
-		// if(Robot.m_oi.joystick2.getPOV() == 315){
-		//   RobotMap.armTarget = RobotMap.armBackCargo;
-		// }else if(Robot.m_oi.joystick2.getPOV() == 270){
-		//   RobotMap.armTarget = RobotMap.armBack;
-		// }else if(Robot.m_oi.joystick2.getPOV() == 180){
-		//   RobotMap.armTarget = RobotMap.armIntake;
-		// }else if(Robot.m_oi.joystick2.getPOV() == 90){
-		//   RobotMap.armTarget = RobotMap.armForCargo;
-		// }else if(Robot.m_oi.joystick2.getPOV() == 0){
-		//   RobotMap.armTarget = 0;
-		// }
 		if (Robot.m_oi.joystick2.getPOV() == 0) {
-			RobotMap.armTarget = RobotMap.armHigh;
+			RobotMap.armTarget = RobotMap.armForCargo;
+			multp = RobotMap.multparmHigh;
+			multi = RobotMap.multiarmHigh;
+			multd = RobotMap.multdarmHigh;
 		} else if (Robot.m_oi.joystick2.getPOV() == 90) {
-			RobotMap.armTarget = RobotMap.armForward;
+			RobotMap.armTarget = RobotMap.armIntake;
+			multp = RobotMap.multparm;
+			multi = RobotMap.multiarm;
+			multd = RobotMap.multdarm;
+		}else if(Robot.m_oi.joystick2.getPOV() == 270){
+			RobotMap.armTarget = RobotMap.armClimb;
+			multp = RobotMap.multparm;
+			multi = RobotMap.multiarm;
+			multd = RobotMap.multdarm;
 		}
 	}
 	public PIDarm() {
@@ -62,13 +65,8 @@ public class PIDarm extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-				Robot.arm.arm(-output);
-
-				// double enc = RobotMap.armRight.getSensorCollection().getQuadraturePosition();
-				// enc *= Math.PI/10000;
-				// double angle = Math.abs(Math.sin(enc));
-				// SmartDashboard.putNumber("angleForceCounter", angle);
-				// Robot.arm.arm(output * Math.cos(angle));
+				double enc = RobotMap.armRight.getSensorCollection().getQuadraturePosition()*Math.PI/10000;
+				Robot.arm.arm(-output + RobotMap.pidarmStall*Math.sin(enc));
 			}
 		});
 		pidcontroller.setOutputRange(-1, 1);
@@ -91,9 +89,9 @@ public class PIDarm extends Command {
 		pidcontroller.setSetpoint(RobotMap.armTarget);
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget * -1);
 
-		pidcontroller.setP(SmartDashboard.getNumber("PArm", RobotMap.multparm) * factor);
-		pidcontroller.setI(SmartDashboard.getNumber("IArm", RobotMap.multiarm) * factor);
-		pidcontroller.setD(SmartDashboard.getNumber("DArm", RobotMap.multdarm) * factor);
+		pidcontroller.setP(SmartDashboard.getNumber("PArm", multp) * factor);
+		pidcontroller.setI(SmartDashboard.getNumber("IArm", multi) * factor);
+		pidcontroller.setD(SmartDashboard.getNumber("DArm", multd) * factor);
 
 		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
 		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));

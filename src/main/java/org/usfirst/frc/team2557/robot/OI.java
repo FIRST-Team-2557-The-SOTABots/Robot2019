@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot;
 
+import org.usfirst.frc.team2557.robot.commands.drive.Straight;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -37,9 +39,9 @@ public class OI {
 		da = new JoystickButton(joystick1, 1); //a is for apathy
 		db = new JoystickButton(joystick1, 2); //b is for belfast
 		dx = new JoystickButton(joystick1, 3); 
-		dy = new JoystickButton(joystick1, 4); //emergency unclimb
+		dy = new JoystickButton(joystick1, 4);
 		bumperLeft = new JoystickButton(joystick1, 5); //vision forward
-		bumperRight = new JoystickButton(joystick1, 6); //vision backwards
+		bumperRight = new JoystickButton(joystick1, 6);
 		back = new JoystickButton(joystick1, 7); //8s
 		start = new JoystickButton(joystick1, 8); //12s
 		terribleLeft = new JoystickButton(joystick1, 9);
@@ -56,5 +58,7 @@ public class OI {
 		mstart = new JoystickButton(joystick2, 8);
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
+
+		// dx.whileHeld(new Straight());
 	}
 }

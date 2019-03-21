@@ -1,16 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
-import org.usfirst.frc.team2557.robot.commands.lift.LiftEncoder;
-import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 
+// import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
+// import org.usfirst.frc.team2557.robot.commands.lift.LiftEncoder;
+// import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ClimbCommandGroup extends CommandGroup {
@@ -18,24 +12,44 @@ public class ClimbCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public ClimbCommandGroup() {
+    // addSequential(new UsefulPIDarm(0));
+
+    addParallel(new LiftClimb());
+    addParallel(new AutoIntake(-0.1));
+    addSequential(new Climb(-16500, 0.75));
+
+    addParallel(new LiftClimb());
+    addParallel(new AutoIntake(-1));
+    addSequential(new TimedDrive(2, 0, -0.5, 0));
+    addSequential(new TimedDrive(10, 0, -0.5, 0));
+
+    // addParallel(new AutoIntake(0));
+    // addParallel(new AutoLift(0));
+    // addSequential(new TimedDrive(2, 0, 0.5, 0));
+
+    // addSequential(new AutoArmLock(false));
+    // // addSequential(new Climb(0, -.75));
+    // addSequential(new UsefulPIDarm(0));
+    // addSequential(new TimedDrive(1, 0, 0.5, 0));
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
 
     //go to top and angle arm
-    addSequential(new LiftEncoder(0));
-    addSequential(new UsefulPIDarm(5000));
+    // addSequential(new LiftEncoder(0));
+    // addSequential(new UsefulPIDarm(5000));
 
     //lower lift to 6" above ground (touching level 2)
-    addSequential(new LiftEncoder(-223000));
+    // addSequential(new LiftEncoder(-223000));
 
     //lower arm and climber simultaneously
-    addParallel(new Climb(-6500));
-    addSequential(new LiftEncoder(-0));
+    // addParallel(new Climb(-6500));
+    // addSequential(new LiftEncoder(-0));
     
     // run outake to go forward
-    addSequential(new ForwardClimb(5));
+    // addSequential(new ForwardClimb(5));
 
     // addSequential(new DistanceDriveCommand(10));
 

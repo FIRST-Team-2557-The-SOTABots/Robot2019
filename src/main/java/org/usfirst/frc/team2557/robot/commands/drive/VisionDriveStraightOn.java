@@ -151,9 +151,9 @@ public class VisionDriveStraightOn extends Command {
   }
 
   // private void getDistance() {
-  //   for(int i = 0; i < 2; i++){
-  //     dist[i] = elevation[i]*0.000636796+13.369;
-  //   }
+  //   // for(int i = 0; i < 2; i++){
+  //   //   dist[i] = elevation[i]*0.000636796+13.369;
+  //   // }
   // }
 
   private void getAngle() {

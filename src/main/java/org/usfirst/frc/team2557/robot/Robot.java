@@ -1,20 +1,21 @@
 package org.usfirst.frc.team2557.robot;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
+import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup2;
+import org.usfirst.frc.team2557.robot.commands.climb.LiftClimb;
+import org.usfirst.frc.team2557.robot.commands.drive.Straight;
+import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
-import org.usfirst.frc.team2557.robot.subsystems.ArduinoSensors;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,8 +30,8 @@ public class Robot extends TimedRobot {
 	public static Lift lift;
 	public static Intake intake;
 	public static Arm arm;
-	public static Climber climb;
-	public static ArduinoSensors arduinoSensors;
+	public static Climber climber;
+	// public static ArduinoSensors arduinoSensors;
 	public static boolean prevArm;
 	public static boolean defaultUnlockArm;
 	public static String str = "";
@@ -42,9 +43,13 @@ public class Robot extends TimedRobot {
 	PIDlift my;
 	PIDlift mx;
 	VisionDriveStraightOn vdso;
+	ClimbCommandGroup lc;
+	ClimbCommandGroup2 lc2;
+	TofDrive td;
 
 	PIDarm pidarm;
 	ArmWithAxis awa;
+	Straight straight;
 
 	ClimbCommandGroup ccg;
 
@@ -67,8 +72,8 @@ public class Robot extends TimedRobot {
 		lift = new Lift();
 		intake = new Intake();
 		arm = new Arm();
-		climb = new Climber();
-		arduinoSensors = new ArduinoSensors();
+		climber = new Climber();
+		// arduinoSensors = new ArduinoSensors();
 
 		// NOTE: oi MUST be constructed after subsystems
 		m_oi = new OI();
@@ -81,6 +86,10 @@ public class Robot extends TimedRobot {
 
 		vdso = new VisionDriveStraightOn();
 		ccg = new ClimbCommandGroup();
+		lc = new ClimbCommandGroup();
+		lc2 = new ClimbCommandGroup2();
+		straight = new Straight();
+		td = new TofDrive();
 
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
@@ -108,10 +117,10 @@ public class Robot extends TimedRobot {
 
 		lift.init();
 		arm.init();
-		// RobotMap.armLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
-		RobotMap.climber.getSensorCollection().setQuadraturePosition(0, 10);
+    	RobotMap.climber.getSensorCollection().setQuadraturePosition(0, 10);
+    
 		m_autonomousCommand = m_chooser.getSelected();
 
 		if (m_autonomousCommand != null) {
@@ -123,6 +132,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		climber.climb(0);
 		boolean armLock = false;
 		if (RobotMap.dsArmLock.get() == Value.kReverse) {
 			armLock = true;
@@ -184,7 +194,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		awa.start();
 		defaultUnlockArm = false;
-
+		
 		// lift.initialize();
 		// arm.initialize();
 
@@ -198,6 +208,21 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+	
+		if(m_oi.back.get()){
+			lc2.start();
+			lc.cancel();
+		}else if(m_oi.start.get()){
+			lc.start();
+		}else{
+			lc.cancel();
+			lc2.cancel();
+			if(RobotMap.dsClimbLock.get() != Value.kForward){
+				RobotMap.dsClimbLock.set(Value.kForward);
+			}
+			RobotMap.climber.set (0);
+		}
+
 		boolean armLock = false;
 		if (RobotMap.dsArmLock.get() == Value.kReverse) {
 			armLock = true;
@@ -222,31 +247,40 @@ public class Robot extends TimedRobot {
 		// }else{
 		// vdso.cancel();
 		// SmartDashboard.putBoolean("VISION", false);
-		// }
+    // }
+    
 		if (Robot.m_oi.ma.get()) {
 			ma.setSetpoint(RobotMap.lowPos);
 			ma.start();
 		} else {
 			ma.cancel();
-		}
+    }
+    
 		if (Robot.m_oi.mb.get()) {
-			RobotMap.multplift = 0.75;
-			RobotMap.multilift = 0.05;
-			RobotMap.multdlift = 0.75;
-			SmartDashboard.putNumber("P lift", RobotMap.multplift);
-			SmartDashboard.putNumber("I lift", RobotMap.multilift);
-			SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+			// RobotMap.multplift = 0.75;
+			// RobotMap.multilift = 0.05;
+			// RobotMap.multdlift = 0.75;
+			// SmartDashboard.putNumber("P lift", RobotMap.multplift);
+			// SmartDashboard.putNumber("I lift", RobotMap.multilift);
+			// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
 			mb.setSetpoint(RobotMap.midPos);
 			mb.start();
 		} else {
 			mb.cancel();
-			RobotMap.multplift = 0.45;
-			RobotMap.multilift = 0.005;
-			RobotMap.multdlift = 0.0;
-			SmartDashboard.putNumber("P lift", RobotMap.multplift);
-			SmartDashboard.putNumber("I lift", RobotMap.multilift);
-			SmartDashboard.putNumber("D lift", RobotMap.multdlift);
-		}
+		// 	RobotMap.multplift = 0.45;
+		// 	RobotMap.multilift = 0.005;
+		// 	RobotMap.multdlift = 0.0;
+		// 	SmartDashboard.putNumber("P lift", RobotMap.multplift);
+		// 	SmartDashboard.putNumber("I lift", RobotMap.multilift);
+		// 	SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+	}
+	
+	if(Robot.m_oi.dx.get()){
+		td.start();
+	}else{
+		td.cancel();
+	}
+    
 		if (Robot.m_oi.my.get()) {
 			my.setSetpoint(RobotMap.highPos);
 			my.start();
@@ -275,64 +309,73 @@ public class Robot extends TimedRobot {
 			prevArm = false;
 		}
 
-		if (m_oi.dy.get() && !climbed) {
-			ccg.start();
-		} else if (!m_oi.dy.get()) {
-			ccg.cancel();
+		if(m_oi.joystick2.getPOV() == 180 && prevArm && RobotMap.dsArmLock.get() != Value.kReverse){
+			RobotMap.dsArmLock.set(Value.kReverse);
 		}
 
-		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
-		SmartDashboard.putBoolean("Touch cargo1", RobotMap.cargo.get());
-		SmartDashboard.putBoolean("Touch cargo2", RobotMap.cargo2.get());
-		SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("climb", RobotMap.climber.getSensorCollection().getQuadraturePosition());
-		SmartDashboard.putNumber("climb volts", RobotMap.climber.getBusVoltage());
-		for (int i = 0; i < 4; i++) {
-			// SmartDashboard.putNumber("Encoder value " + i,
-			// RobotMap.swerveMod[i].encoder.pidGet());
-			SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
-			// SmartDashboard.putNumber("spark velocity" + i,
-			// RobotMap.swerveMod[i].speedMotor.getEncoder().getVelocity());
-			// SmartDashboard.putNumber("Encoder value degrees " + i,
-			// RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC);
-			// SmartDashboard.putNumber("Offset to zero " + i, (360 -
-			// RobotMap.swerveMod[i].encoder.pidGet()*360/RobotMap.SWERVE_ENC_CIRC) *
-			// RobotMap.SWERVE_ENC_CIRC/360);
-		}
-		Scheduler.getInstance().run();
+		// if (m_oi.dy.get() && !climbed) {
+		// 	ccg.start();
+		// } else if (!m_oi.dy.get()) {
+		// 	ccg.cancel();
+    // }
 
-		if (RobotMap.serial.getBytesReceived() == 0)
-			return;
+    // if (m_oi.dy.get()) {
+    //   if (RobotMap.arduino.get("ToFL") - 100 > RobotMap.arduino.get("ToFR")) {
+        
+    //   } else if (RobotMap.arduino.get("ToFR") - 100 > RobotMap.arduino.get("ToFL")) {
 
-		str += RobotMap.serial.readString();
-		while (str.indexOf('\n') != -1) {
-			list.add(str.substring(0, str.indexOf('\n')));
-			str = str.substring(str.indexOf('\n') + 1);
-		}
+    //   }
+	// }
+	
+    SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
+	SmartDashboard.putNumber("Arm axis!!!", m_oi.joystick2.getRawAxis(1));
+	SmartDashboard.putNumber("Lift axis!!!", m_oi.joystick2.getRawAxis(5));
+	SmartDashboard.putBoolean("Touch cargo1", RobotMap.cargo.get());
+	SmartDashboard.putBoolean("Touch cargo2", RobotMap.cargo2.get());
+	SmartDashboard.putNumber("arm right enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
+	SmartDashboard.putNumber("lift 2 enc", RobotMap.lift2.getSensorCollection().getQuadraturePosition());
+	SmartDashboard.putNumber("climb", RobotMap.climber.getSensorCollection().getQuadraturePosition());
+	SmartDashboard.putBoolean("dsClimbLock Teleop", RobotMap.dsClimbLock.get() == Value.kForward);
+	for (int i = 0; i < 4; i++) {
+		SmartDashboard.putNumber("Encoder value " + i, RobotMap.swerveMod[i].encoder.pidGet());
+		SmartDashboard.putNumber("spark pos" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+	}
+	Scheduler.getInstance().run();
 
-		for (int i = 0; i < list.size(); i++) {
-			String temp = list.get(i);
-			for (String key : RobotMap.arduino.keySet()) {
-				if (temp.contains(key)) {
-					String[] arr = temp.split(key);
-					parseNumber(arr[1], 0, key);
-				}
-			}
-			list.remove(i);
-		}
-		SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
+
+	if (RobotMap.serial.getBytesReceived() == 0) return;
+
+	str += RobotMap.serial.readString();
+	SmartDashboard.putString("tof buffer str", str);
+	while (str.indexOf('\n') != -1) {
+		list.add(str.substring(0, str.indexOf('\n')));
+		str = str.substring(str.indexOf('\n') + 1);
 	}
 
-	public void parseNumber(String str, double num, String key){
-		if(str.length() != 0){
-		  num *= 10;
-		  parseNumber(str.substring(1), num + str.charAt(0) - 48, key);
-		}else{
-			RobotMap.arduino.put(key, num);
-		  // System.out.println("put: " + key + " + " + num);
+	for (int i = 0; i < list.size(); i++) {
+		String temp = list.get(i);
+		for (String key : RobotMap.arduino.keySet()) {
+			if (temp.contains(key)) {
+				String[] arr = temp.split(key);
+				parseNumber(arr[1], 0, key);
+			}
 		}
-	  }
+		list.remove(i);
+	}
+	RobotMap.tofAngle = Math.toDegrees(Math.atan2((RobotMap.arduino.get("ToFR") - RobotMap.arduino.get("ToFL")),RobotMap.TofDistance));
+
+	SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
+	SmartDashboard.putNumber("tof angle", RobotMap.tofAngle);
+}
+
+public void parseNumber(String str, double num, String key){
+	if(str.length() != 0){
+		num *= 10;
+		parseNumber(str.substring(1), num + str.charAt(0) - 48, key);
+	}else{
+		RobotMap.arduino.put(key, num);
+	}
+  }
 
 	@Override
 	public void testPeriodic() {
