@@ -18,26 +18,22 @@ public class Climb extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		RobotMap.climber.set (0);
-		// System.out.println("intittted");
-		// RobotMap.dsClimbLock.set(Value.kForward); // default lock
-		// RobotMap.dsClimbLock.set(Value.kReverse); // unlocked CAREFUL
+		Robot.climber.lock(true); // default lock
+		// Robot.climber.lock(false); // unlocked CAREFUL
 	}
 	
 	protected void execute(){
-	// Robot.climber.climbAuto();
-		System.out.println(power + " - " + (Robot.m_oi.start.get() || Robot.m_oi.start.get()) + " - " + (boolean) (RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc));
-		if(power < 0 && (Robot.m_oi.start.get() || Robot.m_oi.back.get()) && RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
+		// Robot.climber.climb(power);
+		System.out.println("power : " + power + " - enc: " + enc);
+		if((Robot.m_oi.start.get() || Robot.m_oi.back.get()) && power < 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
 			Robot.climber.lock(false);
 			Robot.climber.climb(power);
-			// System.out.println("NEGATIVE POWER");
-		}else if(power > 0 && (Robot.m_oi.start.get() || Robot.m_oi.back.get()) && RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
+		}else if((Robot.m_oi.start.get() || Robot.m_oi.back.get()) && power > 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
 			Robot.climber.lock(false);
-			  Robot.climber.climb(power);
-			//   System.out.println("PSITIVE POWERR");
+			Robot.climber.climb(power);
 		}else{
 			Robot.climber.climb (0);
 			Robot.climber.lock(true);
-			// System.out.println("NOOOOO POWER");
 		}
 	}
 

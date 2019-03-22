@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot.commands.climb;
 
+import org.usfirst.frc.team2557.robot.Robot;
+import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
 
 // import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
@@ -14,14 +16,25 @@ public class ClimbCommandGroup extends CommandGroup {
   public ClimbCommandGroup() {
     // addSequential(new UsefulPIDarm(0));
 
+
+
+    //*** */
     addParallel(new LiftClimb());
     addParallel(new AutoIntake(-0.1));
-    addSequential(new Climb(-16500, 0.75));
+    addSequential(new Climb(16500, -0.75));
 
     addParallel(new LiftClimb());
     addParallel(new AutoIntake(-1));
+
+    Robot.gyroSwerveDrive.fcd = false;
+    RobotMap.gyro.reset();
     addSequential(new TimedDrive(2, 0, -0.5, 0));
     addSequential(new TimedDrive(10, 0, -0.5, 0));
+
+
+
+
+
 
     // addParallel(new AutoIntake(0));
     // addParallel(new AutoLift(0));

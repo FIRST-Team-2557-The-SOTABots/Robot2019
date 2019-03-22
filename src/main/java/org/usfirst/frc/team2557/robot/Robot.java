@@ -217,10 +217,10 @@ public class Robot extends TimedRobot {
 		}else{
 			lc.cancel();
 			lc2.cancel();
-			if(RobotMap.dsClimbLock.get() != Value.kForward){
-				RobotMap.dsClimbLock.set(Value.kForward);
-			}
-			RobotMap.climber.set (0);
+			// if(RobotMap.dsClimbLock.get() != Value.kForward){
+			// 	RobotMap.dsClimbLock.set(Value.kForward);
+			// }
+			// RobotMap.climber.set (0);
 		}
 
 		boolean armLock = false;
@@ -309,9 +309,9 @@ public class Robot extends TimedRobot {
 			prevArm = false;
 		}
 
-		if(m_oi.joystick2.getPOV() == 180 && prevArm && RobotMap.dsArmLock.get() != Value.kReverse){
-			RobotMap.dsArmLock.set(Value.kReverse);
-		}
+		// if(m_oi.joystick2.getPOV() == 180 && prevArm && RobotMap.dsArmLock.get() != Value.kReverse){
+		// 	RobotMap.dsArmLock.set(Value.kReverse);
+		// }
 
 		// if (m_oi.dy.get() && !climbed) {
 		// 	ccg.start();

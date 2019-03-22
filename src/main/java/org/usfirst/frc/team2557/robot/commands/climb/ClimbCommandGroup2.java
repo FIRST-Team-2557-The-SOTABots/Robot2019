@@ -27,9 +27,14 @@ public class ClimbCommandGroup2 extends CommandGroup {
 
     addParallel(new TimedDrive(10, 0, -0.25, 0));
     addParallel(new UsefulPIDarm(750));
-    addSequential(new Climb(0, -.75));
+    addSequential(new Climb(0, .75));
 
     addSequential(new TimedDrive(10, 0, -0.25, 0));
+
+
+
+
+
     // addSequential(new TimedDrive(1, 0, 0.5, 0));
 
     // Add Commands here:

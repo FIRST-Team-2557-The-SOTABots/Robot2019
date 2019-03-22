@@ -14,7 +14,7 @@ public class LiftClimb extends Command {
 
 	public LiftClimb() {
 		requires(Robot.lift);
-		pidcontroller = new PIDController(0.0002,0.000003,0, new PIDSource(){
+		pidcontroller = new PIDController(0.00002,0.000002,0, new PIDSource(){
 			@Override
 			public PIDSourceType getPIDSourceType() {
 				return PIDSourceType.kDisplacement;
@@ -53,7 +53,7 @@ public class LiftClimb extends Command {
 			pidcontroller.disable();
 			Robot.lift.lift(0);
 		}
-		pidcontroller.setSetpoint(RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 -60000);
+		pidcontroller.setSetpoint(-RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 -60000);
 		SmartDashboard.putNumber("lift setpoint", pidcontroller.getSetpoint());
 		SmartDashboard.putNumber("lift error", pidcontroller.getError());
 	}

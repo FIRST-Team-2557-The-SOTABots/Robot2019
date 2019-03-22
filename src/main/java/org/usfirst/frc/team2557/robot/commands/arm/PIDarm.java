@@ -17,6 +17,7 @@ public class PIDarm extends Command {
 	double multp = 0;
 	double multi = 0;
 	double multd = 0;
+	boolean didntEnd;
 
 	public void armPositions(){
 		if (Robot.m_oi.joystick2.getPOV() == 0) {
@@ -38,10 +39,11 @@ public class PIDarm extends Command {
 	}
 	public PIDarm() {
 		requires(Robot.arm);
+		didntEnd = false;
 
-		SmartDashboard.putNumber("PArm", RobotMap.multparm);
-		SmartDashboard.putNumber("IArm", RobotMap.multiarm);
-		SmartDashboard.putNumber("DArm", RobotMap.multdarm);
+		// SmartDashboard.putNumber("PArm", RobotMap.multparm);
+		// SmartDashboard.putNumber("IArm", RobotMap.multiarm);
+		// SmartDashboard.putNumber("DArm", RobotMap.multdarm);
 
 		// double kp = 25;
 		// double ki = 0.02;
@@ -78,20 +80,31 @@ public class PIDarm extends Command {
 	  RobotMap.dsArmLock.set(Value.kForward);
       pidcontroller.reset();
       pidcontroller.setSetpoint(RobotMap.armTarget);
-      pidcontroller.enable();
+	  pidcontroller.enable();
+	  didntEnd = false;
 	}
 	
 	protected void execute(){
-		if(RobotMap.dsArmLock.get() == Value.kReverse){
-			RobotMap.dsArmLock.set(Value.kForward);
+		if(Robot.m_oi.joystick2.getPOV() == 180){
+			didntEnd = true;
 		}
+
+		if(RobotMap.dsArmLock.get() != Value.kForward && !didntEnd){
+			RobotMap.dsArmLock.set(Value.kForward);
+		}else if(didntEnd){
+			pidcontroller.disable();
+			if(RobotMap.dsArmLock.get() != Value.kReverse){
+				RobotMap.dsArmLock.set(Value.kReverse);
+			}
+		}
+
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
 		SmartDashboard.putNumber("arm target", RobotMap.armTarget * -1);
 
-		pidcontroller.setP(SmartDashboard.getNumber("PArm", multp) * factor);
-		pidcontroller.setI(SmartDashboard.getNumber("IArm", multi) * factor);
-		pidcontroller.setD(SmartDashboard.getNumber("DArm", multd) * factor);
+		pidcontroller.setP(multp* factor);
+		pidcontroller.setI( multi* factor);
+		pidcontroller.setD( multd * factor);
 
 		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
 		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
