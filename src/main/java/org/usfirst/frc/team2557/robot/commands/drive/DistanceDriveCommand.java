@@ -24,7 +24,7 @@ public class DistanceDriveCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.gyro.resetDisplacement();
+    // RobotMap.gyro.resetDisplacement();
     timer.start();
   }
 

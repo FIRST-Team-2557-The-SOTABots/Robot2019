@@ -80,6 +80,37 @@ public class GyroSwerveDrive extends Subsystem {
       }
     }
   }
+
+  public void driveStraight(double fwd){
+    double a = 0;
+    double b = 0;
+    double c = -fwd;
+    double d = -fwd;
+    
+    speed[1] = Math.sqrt ((a * a) + (d * d));
+    speed[2] = Math.sqrt ((a * a) + (c * c));
+    speed[0] = Math.sqrt ((b * b) + (d * d));
+    speed[3] = Math.sqrt ((b * b) + (c * c));
+
+    angle[1] = Math.atan2 (a, d) / Math.PI;
+    angle[2] = Math.atan2 (a, c) / Math.PI;
+    angle[0] = Math.atan2 (b, d) / Math.PI;
+    angle[3] = Math.atan2 (b, c) / Math.PI;
+
+    for(int i = 0; i < 4; i++){
+      double encCount = RobotMap.swerveMod[i].encoder.pidGet();
+      angle[i] = (angle[i] + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
+      if(angle[i] > RobotMap.SWERVE_ENC_CIRC) angle[i] -= RobotMap.SWERVE_ENC_CIRC;
+
+      double degreesBeforeFlip = 90.0;
+      if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
+        angle[i] = getOppositeAngle(i);
+        speed[i] *= -1;
+      }
+
+      RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+    }
+  }
   
   @Override
   public void initDefaultCommand() {

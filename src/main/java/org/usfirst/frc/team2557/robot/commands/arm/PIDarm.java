@@ -25,7 +25,7 @@ public class PIDarm extends Command {
 			multp = RobotMap.multparmHigh;
 			multi = RobotMap.multiarmHigh;
 			multd = RobotMap.multdarmHigh;
-		} else if (Robot.m_oi.joystick2.getPOV() == 90) {
+		} else if (Robot.m_oi.() == 90) {
 			RobotMap.armTarget = RobotMap.armIntake;
 			multp = RobotMap.multparm;
 			multi = RobotMap.multiarm;

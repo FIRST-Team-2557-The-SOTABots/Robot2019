@@ -16,9 +16,9 @@ public class PIDlift extends Command {
 
 	public PIDlift(double target) {
 		requires(Robot.lift);
-		SmartDashboard.putNumber("P lift", RobotMap.multplift);
-		SmartDashboard.putNumber("I lift", RobotMap.multilift);
-		SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+		// SmartDashboard.putNumber("P lift", RobotMap.multplift);
+		// SmartDashboard.putNumber("I lift", RobotMap.multilift);
+		// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
 		pidcontroller = new PIDController(factor* RobotMap.multplift, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -41,7 +41,7 @@ public class PIDlift extends Command {
 					power *= 0.9;
 				}
 				if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() > 0){
-					power *= RobotMap.pidliftStall;
+					power += RobotMap.pidliftStall;
 				}
 				Robot.lift.lift(power);
 			}
@@ -63,9 +63,9 @@ public class PIDlift extends Command {
 	}
 	
 	protected void execute(){
-		pidcontroller.setP(SmartDashboard.getNumber("P lift", RobotMap.multplift) * factor);
-		pidcontroller.setI(SmartDashboard.getNumber("I lift", RobotMap.multilift) * factor);
-		pidcontroller.setD(SmartDashboard.getNumber("D lift", RobotMap.multdlift) * factor);
+		pidcontroller.setP(RobotMap.multplift * factor);
+		pidcontroller.setI(RobotMap.multilift * factor);
+		pidcontroller.setD(RobotMap.multdlift * factor);
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 

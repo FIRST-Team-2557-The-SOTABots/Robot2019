@@ -35,24 +35,14 @@ public class IntakeTrigger extends Command {
         RobotMap.dsIntake.set(Value.kForward);
         Robot.intake.speed(-mtrl);
       }
-    // }else if(dtr > 0.2){
-    //   if(dtrr > 0.2){
-    //     Robot.intake.speed(dtrr);
-    //     RobotMap.dsIntake.set(Value.kReverse);
-    //   }else if(dtrl > 0.2){
-    //     Robot.intake.speed(-dtrl);
-    //     if(RobotMap.cargo.get()){
-    //       RobotMap.lastGamepieceWasDisc = false;
-    //     }else if(RobotMap.disc.get()){
-    //       RobotMap.lastGamepieceWasDisc = true;
-    //     }
-    //     if(RobotMap.lastGamepieceWasDisc){
-    //       RobotMap.dsIntake.set(Value.kForward);
-    //     }
-    //   }
+    }else if(Robot.m_oi.joystick2.getPOV() == 135){
+      Robot.intake.speed(0.5);
+    }else if(Robot.m_oi.joystick2.getPOV() == 225){
+      Robot.intake.speed(-0.5);
     }else{
       Robot.intake.speed(0);
     }
+    
   }
 
   @Override

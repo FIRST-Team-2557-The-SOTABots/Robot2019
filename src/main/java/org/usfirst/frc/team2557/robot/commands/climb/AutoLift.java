@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoLift extends Command {
   PIDController pidcontroller;
 	double target;
-	double factor = 0.000012;
+	double factor = 0.00001;
 
 	public AutoLift(double target) {
 		requires(Robot.lift);
@@ -37,7 +37,7 @@ public class AutoLift extends Command {
 					power *= 0.9;
 				}
 				if(RobotMap.lift2.getSensorCollection().getQuadraturePosition() > 0){
-					power *= RobotMap.pidliftStall;
+					power += RobotMap.pidliftStall;
 				}
 				Robot.lift.lift(power);
 			}

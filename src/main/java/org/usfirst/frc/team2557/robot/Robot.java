@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
+import org.usfirst.frc.team2557.robot.commands.climb.Climb2CommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup2;
 import org.usfirst.frc.team2557.robot.commands.climb.LiftClimb;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	VisionDriveStraightOn vdso;
 	ClimbCommandGroup lc;
 	ClimbCommandGroup2 lc2;
+	Climb2CommandGroup l2c;
 	TofDrive td;
 
 	PIDarm pidarm;
@@ -88,6 +90,7 @@ public class Robot extends TimedRobot {
 		ccg = new ClimbCommandGroup();
 		lc = new ClimbCommandGroup();
 		lc2 = new ClimbCommandGroup2();
+		l2c = new Climb2CommandGroup();
 		straight = new Straight();
 		td = new TofDrive();
 
@@ -212,16 +215,27 @@ public class Robot extends TimedRobot {
 		if(m_oi.back.get()){
 			lc2.start();
 			lc.cancel();
+		}else if(m_oi.dy.get()){
+			l2c.start();
 		}else if(m_oi.start.get()){
 			lc.start();
+		}else if(m_oi.dx.get()){
+			lc.cancel();
+			lc2.cancel();
+			l2c.cancel();
+			climber.lock(false);
+			RobotMap.climber.set (0.5);
 		}else{
 			lc.cancel();
 			lc2.cancel();
-			// if(RobotMap.dsClimbLock.get() != Value.kForward){
-			// 	RobotMap.dsClimbLock.set(Value.kForward);
-			// }
-			// RobotMap.climber.set (0);
+			l2c.cancel();
+			climber.lock(true);
+			RobotMap.climber.set (0);
 		}
+
+		// if(m_oi.dy.get()){
+		// 	l2c.start();
+		// }
 
 		boolean armLock = false;
 		if (RobotMap.dsArmLock.get() == Value.kReverse) {
@@ -254,33 +268,33 @@ public class Robot extends TimedRobot {
 			ma.start();
 		} else {
 			ma.cancel();
-    }
+		}
     
 		if (Robot.m_oi.mb.get()) {
-			// RobotMap.multplift = 0.75;
-			// RobotMap.multilift = 0.05;
-			// RobotMap.multdlift = 0.75;
-			// SmartDashboard.putNumber("P lift", RobotMap.multplift);
-			// SmartDashboard.putNumber("I lift", RobotMap.multilift);
-			// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+		// 	// RobotMap.multplift = 0.75;
+		// 	// RobotMap.multilift = 0.0;
+		// 	// RobotMap.multdlift = 0.0;
+		// 	// SmartDashboard.putNumber("P lift", RobotMap.multplift);
+		// 	// SmartDashboard.putNumber("I lift", RobotMap.multilift);
+		// 	// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
 			mb.setSetpoint(RobotMap.midPos);
 			mb.start();
 		} else {
 			mb.cancel();
-		// 	RobotMap.multplift = 0.45;
-		// 	RobotMap.multilift = 0.005;
-		// 	RobotMap.multdlift = 0.0;
-		// 	SmartDashboard.putNumber("P lift", RobotMap.multplift);
-		// 	SmartDashboard.putNumber("I lift", RobotMap.multilift);
-		// 	SmartDashboard.putNumber("D lift", RobotMap.multdlift);
-	}
-	
-	if(Robot.m_oi.dx.get()){
-		td.start();
-	}else{
-		td.cancel();
-	}
-    
+		// 	// RobotMap.multplift = 0.4;
+		// 	// RobotMap.multilift = 0.0;
+		// 	// RobotMap.multdlift = 0.0;
+		// 	// SmartDashboard.putNumber("P lift", RobotMap.multplift);
+		// 	// SmartDashboard.putNumber("I lift", RobotMap.multilift);
+		// 	// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
+		}
+		
+		// if(Robot.m_oi.dx.get()){
+		// 	td.start();
+		// }else{
+		// 	td.cancel();
+		// }
+		
 		if (Robot.m_oi.my.get()) {
 			my.setSetpoint(RobotMap.highPos);
 			my.start();
@@ -293,6 +307,7 @@ public class Robot extends TimedRobot {
 		} else {
 			mx.cancel();
 		}
+
 
 		if (m_oi.joystick2.getPOV() > -1 && !prevArm) {
 			if (awa != null) {

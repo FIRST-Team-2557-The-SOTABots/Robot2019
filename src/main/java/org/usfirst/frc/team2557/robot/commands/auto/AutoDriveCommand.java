@@ -46,7 +46,7 @@ public class AutoDriveCommand extends Command {
     follower[2] = new EncoderFollower(bl);
     follower[3] = new EncoderFollower(fl);
     
-    RobotMap.gyro.reset();
+    // RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){
       follower[i].reset();
       // follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);

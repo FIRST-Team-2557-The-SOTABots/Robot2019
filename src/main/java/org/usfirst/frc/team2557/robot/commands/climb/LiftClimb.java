@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class LiftClimb extends Command {
   PIDController pidcontroller;
+  double offset = 0;
 
-	public LiftClimb() {
-		requires(Robot.lift);
+	public LiftClimb(double offset) {
+		this.offset = offset;
+				requires(Robot.lift);
 		pidcontroller = new PIDController(0.00002,0.000002,0, new PIDSource(){
 			@Override
 			public PIDSourceType getPIDSourceType() {
@@ -47,13 +49,13 @@ public class LiftClimb extends Command {
 	}
 	
 	protected void execute(){
-		if(Robot.m_oi.start.get()){
+		if(Robot.m_oi.start.get() || Robot.m_oi.dy.get()){
 			pidcontroller.enable();
 		}else{
 			pidcontroller.disable();
 			Robot.lift.lift(0);
 		}
-		pidcontroller.setSetpoint(-RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 -60000);
+		pidcontroller.setSetpoint(-RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 + offset);
 		SmartDashboard.putNumber("lift setpoint", pidcontroller.getSetpoint());
 		SmartDashboard.putNumber("lift error", pidcontroller.getError());
 	}

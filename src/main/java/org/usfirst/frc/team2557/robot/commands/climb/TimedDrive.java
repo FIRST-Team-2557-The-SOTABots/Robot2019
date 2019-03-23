@@ -35,14 +35,12 @@ public class TimedDrive extends Command {
     Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
     t.reset();
     t.start();
-    Robot.gyroSwerveDrive.fcd = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.gyroSwerveDrive.fcd = false;
-    Robot.gyroSwerveDrive.gyroDrive(str, fwd, rot);
+    Robot.gyroSwerveDrive.driveStraight(fwd);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -55,7 +53,7 @@ public class TimedDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
+    Robot.gyroSwerveDrive.driveStraight(0);
   }
 
   // Called when another command which requires one or more of the same

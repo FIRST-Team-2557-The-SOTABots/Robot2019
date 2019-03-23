@@ -7,37 +7,25 @@
 
 package org.usfirst.frc.team2557.robot.commands.climb;
 
-import org.usfirst.frc.team2557.robot.Robot;
-import org.usfirst.frc.team2557.robot.RobotMap;
-import org.usfirst.frc.team2557.robot.commands.arm.UsefulPIDarm;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ClimbCommandGroup2 extends CommandGroup {
-  public ClimbCommandGroup2() {
-    addParallel(new TimedDrive(10, 0, 0.2, 0));
-    addParallel(new AutoIntake(0));
-    addSequential(new AutoLift(0));
+public class Climb2CommandGroup extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public Climb2CommandGroup() {
+    addParallel(new LiftClimb(-212000));
+    System.out.println("Here in Climb 2");
+    addParallel(new AutoIntake(-0.1));
+    addSequential(new Climb(6250, -0.75));
 
-    addParallel(new TimedDrive(10, 0, 0.2, 0));
-    System.out.println("not lock");
-    addSequential(new AutoArmLock(false));
-    
-    System.out.println("Yes lock");
+    System.out.println("CLIMBEDDD");
 
-    addParallel(new TimedDrive(10, 0, 0.2, 0));
-    addParallel(new UsefulPIDarm(750));
-    addSequential(new Climb(0, .75));
+    addParallel(new LiftClimb(-212000));
+    addParallel(new AutoIntake(-1));
 
-    System.out.println("After climb retract");
-
-    addSequential(new TimedDrive(10, 0, 0.2, 0));
-
-
-
-
-
-    // addSequential(new TimedDrive(1, 0, 0.5, 0));
+    addSequential(new TimedDrive(2, 0, 0.5, 0));
+    addSequential(new TimedDrive(10, 0, 0.5, 0));
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

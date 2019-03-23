@@ -26,7 +26,7 @@ public class TurnByAngle extends Command {
   @Override
   protected void initialize() {
     // TAKE THIS OUT, INSTEAD SUBTRACT GYRO READING, NO RESET!!
-    RobotMap.gyro.reset();
+    // RobotMap.gyro.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run

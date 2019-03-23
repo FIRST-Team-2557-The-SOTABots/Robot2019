@@ -54,14 +54,14 @@ public class RobotMap {
 	public static double multparmHigh = 225;
 	public static double multiarmHigh = 0.0; 
 	public static double multdarmHigh = 0.1;
-	public static double multplift = 0.8;
+	public static double multplift = 0.4;
 	public static double multilift = 0.00;
 	public static double multdlift = 0.0;
 	public static double driveMult = 1;
 	public static double Y = 465000;
 	public static double B = 85000; 
-	public static double A = -278000;
-	public static double X = -307000;
+	public static double A = -268000;
+	public static double X = -300000;
 	public static double backY = 508000;
 	public static double backB = 203000;
 	public static double backA = -137000;
