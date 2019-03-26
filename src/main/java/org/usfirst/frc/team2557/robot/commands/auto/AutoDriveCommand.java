@@ -70,7 +70,7 @@ public class AutoDriveCommand extends Command {
         heading = getOppositeAngle(i);
         output *= -1;
       }
-      RobotMap.swerveMod[i].drive(output, heading);
+      // RobotMap.swerveMod[i].drive(output, heading);
       SmartDashboard.putNumber("spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
     }
   }

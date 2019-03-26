@@ -24,7 +24,7 @@ public class Climb extends Command {
 	
 	protected void execute(){
 		// Robot.climber.climb(power);
-		// System.out.println("power : " + power + " - enc: " + enc);
+		System.out.println("button: " + (Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) + " - " + "power : " + power + " - enc: " + enc);
 		if((Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) && power < 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
 			Robot.climber.lock(false);
 			Robot.climber.climb(power);

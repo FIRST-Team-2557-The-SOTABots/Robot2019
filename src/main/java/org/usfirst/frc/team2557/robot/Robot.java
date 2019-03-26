@@ -135,6 +135,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		SmartDashboard.putNumber("Gyro Reading", RobotMap.gyro.getAngle());
 		climber.climb(0);
 		boolean armLock = false;
 		if (RobotMap.dsArmLock.get() == Value.kReverse) {
@@ -342,6 +343,7 @@ public class Robot extends TimedRobot {
     //   }
 	// }
 	
+	SmartDashboard.putNumber("Gyro Reading", RobotMap.gyro.getAngle());
     SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
 	SmartDashboard.putNumber("Arm axis!!!", m_oi.joystick2.getRawAxis(1));
 	SmartDashboard.putNumber("Lift axis!!!", m_oi.joystick2.getRawAxis(5));
@@ -358,29 +360,29 @@ public class Robot extends TimedRobot {
 	Scheduler.getInstance().run();
 
 
-	if (RobotMap.serial.getBytesReceived() == 0) return;
+	// if (RobotMap.serial.getBytesReceived() == 0) return;
 
-	str += RobotMap.serial.readString();
-	SmartDashboard.putString("tof buffer str", str);
-	while (str.indexOf('\n') != -1) {
-		list.add(str.substring(0, str.indexOf('\n')));
-		str = str.substring(str.indexOf('\n') + 1);
-	}
+	// str += RobotMap.serial.readString();
+	// SmartDashboard.putString("tof buffer str", str);
+	// while (str.indexOf('\n') != -1) {
+	// 	list.add(str.substring(0, str.indexOf('\n')));
+	// 	str = str.substring(str.indexOf('\n') + 1);
+	// }
 
-	for (int i = 0; i < list.size(); i++) {
-		String temp = list.get(i);
-		for (String key : RobotMap.arduino.keySet()) {
-			if (temp.contains(key)) {
-				String[] arr = temp.split(key);
-				parseNumber(arr[1], 0, key);
-			}
-		}
-		list.remove(i);
-	}
-	RobotMap.tofAngle = Math.toDegrees(Math.atan2((RobotMap.arduino.get("ToFR") - RobotMap.arduino.get("ToFL")),RobotMap.TofDistance));
+	// for (int i = 0; i < list.size(); i++) {
+	// 	String temp = list.get(i);
+	// 	for (String key : RobotMap.arduino.keySet()) {
+	// 		if (temp.contains(key)) {
+	// 			String[] arr = temp.split(key);
+	// 			parseNumber(arr[1], 0, key);
+	// 		}
+	// 	}
+	// 	list.remove(i);
+	// }
+	// RobotMap.tofAngle = Math.toDegrees(Math.atan2((RobotMap.arduino.get("ToFR") - RobotMap.arduino.get("ToFL")),RobotMap.TofDistance));
 
-	SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
-	SmartDashboard.putNumber("tof angle", RobotMap.tofAngle);
+	// SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
+	// SmartDashboard.putNumber("tof angle", RobotMap.tofAngle);
 }
 
 public void parseNumber(String str, double num, String key){

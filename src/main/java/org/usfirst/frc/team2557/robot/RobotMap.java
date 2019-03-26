@@ -159,7 +159,7 @@ public class RobotMap {
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 
-		serial = new SerialPort(9600, SerialPort.Port.kUSB);
+		// serial = new SerialPort(9600, SerialPort.Port.kUSB);
 
 		dsArmLock.clearAllPCMStickyFaults(1);
 		dsClimbLock.clearAllPCMStickyFaults(0);

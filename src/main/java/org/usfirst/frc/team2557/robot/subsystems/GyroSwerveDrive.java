@@ -27,7 +27,11 @@ public class GyroSwerveDrive extends Subsystem {
       // if(Robot.m_oi.terribleRight.get()){
       // RobotMap.swerveMod[i].drive(0, angle[i]);
       // }else{
+
+
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+
+
       // }
     }
   }
