@@ -11,11 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TofDrive extends Command {
-  double fwd = 0.05;
+  double fwd = 0.1;
   double fwdCmp = 0;
   double angle = 0;
-  // double tofr = 0;
-  // double tofl = 0;
 
   PIDController pidcontrollerrot;
   double midrot;
@@ -29,10 +27,11 @@ public class TofDrive extends Command {
     requires(Robot.gyroSwerveDrive);
 
     outputrot = 0;
-    kProt = 0.002;
-		kIrot = 0.0000;
-    kDrot = 0.00;
-    tolerancerot = 0.1;
+    // kProt = 0.0005;
+    kProt = 0.005;
+    kIrot = 0.000008;
+    kDrot = 0.00008;
+    tolerancerot = 0.05;
 		pidcontrollerrot = new PIDController(kProt, kIrot, kDrot, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -56,13 +55,11 @@ public class TofDrive extends Command {
 		pidcontrollerrot.setOutputRange(-1, 1);
 		pidcontrollerrot.setAbsoluteTolerance(tolerancerot);
     
-    Robot.gyroSwerveDrive.fcd = false;
   }
 
   @Override
   protected void initialize() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
-    Robot.gyroSwerveDrive.fcd = false;
+    Robot.gyroSwerveDrive.driveStraight(0);
     pidcontrollerrot.reset();
     pidcontrollerrot.setSetpoint(0.0);
     pidcontrollerrot.enable();
@@ -71,7 +68,6 @@ public class TofDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.gyroSwerveDrive.fcd) Robot.gyroSwerveDrive.fcd = false;
     getForward();
     getAngle();
     midrot = angle;
@@ -82,7 +78,7 @@ public class TofDrive extends Command {
     // SmartDashboard.putNumber("climb tofr", tofr);
     // SmartDashboard.putNumber("climb tofl", tofl);
 
-    Robot.gyroSwerveDrive.gyroDrive(0, fwdCmp, -outputrot);
+    Robot.gyroSwerveDrive.drive(0, fwdCmp, -outputrot);
   }
 
   private void getAngle() {
@@ -94,7 +90,7 @@ public class TofDrive extends Command {
 
   private void getForward() {
     fwdCmp = fwd;
-    if(RobotMap.arduino.get("ToFR") < 300 || RobotMap.arduino.get("ToFL") < 300){
+    if(RobotMap.arduino.get("ToFR") < 8000 || RobotMap.arduino.get("ToFL") < 8000){
       fwdCmp = 0;
     }
   }
@@ -108,7 +104,6 @@ public class TofDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.gyroSwerveDrive.fcd = true;
     pidcontrollerrot.disable();
   }
 
@@ -116,7 +111,6 @@ public class TofDrive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.gyroSwerveDrive.fcd = true;
     pidcontrollerrot.disable();
 		this.end();
   }

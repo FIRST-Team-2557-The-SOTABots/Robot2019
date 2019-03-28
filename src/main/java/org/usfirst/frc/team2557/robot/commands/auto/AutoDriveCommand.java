@@ -49,30 +49,32 @@ public class AutoDriveCommand extends Command {
     // RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){
       follower[i].reset();
-      // follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);
-      follower[i].configureEncoder(0, (int) RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition(), RobotMap.SWERVE_WHEEL_DIAMETER);
+      follower[i].configureEncoder((int) (1000* RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()), (int) (1000* 5.41), RobotMap.SWERVE_WHEEL_DIAMETER);
       follower[i].configurePIDVA(1, 0, 0, 1/RobotMap.MAX_VEL, RobotMap.MAX_ACC);
     }
   }
 
+  double[] angle;
+  double[] speed;
+  // double[] angles = new double[4];
+  // double[] speeds = new double[4];
+
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    angle = new double[4];
+    speed = new double[4];
+    // angles = new double[4];
+    // speeds = new double[4];
     for(int i = 0; i < 4; i++){
-      double output = follower[i].calculate((int) RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
-      double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()))/360;
-      double encCount = RobotMap.swerveMod[i].encoder.pidGet();
-      heading = (heading + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
-      if(heading > RobotMap.SWERVE_ENC_CIRC) heading -= RobotMap.SWERVE_ENC_CIRC;
-
-      double degreesBeforeFlip = 90.0;
-      if(Math.abs(encCount - heading) > RobotMap.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
-        heading = getOppositeAngle(i);
-        output *= -1;
-      }
-      // RobotMap.swerveMod[i].drive(output, heading);
-      SmartDashboard.putNumber("spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+      speed[i] = follower[i].calculate((int) (1000 *RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()));
+      angle[i] = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()))*RobotMap.SWERVE_ENC_CIRC/360;
+      // angle[i] = follower[i].getHeading();
     }
+
+    SmartDashboard.putNumberArray("drive angles", angle);
+    SmartDashboard.putNumberArray("drive speeds", speed);
+    // Robot.gyroSwerveDrive.autoDrive(angle, speed);
   }
 
   public double getOppositeAngle(int heading){

@@ -24,15 +24,50 @@ public class GyroSwerveDrive extends Subsystem {
     computeSwerveInputs(str, fwd, rot);
     setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
-      // if(Robot.m_oi.terribleRight.get()){
-      // RobotMap.swerveMod[i].drive(0, angle[i]);
-      // }else{
-
-
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+    }
+  }
 
+  public void drive (double str, double fwd, double rot) {
+    double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+    double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+    double c = fwd - rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
+    double d = fwd + rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
+    
+    speed[1] = Math.sqrt ((a * a) + (d * d));
+    speed[2] = Math.sqrt ((a * a) + (c * c));
+    speed[0] = Math.sqrt ((b * b) + (d * d));
+    speed[3] = Math.sqrt ((b * b) + (c * c));
 
+    angle[1] = Math.atan2 (a, d) / Math.PI;
+    angle[2] = Math.atan2 (a, c) / Math.PI;
+    angle[0] = Math.atan2 (b, d) / Math.PI;
+    angle[3] = Math.atan2 (b, c) / Math.PI;
+    setSetpoints(rot); 
+    for(int i = 0; i < 4; i++) {
+        RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+    }
+  }
+
+  public void autoDrive(double[] angle, double[] speed){
+    for(int i = 0; i < 4; i++){
+      // double encCount = RobotMap.swerveMod[i].encoder.pidGet();
+      // angle[i] = (angle[i] + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
+      // if(angle[i] > RobotMap.SWERVE_ENC_CIRC) angle[i] -= RobotMap.SWERVE_ENC_CIRC;
+
+      // double degreesBeforeFlip = 90.0;
+      // if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
+      //   angle[i] = getOppositeAngle(i);
+      //   speed[i] *= -1;
       // }
+
+      RobotMap.swerveMod[i].drive(0, 0);
+    }
+  }
+
+  public void gyroDriveAngle(){
+    for(int i = 0; i < 4; i++) {
+        RobotMap.swerveMod[i].drive(0, angle[i]);
     }
   }
 

@@ -24,7 +24,7 @@ public class Climber extends Subsystem {
   }
 
   public void climb(double power){
-    RobotMap.climber.set (power);
+    RobotMap.climber.set (power * RobotMap.climberEncoderDirection);
   }
 
   public void cancel() {

@@ -55,7 +55,7 @@ public class LiftClimb extends Command {
 			pidcontroller.disable();
 			Robot.lift.lift(0);
 		}
-		pidcontroller.setSetpoint(-RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 + offset);
+		pidcontroller.setSetpoint(-RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 + offset);
 		SmartDashboard.putNumber("lift setpoint", pidcontroller.getSetpoint());
 		SmartDashboard.putNumber("lift error", pidcontroller.getError());
 	}

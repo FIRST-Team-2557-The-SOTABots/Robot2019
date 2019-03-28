@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2557.robot;
 
-import org.usfirst.frc.team2557.robot.commands.drive.Straight;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -58,7 +56,5 @@ public class OI {
 		mstart = new JoystickButton(joystick2, 8);
 		mterribleLeft = new JoystickButton(joystick2, 9);
 		mterribleRight = new JoystickButton(joystick2, 10);
-
-		// dx.whileHeld(new Straight());
 	}
 }
