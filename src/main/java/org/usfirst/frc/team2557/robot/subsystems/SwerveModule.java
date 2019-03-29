@@ -52,6 +52,6 @@ public class SwerveModule extends Subsystem {
 
 
     public void initDefaultCommand() {
-		// NOTE: no default command unless running swerve modules seperately
+			// NOTE: no default command unless running swerve modules seperately
     }
 }

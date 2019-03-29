@@ -65,7 +65,6 @@ public class TofDrive extends Command {
     pidcontrollerrot.enable();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     getForward();
@@ -95,20 +94,16 @@ public class TofDrive extends Command {
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return pidcontrollerrot.onTarget();
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     pidcontrollerrot.disable();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     pidcontrollerrot.disable();

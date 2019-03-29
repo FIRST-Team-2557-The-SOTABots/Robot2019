@@ -19,7 +19,6 @@ public class Arm extends Subsystem {
     prevOff = false;
     RobotMap.armRight.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
     RobotMap.armLeft.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-		// RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
   // the arm does lock. Reverse is locked. Foward is unlocked

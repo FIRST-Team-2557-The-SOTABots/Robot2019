@@ -47,7 +47,6 @@ public class AutoLift extends Command {
 		pidcontroller.setAbsoluteTolerance(20000);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		pidcontroller.reset();
 		pidcontroller.setSetpoint(target);
@@ -61,19 +60,15 @@ public class AutoLift extends Command {
 	protected void execute(){
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return pidcontroller.onTarget();
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		Robot.lift.lift(0);
 		pidcontroller.disable();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();

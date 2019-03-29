@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class UsefulPIDarm extends Command {
 	PIDController pidcontroller;
@@ -48,9 +47,7 @@ public class UsefulPIDarm extends Command {
 		pidcontroller.setAbsoluteTolerance(250);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
-	//   RobotMap.dsArmLock.set(Value.kForward);
       pidcontroller.reset();
       pidcontroller.setSetpoint(target);
       pidcontroller.enable();
@@ -60,19 +57,15 @@ public class UsefulPIDarm extends Command {
 		pidcontroller.setSetpoint(target);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return pidcontroller.onTarget();
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		Robot.arm.arm(0);
 		pidcontroller.disable();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();

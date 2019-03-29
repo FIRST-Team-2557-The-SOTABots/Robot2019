@@ -41,14 +41,6 @@ public class PIDarm extends Command {
 		requires(Robot.arm);
 		didntEnd = false;
 
-		// SmartDashboard.putNumber("PArm", RobotMap.multparm);
-		// SmartDashboard.putNumber("IArm", RobotMap.multiarm);
-		// SmartDashboard.putNumber("DArm", RobotMap.multdarm);
-
-		// double kp = 25;
-		// double ki = 0.02;
-		// double kd = 0.0005;
-		//make sure go any direction and see how much wiggle.
 		pidcontroller = new PIDController(RobotMap.multparm * factor, RobotMap.multiarm * factor, RobotMap.multdarm * factor, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -75,7 +67,6 @@ public class PIDarm extends Command {
 		pidcontroller.setAbsoluteTolerance(60);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 	  RobotMap.dsArmLock.set(Value.kForward);
       pidcontroller.reset();
@@ -105,26 +96,18 @@ public class PIDarm extends Command {
 		pidcontroller.setP(multp* factor);
 		pidcontroller.setI( multi* factor);
 		pidcontroller.setD( multd * factor);
-
-		// pidcontroller.setP(SmartDashboard.getNumber("ArmP", 0.001));
-		// pidcontroller.setI(SmartDashboard.getNumber("ArmI", 0));
-		// pidcontroller.setD(SmartDashboard.getNumber("ArmD", 0));
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return pidcontroller.onTarget();
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		Robot.arm.arm(0);
 		RobotMap.dsArmLock.set(Value.kReverse);
 		pidcontroller.disable();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();

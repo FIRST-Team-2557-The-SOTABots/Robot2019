@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2557.robot.commands.auto;
 
 import java.io.File;
-
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +22,6 @@ public class AutoDriveCommand extends Command {
     this.name = name;
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     follower = new EncoderFollower[4];
@@ -46,7 +44,6 @@ public class AutoDriveCommand extends Command {
     follower[2] = new EncoderFollower(bl);
     follower[3] = new EncoderFollower(fl);
     
-    // RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){
       follower[i].reset();
       follower[i].configureEncoder((int) (1000* RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()), (int) (1000* 5.41), RobotMap.SWERVE_WHEEL_DIAMETER);
@@ -56,16 +53,10 @@ public class AutoDriveCommand extends Command {
 
   double[] angle;
   double[] speed;
-  // double[] angles = new double[4];
-  // double[] speeds = new double[4];
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     angle = new double[4];
     speed = new double[4];
-    // angles = new double[4];
-    // speeds = new double[4];
     for(int i = 0; i < 4; i++){
       speed[i] = follower[i].calculate((int) (1000 *RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()));
       angle[i] = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()))*RobotMap.SWERVE_ENC_CIRC/360;
@@ -84,7 +75,6 @@ public class AutoDriveCommand extends Command {
     return opp;
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     for(int i = 0; i < 4; i++){
@@ -96,20 +86,13 @@ public class AutoDriveCommand extends Command {
     // return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
-    for(int i = 0; i < 4; i++){
-      RobotMap.swerveMod[i].drive(0, 0);
-    }
+    for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, 0);
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    for(int i = 0; i < 4; i++){
-      RobotMap.swerveMod[i].drive(0, 0);
-    }
+    for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, 0);
   }
 }

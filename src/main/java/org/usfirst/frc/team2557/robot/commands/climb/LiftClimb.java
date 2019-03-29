@@ -42,14 +42,13 @@ public class LiftClimb extends Command {
 		pidcontroller.setAbsoluteTolerance(10000);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		pidcontroller.reset();
 		pidcontroller.setSetpoint(0);
 	}
 	
 	protected void execute(){
-		if(Robot.m_oi.start.get() || Robot.m_oi.dy.get()){
+		if(Robot.m_oi.dstart.get() || Robot.m_oi.dy.get()){
 			pidcontroller.enable();
 		}else{
 			pidcontroller.disable();
@@ -60,20 +59,16 @@ public class LiftClimb extends Command {
 		SmartDashboard.putNumber("lift error", pidcontroller.getError());
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
     	return false;
 		// return pidcontroller.onTarget();
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
     	Robot.lift.lift(0);
 		pidcontroller.disable();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.lift.lift(0);
 		pidcontroller.disable();

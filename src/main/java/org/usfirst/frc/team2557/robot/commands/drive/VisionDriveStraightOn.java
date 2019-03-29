@@ -9,18 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionDriveStraightOn extends Command {
-  // double[] height = new double[2];
   double[] centerX = new double[2];
-  // double[] distance = new double[2];
-  // double[] elevation = new double[2];
   double[] dist = new double[2];
   double angle = 0;
 
   double pixels_height = 240;
   double pixels_width = 416;
-  // double degView = 36.87;
   double fwd = 0.08;
-  // double fwd = 0.05;
   double fwdCmp = 0;
 
   PIDController pidcontrollerrot;
@@ -49,14 +44,6 @@ public class VisionDriveStraightOn extends Command {
 		kIrot = 0.00001;
     kDrot = 0.00;
     tolerancerot = 1.5;
-    // kProt = 0.012;
-		// kIrot = 0.00;
-    // kDrot = 0.000;
-    // tolerancerot = 1.5;
-    // kProt = 0.19;
-		// kIrot = 0.001;
-    // kDrot = 0.00;
-    // tolerancerot = 0.1;
 		pidcontrollerrot = new PIDController(kProt, kIrot, kDrot, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -80,10 +67,6 @@ public class VisionDriveStraightOn extends Command {
 		pidcontrollerrot.setOutputRange(-1, 1);
 		pidcontrollerrot.setAbsoluteTolerance(tolerancerot);
     
-    // kPstr = 0.005;
-		// kIstr = 0.0000775;
-    // kDstr = 0.00006;
-    // tolerancestr = 1.5;
     kPstr = 0.004;
 		kIstr = 0.000005;
     kDstr = 0.0000;
@@ -119,7 +102,6 @@ public class VisionDriveStraightOn extends Command {
     Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
     Robot.gyroSwerveDrive.fcd = false;
     pidcontrollerrot.reset();
-    // pidcontrollerrot.setSetpoint(1);
     pidcontrollerrot.setSetpoint(0.0);
     pidcontrollerrot.enable();
     pidcontrollerstr.reset();
@@ -127,7 +109,6 @@ public class VisionDriveStraightOn extends Command {
     pidcontrollerstr.enable();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     if(Robot.gyroSwerveDrive.fcd) Robot.gyroSwerveDrive.fcd = false;
@@ -146,15 +127,8 @@ public class VisionDriveStraightOn extends Command {
 
     if(centerX[0] != -1 && centerX[1] != -1){
       Robot.gyroSwerveDrive.gyroDrive(outputstr, fwdCmp, outputrot);
-      // Robot.gyroSwerveDrive.gyroDrive(0, 0, outputrot);
     }
   }
-
-  // private void getDistance() {
-  //   // for(int i = 0; i < 2; i++){
-  //   //   dist[i] = elevation[i]*0.000636796+13.369;
-  //   // }
-  // }
 
   private void getAngle() {
     if(centerX[0] > centerX[1]){
@@ -172,12 +146,6 @@ public class VisionDriveStraightOn extends Command {
       fwdCmp = 0;
     }
   }
-
-  // private void getElevation() {
-  //   for(int i = 0; i < 2; i++){
-  //     elevation[i] = distance[i] + height[i]/2;
-  //   }
-  // }
 
   private void getStrafe() {
     if(centerX[0] != -1 && centerX[1] != -1){
@@ -211,14 +179,12 @@ public class VisionDriveStraightOn extends Command {
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return pidcontrollerrot.onTarget() && pidcontrollerstr.onTarget();
     // return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.gyroSwerveDrive.fcd = true;
@@ -226,8 +192,6 @@ public class VisionDriveStraightOn extends Command {
     pidcontrollerstr.disable();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
     Robot.gyroSwerveDrive.fcd = true;

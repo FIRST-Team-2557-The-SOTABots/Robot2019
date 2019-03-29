@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
+	//if wheels twitch, it's a motor power direction issue. (flip the wires)
 	public static String TRAJECTORY_FOLDER = "/home/lvuser/Trajectories/";
 	public static HashMap<String, Integer> arduino;
 	public static double tofAngle = 0;
@@ -41,7 +42,7 @@ public class RobotMap {
 	public static double TofDistance = 1397;
 	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.792, 3.486, 1.942}; //2.744
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.792, 3.486, 1.942};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.01}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 	public static double pidarmStall = 0.05;
@@ -80,14 +81,12 @@ public class RobotMap {
 	// public static double pidliftStall = -0.07;
 	// public static double climberEncoderDirection = 1;
 
-	// //if wheels twitch, it's a motor power direction issue. (flip the wires)
-
 	//Constants
 	public static double JOYSTICK_DEADBAND = 0.05;
 	public static double TRIGGER_DEADBAND = 0.2;
 
+	//swerve
 	public static SwerveModule[] swerveMod;
-
 	public static double MAX_VEL = 10;
     public static double MAX_ACC = 5;
 	public static double WHEELBASE_WIDTH = 0.8;
@@ -98,17 +97,14 @@ public class RobotMap {
 	public static double SWERVE_LENGTH = 21.5;
 	public static double SWERVE_WIDTH = 21.5;
 	public static double SWERVE_RADIUS = Math.sqrt(Math.pow(SWERVE_LENGTH, 2) + Math.pow(SWERVE_WIDTH, 2));
-
 	public static double SWERVE_LOOP_TIME = 0.100; // in ms (50 ms default)
 	public static double SWERVE_PID_TOLERANCE = SWERVE_ENC_CIRC / 100.0 / 4.0; // .25%
 	
+	// lift
 	public static double highPos;
 	public static double midPos;
 	public static double lowPos;
 	public static double xPos;
-	
-	public static double armTarget;
-
 	public static WPI_TalonSRX lift1;
 	public static WPI_TalonSRX lift2;
 	public static WPI_TalonSRX lift3;
@@ -117,13 +113,18 @@ public class RobotMap {
 	public static WPI_TalonSRX intake;
 	public static WPI_TalonSRX climber;
 
-	public static AHRS gyro;
+	// arm
+	public static double armTarget;
+
+	// pneumatics
 	public static DoubleSolenoid dsLift;
 	public static DoubleSolenoid dsIntake;
 	public static DoubleSolenoid dsArmLock;
 	public static DoubleSolenoid dsClimbLock;
 	public static Compressor compressor;
 
+	// sensors
+	public static AHRS gyro;
 	public static DigitalInput cargo;
 	public static DigitalInput cargo2;
 	public static SerialPort serial;
@@ -135,8 +136,6 @@ public class RobotMap {
 		midPos = B;
 		lowPos = A;
 		xPos = X;
-		armTarget = 0;
-
 		lift1 = new WPI_TalonSRX(4);
 		lift2 = new WPI_TalonSRX(5);
 		lift3 = new WPI_TalonSRX(6);
@@ -146,23 +145,22 @@ public class RobotMap {
 		climber = new WPI_TalonSRX(10);
 		climber.setNeutralMode(NeutralMode.Brake);
 
-		gyro = new AHRS(SPI.Port.kMXP);
+		armTarget = 0;
+
 		compressor = new Compressor(1);
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
 		dsClimbLock = new DoubleSolenoid(1, 6, 7);
 		
-		// dsClimbLock = new DoubleSolenoid(0, 4, 5);
-
-		//real bot
 		cargo = new DigitalInput(5);
 		cargo2 = new DigitalInput(6);
 
-		// // FR = 0, BR = 1, BL = 2, FL = 3
+		// FR = 0, BR = 1, BL = 2, FL = 3
 		swerveMod = new SwerveModule[4];
 		for(int i = 0; i < 4; i++) swerveMod[i] = new SwerveModule(i, ANGLE_MOTOR_INVERTED[i]);
 
+		gyro = new AHRS(SPI.Port.kMXP);
 		serial = new SerialPort(9600, SerialPort.Port.kUSB);
 
 		dsArmLock.clearAllPCMStickyFaults(1);

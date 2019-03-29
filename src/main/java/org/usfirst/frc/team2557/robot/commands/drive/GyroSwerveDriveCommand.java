@@ -37,7 +37,7 @@ public class GyroSwerveDriveCommand extends Command {
     double rotMult = 0.35;
     if(Robot.m_oi.db.get()) {
       mult = 0.9;
-    }else if(Robot.m_oi.bumperLeft.get()) {
+    }else if(Robot.m_oi.dbumperLeft.get()) {
       mult = 0.2;
       rotMult = 0.2;
     }

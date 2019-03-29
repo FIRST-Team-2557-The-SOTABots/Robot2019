@@ -2,7 +2,6 @@ package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Climb extends Command {
@@ -15,7 +14,6 @@ public class Climb extends Command {
 		this.power = power;
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		RobotMap.climber.set (0);
 		Robot.climber.lock(true); // default lock
@@ -23,12 +21,11 @@ public class Climb extends Command {
 	}
 	
 	protected void execute(){
-		// Robot.climber.climb(power);
 		// System.out.println("button: " + (Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) + " - " + "power : " + power + " - enc: " + enc);
-		if((Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) && power < 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
+		if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.dy.get()) && power < 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
 			Robot.climber.lock(false);
 			Robot.climber.climb(power);
-		}else if((Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) && power > 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
+		}else if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.dy.get()) && power > 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
 			Robot.climber.lock(false);
 			Robot.climber.climb(power);
 		}else{
@@ -37,7 +34,6 @@ public class Climb extends Command {
 		}
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if(power < 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
 			return true;
@@ -47,14 +43,11 @@ public class Climb extends Command {
 		return false;
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		RobotMap.climber.set (0);
 		Robot.climber.lock(true);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		RobotMap.climber.set (0);
 		Robot.climber.lock(true);

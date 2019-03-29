@@ -12,10 +12,9 @@ public class GyroSwerveDrive extends Subsystem {
   public boolean fcd = true;
 
   public void gyroDrive (double str, double fwd, double rot) {
-    boolean bumper = Robot.m_oi.bumperRight.get();
+    boolean bumper = Robot.m_oi.dbumperRight.get();
     if(!bumper){
       fcd = true;
-      // RobotMap.gyro.reset();
     }else{
       fcd = false;
     }
@@ -51,16 +50,6 @@ public class GyroSwerveDrive extends Subsystem {
 
   public void autoDrive(double[] angle, double[] speed){
     for(int i = 0; i < 4; i++){
-      // double encCount = RobotMap.swerveMod[i].encoder.pidGet();
-      // angle[i] = (angle[i] + 1) * RobotMap.SWERVE_ENC_CIRC / 2 + RobotMap.SWERVE_SETPOINT_OFFSET[i]; 
-      // if(angle[i] > RobotMap.SWERVE_ENC_CIRC) angle[i] -= RobotMap.SWERVE_ENC_CIRC;
-
-      // double degreesBeforeFlip = 90.0;
-      // if(Math.abs(encCount - angle[i]) > RobotMap.SWERVE_ENC_CIRC / 360 * degreesBeforeFlip) {
-      //   angle[i] = getOppositeAngle(i);
-      //   speed[i] *= -1;
-      // }
-
       RobotMap.swerveMod[i].drive(0, 0);
     }
   }

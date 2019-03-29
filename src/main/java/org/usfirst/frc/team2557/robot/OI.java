@@ -11,12 +11,12 @@ public class OI {
 	public JoystickButton db; 
 	public JoystickButton dx;
 	public JoystickButton dy;
-	public JoystickButton bumperLeft;
-	public JoystickButton bumperRight;
-	public JoystickButton back;
-	public JoystickButton start;
-	public JoystickButton terribleLeft;
-	public JoystickButton terribleRight;
+	public JoystickButton dbumperLeft;
+	public JoystickButton dbumperRight;
+	public JoystickButton dback;
+	public JoystickButton dstart;
+	public JoystickButton dterribleLeft;
+	public JoystickButton dterribleRight;
 
 	public JoystickButton ma; 
 	public JoystickButton mb; 
@@ -38,12 +38,12 @@ public class OI {
 		db = new JoystickButton(joystick1, 2); //b is for belfast
 		dx = new JoystickButton(joystick1, 3); 
 		dy = new JoystickButton(joystick1, 4);
-		bumperLeft = new JoystickButton(joystick1, 5); //vision forward
-		bumperRight = new JoystickButton(joystick1, 6);
-		back = new JoystickButton(joystick1, 7); //8s
-		start = new JoystickButton(joystick1, 8); //12s
-		terribleLeft = new JoystickButton(joystick1, 9);
-		terribleRight = new JoystickButton(joystick1, 10);
+		dbumperLeft = new JoystickButton(joystick1, 5); //vision forward
+		dbumperRight = new JoystickButton(joystick1, 6);
+		dback = new JoystickButton(joystick1, 7); //8s
+		dstart = new JoystickButton(joystick1, 8); //12s
+		dterribleLeft = new JoystickButton(joystick1, 9);
+		dterribleRight = new JoystickButton(joystick1, 10);
 		
 
 		ma = new JoystickButton(joystick2, 1);

@@ -16,9 +16,6 @@ public class PIDlift extends Command {
 
 	public PIDlift(double target) {
 		requires(Robot.lift);
-		// SmartDashboard.putNumber("P lift", RobotMap.multplift);
-		// SmartDashboard.putNumber("I lift", RobotMap.multilift);
-		// SmartDashboard.putNumber("D lift", RobotMap.multdlift);
 		pidcontroller = new PIDController(factor* RobotMap.multplift, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
@@ -51,7 +48,6 @@ public class PIDlift extends Command {
 		pidcontroller.setAbsoluteTolerance(3000);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		pidcontroller.reset();
 		pidcontroller.setSetpoint(target);
@@ -69,19 +65,15 @@ public class PIDlift extends Command {
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return pidcontroller.onTarget();
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 		Robot.lift.lift(0);
 		pidcontroller.disable();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 		pidcontroller.disable();
 		this.end();

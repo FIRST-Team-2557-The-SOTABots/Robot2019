@@ -6,7 +6,6 @@ import org.usfirst.frc.team2557.robot.RobotMap;
 import org.usfirst.frc.team2557.robot.commands.lift.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lift extends Subsystem {
 
@@ -36,10 +35,6 @@ public class Lift extends Subsystem {
       } else {
         power *= 0.8;
       }
-
-      // if(power > 0){
-      //   power *= 0.7; 
-      // }
 
       RobotMap.lift1.set(power);
       RobotMap.lift2.set(power);
