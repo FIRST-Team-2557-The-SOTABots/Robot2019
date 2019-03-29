@@ -20,16 +20,16 @@ public class ClimbCommandGroup2 extends CommandGroup {
     addSequential(new AutoLift(0));
 
     addParallel(new TimedDrive(10, 0, 0.2, 0));
-    System.out.println("not lock");
+    // System.out.println("not lock");
     addSequential(new AutoArmLock(false));
     
-    System.out.println("Yes lock");
+    // System.out.println("Yes lock");
 
     addParallel(new TimedDrive(10, 0, 0.2, 0));
     addParallel(new UsefulPIDarm(750));
     addSequential(new Climb(0, .75));
 
-    System.out.println("After climb retract");
+    // System.out.println("After climb retract");
 
     addSequential(new TimedDrive(10, 0, 0.2, 0));
 

@@ -34,12 +34,12 @@ public class GyroSwerveDriveCommand extends Command {
     // if (triggerRight < RobotMap.TRIGGER_DEADBAND && triggerRight > -RobotMap.TRIGGER_DEADBAND) triggerRight = 0;
 
     double mult = 0.7;
-    double rotMult = mult;
+    double rotMult = 0.35;
     if(Robot.m_oi.db.get()) {
       mult = 0.9;
     }else if(Robot.m_oi.bumperLeft.get()) {
       mult = 0.2;
-      rotMult *= 0.5;
+      rotMult = 0.2;
     }
 
     // if(triggerRight > 0.2) axis4 = -triggerRight;

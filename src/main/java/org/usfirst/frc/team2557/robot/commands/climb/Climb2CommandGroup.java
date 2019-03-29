@@ -15,11 +15,11 @@ public class Climb2CommandGroup extends CommandGroup {
    */
   public Climb2CommandGroup() {
     addParallel(new LiftClimb(-212000));
-    System.out.println("Here in Climb 2");
+    // System.out.println("Here in Climb 2");
     addParallel(new AutoIntake(-0.1));
     addSequential(new Climb(6250, -0.75));
 
-    System.out.println("CLIMBEDDD");
+    // System.out.println("CLIMBEDDD");
 
     addParallel(new LiftClimb(-212000));
     addParallel(new AutoIntake(-1));

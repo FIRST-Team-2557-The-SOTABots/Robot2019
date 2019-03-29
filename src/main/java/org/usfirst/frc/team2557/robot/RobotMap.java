@@ -27,11 +27,11 @@ public class RobotMap {
 	public static double multilift = 0.00; //0
 	public static double multdlift = 0.0; //0.004
 	public static double driveMult = -1;
-	public static double Y = 450000;
-	public static double B = 130000;
+	public static double Y = 500000;
+	public static double B = 170000;
 	public static double A = -255000; //-165000
 	public static double X = -270000;
-	public static double backY = 500000;
+	public static double backY = 450000;
 	public static double backB = 120000;
 	public static double backA = -260000;
 	public static double backX = 80000;
@@ -41,7 +41,7 @@ public class RobotMap {
 	public static double TofDistance = 1397;
 	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.792, 3.486, 2.027}; //2.744
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.792, 3.486, 1.942}; //2.744
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.01}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 	public static double pidarmStall = 0.05;
@@ -147,11 +147,13 @@ public class RobotMap {
 		climber.setNeutralMode(NeutralMode.Brake);
 
 		gyro = new AHRS(SPI.Port.kMXP);
-		compressor = new Compressor(0);
+		compressor = new Compressor(1);
 		dsLift = new DoubleSolenoid(1, 0, 1);
 		dsIntake = new DoubleSolenoid(1, 2, 3);
 		dsArmLock = new DoubleSolenoid(1, 4, 5);
-		dsClimbLock = new DoubleSolenoid(0, 4, 5);
+		dsClimbLock = new DoubleSolenoid(1, 6, 7);
+		
+		// dsClimbLock = new DoubleSolenoid(0, 4, 5);
 
 		//real bot
 		cargo = new DigitalInput(5);
