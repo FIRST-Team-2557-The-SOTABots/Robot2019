@@ -131,12 +131,21 @@ public class Robot extends TimedRobot {
 		gyroSwerveDrive.driveStraight(0);
 		if (m_autonomousCommand != null) m_autonomousCommand.cancel();
 
+
+		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
+
 		// Robot.tg.trajectory0();
 		// System.out.println("trajectory0 written");
 	}
 
 	@Override
 	public void teleopPeriodic() {
+
+		if(m_oi.joystick1.getPOV() == 90) {
+			Robot.gyroSwerveDrive.fcd = false;
+
+		}
+
 		driverTofs();
 		driverClimb();
 		manipArm();
