@@ -14,6 +14,10 @@ import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -141,6 +145,18 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 
+		// NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+		// NetworkTableEntry tx = table.getEntry("tx");
+		// NetworkTableEntry ta = table.getEntry("ta");
+
+		// //read values periodically
+		// double x = tx.getDouble(0.0);
+		// double area = ta.getDouble(0.0);
+
+		// //post to smart dashboard periodically
+		// SmartDashboard.putNumber("LimelightX", x);
+		// SmartDashboard.putNumber("LimelightArea", area);
+
 		if(m_oi.joystick1.getPOV() == 90) {
 			Robot.gyroSwerveDrive.fcd = false;
 
@@ -156,8 +172,8 @@ public class Robot extends TimedRobot {
 	}
 
 	public void driverTofs(){
-		if(m_oi.joystick1.getRawAxis(2) > 0.5 || m_oi.joystick1.getRawAxis(3) > 0.5) td.start();
-		else td.cancel();
+		if(m_oi.joystick1.getRawAxis(2) > 0.5 || m_oi.joystick1.getRawAxis(3) > 0.5) vdso.start();
+		else vdso.cancel();
 	}
 
 	public void driverClimb(){
