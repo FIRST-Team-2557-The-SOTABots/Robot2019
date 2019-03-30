@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		manipLift();
 		smartdashboarding();
 		Scheduler.getInstance().run();
-		readTofs();
+		// readTofs();
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class Robot extends TimedRobot {
 		manipLift();
 		smartdashboarding();
 		Scheduler.getInstance().run();
-		readTofs();
+		// readTofs();
 	}
 
 	public void driverTofs(){
