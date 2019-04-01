@@ -15,7 +15,7 @@ public class AutoLift extends Command {
 
 	public AutoLift(double target) {
 		requires(Robot.lift);
-		pidcontroller = new PIDController(factor* RobotMap.multplift, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
+		pidcontroller = new PIDController(factor* RobotMap.multplift * 1.35, factor * RobotMap.multilift, factor * RobotMap.multdlift, new PIDSource(){
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
 			}
@@ -44,7 +44,7 @@ public class AutoLift extends Command {
 		});
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(20000);
+		pidcontroller.setAbsoluteTolerance(80000);
 	}
 
 	protected void initialize() {

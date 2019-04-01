@@ -21,29 +21,30 @@ public class Climb extends Command {
 	}
 	
 	protected void execute(){
-		// System.out.println("button: " + (Robot.m_oi.start.get() || Robot.m_oi.back.get() || Robot.m_oi.dy.get()) + " - " + "power : " + power + " - enc: " + enc);
-		if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.dy.get()) && power < 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
+		if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.joystick1.getPOV() == 0) && 
+				(power < 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc) 
+						|| (power > 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc) ){
 			Robot.climber.lock(false);
-			Robot.climber.climb(power);
-		}else if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.dy.get()) && power > 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
-			Robot.climber.lock(false);
-			Robot.climber.climb(power);
+			if ( power < 0 || RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < -5000) Robot.climber.climb(power);
+			else if (power > 0) Robot.climber.climb(power*RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition()/5000);
 		}else{
 			Robot.climber.climb (0);
 			Robot.climber.lock(true);
 		}
+		System.out.println("climber climbing");
 	}
 
 	protected boolean isFinished() {
-		if(power < 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
+		if(power < 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() > enc){
 			return true;
-		}else if(power > 0 && RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
+		}else if(power > 0 && RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition() < enc){
 			return true;
 		}
 		return false;
 	}
 
 	protected void end() {
+		System.out.println("climber climbed");
 		RobotMap.climber.set (0);
 		Robot.climber.lock(true);
 	}

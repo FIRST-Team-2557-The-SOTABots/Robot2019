@@ -8,6 +8,7 @@ import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
 import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
+import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
@@ -44,6 +45,7 @@ public class Robot extends TimedRobot {
 	PIDlift my;
 	PIDlift mx;
 	VisionDriveStraightOn vdso;
+	VisionWithGyro vwg;
 	ClimbCommandGroup c3;
 	RetractClimb rc;
 	ClimbCommandGroup c2;
@@ -80,9 +82,10 @@ public class Robot extends TimedRobot {
 		my = new PIDlift(RobotMap.highPos);
 		mx = new PIDlift(RobotMap.xPos);
 		vdso = new VisionDriveStraightOn();
-		c3 = new ClimbCommandGroup(-60000, 16500);
+		vwg = new VisionWithGyro();
+		c3 = new ClimbCommandGroup(16500);
 		rc = new RetractClimb();
-		c2 = new ClimbCommandGroup(-212000, 6250);
+		c2 = new ClimbCommandGroup(7950);
 		td = new TofDrive();
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
@@ -120,7 +123,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		driverTofs();
+		driverVision();
 		manipArm();
 		manipLift();
 		smartdashboarding();
@@ -144,25 +147,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-
-		// NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-		// NetworkTableEntry tx = table.getEntry("tx");
-		// NetworkTableEntry ta = table.getEntry("ta");
-
-		// //read values periodically
-		// double x = tx.getDouble(0.0);
-		// double area = ta.getDouble(0.0);
-
-		// //post to smart dashboard periodically
-		// SmartDashboard.putNumber("LimelightX", x);
-		// SmartDashboard.putNumber("LimelightArea", area);
-
-		if(m_oi.joystick1.getPOV() == 90) {
-			Robot.gyroSwerveDrive.fcd = false;
-
-		}
-
-		driverTofs();
+		driverVision();
 		driverClimb();
 		manipArm();
 		manipLift();
@@ -171,25 +156,29 @@ public class Robot extends TimedRobot {
 		// readTofs();
 	}
 
-	public void driverTofs(){
-		if(m_oi.joystick1.getRawAxis(2) > 0.5 || m_oi.joystick1.getRawAxis(3) > 0.5) vdso.start();
-		else vdso.cancel();
+	public void driverVision(){
+		// if(m_oi.joystick1.getRawAxis(2) > 0.5) vdso.start();
+		// else vdso.cancel();
+		if(m_oi.joystick1.getRawAxis(2) > 0.5 || m_oi.joystick1.getRawAxis(3) > 0.5 || m_oi.da.get() || m_oi.db.get() || m_oi.dx.get() || m_oi.dy.get()) vwg.start();
+		else vwg.cancel();
 	}
 
 	public void driverClimb(){
-		if(m_oi.dback.get()){
+		if(Robot.m_oi.joystick1.getPOV() == 90){
+			climber.lock(false);
+		}else if(m_oi.dback.get()){
 			rc.start();
 			c3.cancel();
-		}else if(m_oi.dy.get()){
+		}else if(Robot.m_oi.joystick1.getPOV() == 0){
 			c2.start();
 		}else if(m_oi.dstart.get()){
 			c3.start();
-		}else if(m_oi.dx.get()){
+		}else if(Robot.m_oi.joystick1.getPOV() == 270){
 			c3.cancel();
 			rc.cancel();
 			c2.cancel();
 			climber.lock(false);
-			RobotMap.climber.set (0.5);
+			RobotMap.climber.set (RobotMap.climberEncoderDirection * 0.75);
 		}else{
 			c3.cancel();
 			rc.cancel();
@@ -276,6 +265,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void smartdashboarding(){
+		SmartDashboard.putNumber("Pitch", RobotMap.gyro.getPitch());
 		SmartDashboard.putBoolean("dsArmLock", RobotMap.dsArmLock.get() == Value.kReverse);
 		SmartDashboard.putNumber("Gyro", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);

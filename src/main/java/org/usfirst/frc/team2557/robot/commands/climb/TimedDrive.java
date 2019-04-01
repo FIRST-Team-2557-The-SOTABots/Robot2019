@@ -7,16 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TimedDrive extends Command {
   Timer t;
   double time;
-  double str;
   double fwd;
-  double rot;
-  public TimedDrive(double time, double str, double fwd, double rot) {
+  public TimedDrive(double time, double fwd) {
     requires(Robot.gyroSwerveDrive);
     t = new Timer();
     this.time = time;
-    this.str = str;
     this.fwd = fwd;
-    this.rot = rot;
   }
 
   @Override
@@ -29,6 +25,7 @@ public class TimedDrive extends Command {
   @Override
   protected void execute() {
     Robot.gyroSwerveDrive.driveStraight(fwd);
+    // System.out.println("time driving for: " + time);
   }
 
   @Override
@@ -39,6 +36,7 @@ public class TimedDrive extends Command {
 
   @Override
   protected void end() {
+    // System.out.println("time drived for: " + time);
     Robot.gyroSwerveDrive.driveStraight(0);
   }
 

@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
-public class LiftClimb extends Command {
+public class ClimbByGyro extends Command {
   PIDController pidcontroller;
-  double offset = 0;
+  double target;
 
-	public LiftClimb(double offset) {
-		this.offset = offset;
-				requires(Robot.lift);
-		pidcontroller = new PIDController(0.00002,0.000002,0, new PIDSource(){
+	public ClimbByGyro(double target) {
+		this.target = target;
+		requires(Robot.lift);
+		pidcontroller = new PIDController(0.12,0.0,0, new PIDSource(){
 			@Override
 			public PIDSourceType getPIDSourceType() {
 				return PIDSourceType.kDisplacement;
@@ -24,47 +24,50 @@ public class LiftClimb extends Command {
 
 			@Override
 			public double pidGet() {
-				return RobotMap.lift2.getSensorCollection().getQuadraturePosition();
+				return RobotMap.gyro.getPitch();
 			}
 
       @Override
       public void setPIDSourceType(PIDSourceType pidSource) {
-
       }
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-        		output *= -1;
+        		// output *= 1;
 				Robot.lift.lift(output);
 			}
 		});
 		pidcontroller.setOutputRange(-1, 1);
-		pidcontroller.setAbsoluteTolerance(10000);
+		pidcontroller.setAbsoluteTolerance(1);
 	}
 
 	protected void initialize() {
 		pidcontroller.reset();
-		pidcontroller.setSetpoint(0);
+		pidcontroller.setSetpoint(2);
 	}
 	
 	protected void execute(){
-		if(Robot.m_oi.dstart.get() || Robot.m_oi.dy.get()){
+		if(Robot.m_oi.dstart.get() || Robot.m_oi.joystick1.getPOV() == 0){
 			pidcontroller.enable();
 		}else{
 			pidcontroller.disable();
 			Robot.lift.lift(0);
 		}
-		pidcontroller.setSetpoint(-RobotMap.climberEncoderDirection * RobotMap.climber.getSensorCollection().getQuadraturePosition()/825*16000 + offset);
 		SmartDashboard.putNumber("lift setpoint", pidcontroller.getSetpoint());
 		SmartDashboard.putNumber("lift error", pidcontroller.getError());
+		SmartDashboard.putNumber("lift power climb", pidcontroller.get());
+		System.out.println("lift climbing");
 	}
 
 	protected boolean isFinished() {
-    	return false;
+    	// return false;
 		// return pidcontroller.onTarget();
+		if(RobotMap.climber.getSensorCollection().getQuadraturePosition() > target) return true;
+		return false;
 	}
 
 	protected void end() {
+		System.out.println("lift climbed");
     	Robot.lift.lift(0);
 		pidcontroller.disable();
 	}

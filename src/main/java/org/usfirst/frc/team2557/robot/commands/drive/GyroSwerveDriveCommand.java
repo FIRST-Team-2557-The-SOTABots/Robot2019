@@ -15,9 +15,7 @@ public class GyroSwerveDriveCommand extends Command {
 
   @Override
   protected void execute() {
-    if(Robot.m_oi.joystick1.getPOV() == 0){
-      RobotMap.gyro.reset();
-    }
+    if(Robot.m_oi.joystick1.getPOV() == 180) RobotMap.gyro.reset();
 
     double axis0 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(0);
     double axis1 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(1);
@@ -35,9 +33,7 @@ public class GyroSwerveDriveCommand extends Command {
 
     double mult = 0.7;
     double rotMult = 0.35;
-    if(Robot.m_oi.db.get()) {
-      mult = 0.9;
-    }else if(Robot.m_oi.dbumperLeft.get()) {
+    if(Robot.m_oi.dbumperLeft.get()) {
       mult = 0.2;
       rotMult = 0.2;
     }

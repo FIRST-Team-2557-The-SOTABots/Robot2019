@@ -34,6 +34,7 @@ public class PIDlift extends Command {
 			@Override
 			public void pidWrite(double output) {
 				double power = -output;
+				// double power = 0;
 				if(power <= 0){
 					power *= 0.9;
 				}
@@ -46,6 +47,10 @@ public class PIDlift extends Command {
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
 		pidcontroller.setAbsoluteTolerance(3000);
+
+		SmartDashboard.putNumber("Plift", RobotMap.multplift);
+		SmartDashboard.putNumber("Ilift", RobotMap.multilift);
+		SmartDashboard.putNumber("Dlift", RobotMap.multdlift);
 	}
 
 	protected void initialize() {
@@ -59,9 +64,12 @@ public class PIDlift extends Command {
 	}
 	
 	protected void execute(){
-		pidcontroller.setP(RobotMap.multplift * factor);
-		pidcontroller.setI(RobotMap.multilift * factor);
-		pidcontroller.setD(RobotMap.multdlift * factor);
+		// double p = SmartDashboard.getNumber("Plift", RobotMap.multplift);
+		// double i = SmartDashboard.getNumber("Ilift", RobotMap.multilift);
+		// double d = SmartDashboard.getNumber("Dlift", RobotMap.multdlift);
+		pidcontroller.setP(SmartDashboard.getNumber("Plift", RobotMap.multplift) * factor);
+		pidcontroller.setI(SmartDashboard.getNumber("Ilift", RobotMap.multilift) * factor);
+		pidcontroller.setD(SmartDashboard.getNumber("Dlift", RobotMap.multdlift) * factor);
 		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 

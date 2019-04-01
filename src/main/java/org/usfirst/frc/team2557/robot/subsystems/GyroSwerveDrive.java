@@ -27,11 +27,11 @@ public class GyroSwerveDrive extends Subsystem {
     }
   }
 
-  public void drive (double str, double fwd, double rot) {
-    double a = str - rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
-    double b = str + rot * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
-    double c = fwd - rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
-    double d = fwd + rot * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
+  public void drive(double str, double fwd, double rot) {
+    double a = str - rot * 1.25 * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+    double b = str + rot * 1.25 * (RobotMap.SWERVE_LENGTH / RobotMap.SWERVE_RADIUS);
+    double c = fwd - rot * 1.25 * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
+    double d = fwd + rot * 1.25 * (RobotMap.SWERVE_WIDTH / RobotMap.SWERVE_RADIUS);
     
     speed[1] = Math.sqrt ((a * a) + (d * d));
     speed[2] = Math.sqrt ((a * a) + (c * c));
@@ -112,13 +112,13 @@ public class GyroSwerveDrive extends Subsystem {
   public void driveStraight(double fwd){
     double a = 0;
     double b = 0;
-    double c = -fwd;
-    double d = -fwd;
+    double c = RobotMap.driveDirection * -fwd;
+    double d = RobotMap.driveDirection * -fwd;
     
-    speed[1] = Math.sqrt ((a * a) + (d * d));
-    speed[2] = Math.sqrt ((a * a) + (c * c));
-    speed[0] = Math.sqrt ((b * b) + (d * d));
-    speed[3] = Math.sqrt ((b * b) + (c * c));
+    speed[1] = Math.sqrt (d * d);
+    speed[2] = Math.sqrt (c * c);
+    speed[0] = Math.sqrt (d * d);
+    speed[3] = Math.sqrt (c * c);
 
     angle[1] = Math.atan2 (a, d) / Math.PI;
     angle[2] = Math.atan2 (a, c) / Math.PI;

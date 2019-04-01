@@ -17,37 +17,38 @@ public class RobotMap {
 	public static HashMap<String, Integer> arduino;
 	public static double tofAngle = 0;
 	
-	//practice bot !!!
+	// practice bot !!!
 	public static double multparm = 200;
 	public static double multiarm = 0.0; 
 	public static double multdarm = 0.00;
 	public static double multparmHigh = 200;
 	public static double multiarmHigh = 0.0; 
 	public static double multdarmHigh = 0.0;
-	public static double multplift = 0.575; //.19
+	public static double multplift = 0.4; //.19
 	public static double multilift = 0.00; //0
-	public static double multdlift = 0.0; //0.004
+	public static double multdlift = 0.39; //0.004
 	public static double driveMult = -1;
-	public static double Y = 500000;
-	public static double B = 170000;
-	public static double A = -255000; //-165000
-	public static double X = -270000;
-	public static double backY = 450000;
-	public static double backB = 120000;
-	public static double backA = -260000;
-	public static double backX = 80000;
-	public static double armClimb = 4400;
-	public static double armForCargo = 6200;
-	public static double armIntake = 4450;
+	public static double Y = 435000;
+	public static double B = 70000;
+	public static double A = -275000; //-165000
+	public static double X = -295000;
+	public static double backY = 470000;
+	public static double backB = 178000;
+	public static double backA = -191000;
+	public static double backX = 0;
+	public static double armClimb = 4200;
+	public static double armForCargo = 6650;
+	public static double armIntake = 4550;
 	public static double TofDistance = 1397;
 	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.310, 2.792, 3.486, 1.942};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.330, 2.792, 3.486, 1.98};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.01}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 	public static double pidarmStall = 0.05;
-	public static double pidliftStall = 0.15;
+	public static double pidliftStall = -0.2;
 	public static double climberEncoderDirection = -1;
+	public static double driveDirection = -1;
 
 	// //real bot !!!
 	// public static double multparm = 190;
@@ -80,6 +81,7 @@ public class RobotMap {
 	// public static double pidarmStall = 0.054;
 	// public static double pidliftStall = -0.07;
 	// public static double climberEncoderDirection = 1;
+	// public static double driveDirection = 1;
 
 	//Constants
 	public static double JOYSTICK_DEADBAND = 0.05;
@@ -164,6 +166,5 @@ public class RobotMap {
 		serial = new SerialPort(9600, SerialPort.Port.kUSB);
 
 		dsArmLock.clearAllPCMStickyFaults(1);
-		dsClimbLock.clearAllPCMStickyFaults(0);
 	}
 }

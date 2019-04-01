@@ -18,6 +18,7 @@ public class AutoIntake extends Command {
   @Override
   protected void execute() {
     Robot.intake.speed(speed);
+    // System.out.println("autointaking at: " + speed);
   }
 
   @Override
@@ -27,6 +28,7 @@ public class AutoIntake extends Command {
 
   @Override
   protected void end() {
+    // System.out.println("autointaked at: " + speed);
     Robot.intake.speed(0);
   }
 

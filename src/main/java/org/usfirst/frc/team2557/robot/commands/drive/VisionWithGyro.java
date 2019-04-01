@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
+import org.usfirst.frc.team2557.robot.RobotMap;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -11,12 +13,12 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class VisionDriveStraightOn extends Command {
-  double angle = 0;
+public class VisionWithGyro extends Command {
+  double angleTarget = 0;
 
   double pixels_height = 240;
   double pixels_width = 320;
-  double fwd = 0.16;
+  double fwd = 0.15;
   double fwdCmp = 0;
 
   PIDController pidcontrollerrot;
@@ -43,7 +45,7 @@ public class VisionDriveStraightOn extends Command {
   NetworkTableEntry tx;
   NetworkTableEntry tv;
 
-  public VisionDriveStraightOn() {
+  public VisionWithGyro() {
     requires(Robot.gyroSwerveDrive);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -52,8 +54,8 @@ public class VisionDriveStraightOn extends Command {
     outputr = 0;
     valid = 0;
     
-    kProt = 0.3;
-		kIrot = 0.0000175;
+    kProt = 0.00235;
+		kIrot = 0.00000;
     kDrot = 0.00;
     tolerance = 0.01;
 		pidcontrollerrot = new PIDController(kProt, kIrot, kDrot, new PIDSource(){
@@ -68,19 +70,21 @@ public class VisionDriveStraightOn extends Command {
 
 			@Override
 			public double pidGet() {
-				return angle;
+				return (RobotMap.gyro.getAngle()+360)%360.0;
 			}
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-          outputr = output;
+          outputr = -1*output;
 			}
 		});
 		pidcontrollerrot.setOutputRange(-1, 1);
-		pidcontrollerrot.setAbsoluteTolerance(tolerance);
+    pidcontrollerrot.setAbsoluteTolerance(tolerance);
+    pidcontrollerrot.setInputRange(0, 360);
+    pidcontrollerrot.setContinuous();
     
-    kPstr = 0.008;
-		kIstr = 0.00005;
+    kPstr = 0.007;
+		kIstr = 0.0000;
     kDstr = 0.0000;
     tolerancestr = 0.01;
 		pidcontrollerstr = new PIDController(kPstr, kIstr, kDstr, new PIDSource(){
@@ -109,9 +113,9 @@ public class VisionDriveStraightOn extends Command {
 
   @Override
   protected void initialize() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
+    // Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
     pidcontrollerrot.reset();
-    pidcontrollerrot.setSetpoint(0);
+    // pidcontrollerrot.setSetpoint(0);
     pidcontrollerrot.enable();
     pidcontrollerstr.reset();
     pidcontrollerstr.setSetpoint(0);
@@ -120,31 +124,36 @@ public class VisionDriveStraightOn extends Command {
 
   @Override
   protected void execute() {
-    getCamData();
-    getForward();
-    getAngle();
-
-    SmartDashboard.putNumber("vision rot output", pidcontrollerrot.get());
-    SmartDashboard.putNumber("ANGLES", angle);
-    SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
-    // SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
-
-    if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) Robot.gyroSwerveDrive.drive(outputs*-1*(-1*Math.abs(pidcontrollerrot.getError() + 0.1)/0.1), fwdCmp, outputr);
-    else Robot.gyroSwerveDrive.drive(0, fwdCmp, 0);
-  }
-
-  private void getAngle() {
-    if(a0 > a1){
-      angle = -1* a1/a0 + 1;
-    }else{
-      angle = 1* a0/a1 - 1;
+    if(Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
+      getCamData();
+      getForward();
+      SmartDashboard.putNumber("vision rot output", pidcontrollerrot.get());
+      SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
+      if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) Robot.gyroSwerveDrive.drive(outputs, fwdCmp, outputr); //Robot.gyroSwerveDrive.drive(outputs*-1*(-1*Math.abs(pidcontrollerrot.getError() + 0.1)/0.1), fwdCmp, outputr);
+      else Robot.gyroSwerveDrive.drive(0, 0, outputr);
     }
-    angle -= 0.0;
+    if(Robot.m_oi.da.get()){
+      angleTarget = 28;
+    }else if(Robot.m_oi.db.get()){
+      angleTarget = 152;
+    }else if(Robot.m_oi.dx.get()){
+      angleTarget = 332;
+    }else if(Robot.m_oi.dy.get()){
+      angleTarget = 208;
+    }else if(Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
+      angleTarget = 180;
+    }
+    pidcontrollerrot.setSetpoint(angleTarget);
+    SmartDashboard.putNumber("angleTarget vision", angleTarget);
+    SmartDashboard.putNumber("angle setpoint vision", pidcontrollerrot.getSetpoint());
+    SmartDashboard.putNumber("angle error vision", pidcontrollerrot.getError());
+    SmartDashboard.putNumber("outputr vision", outputr);
+    SmartDashboard.putNumber("strafe errorrrr", pidcontrollerstr.getError());
   }
 
   private void getForward() {
-    if ((valid == 1 && Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) fwdCmp = fwd;
-    else if (Robot.m_oi.joystick1.getRawAxis(2) > 0.5) fwdCmp = fwd*.25;
+    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a0+a1)/-2.0)/3 + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
+    else if (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5) fwdCmp = fwd*.25;
     // else fwdCmp = fwd*.25;
   }
 
@@ -164,7 +173,6 @@ public class VisionDriveStraightOn extends Command {
   @Override
   protected boolean isFinished() {
     return pidcontrollerrot.onTarget() && pidcontrollerstr.onTarget();
-    // return false;
   }
 
   @Override
