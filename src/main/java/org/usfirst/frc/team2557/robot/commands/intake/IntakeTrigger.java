@@ -35,7 +35,7 @@ public class IntakeTrigger extends Command {
         Robot.intake.speed(-mtrl);
       }
     }else if(Robot.m_oi.joystick2.getPOV() == 135){
-      Robot.intake.speed(0.5);
+      Robot.intake.speed(0.9);
     }else if(Robot.m_oi.joystick2.getPOV() == 225){
       Robot.intake.speed(-0.5);
     }else{

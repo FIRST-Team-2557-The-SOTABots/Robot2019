@@ -18,7 +18,7 @@ public class VisionWithGyro extends Command {
 
   double pixels_height = 240;
   double pixels_width = 320;
-  double fwd = 0.15;
+  double fwd = 0.165;
   double fwdCmp = 0;
 
   PIDController pidcontrollerrot;
@@ -83,9 +83,10 @@ public class VisionWithGyro extends Command {
     pidcontrollerrot.setInputRange(0, 360);
     pidcontrollerrot.setContinuous();
     
-    kPstr = 0.007;
+
+    kPstr = 0.007105;
 		kIstr = 0.0000;
-    kDstr = 0.0000;
+    kDstr = 0.00001;
     tolerancestr = 0.01;
 		pidcontrollerstr = new PIDController(kPstr, kIstr, kDstr, new PIDSource(){
 			@Override
@@ -152,7 +153,7 @@ public class VisionWithGyro extends Command {
   }
 
   private void getForward() {
-    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a0+a1)/-2.0)/3 + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
+    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a0+a1)/-2.0)/3.5 + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
     else if (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5) fwdCmp = fwd*.25;
     // else fwdCmp = fwd*.25;
   }
