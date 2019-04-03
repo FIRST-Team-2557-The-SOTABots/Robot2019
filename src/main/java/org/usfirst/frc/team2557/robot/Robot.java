@@ -7,7 +7,6 @@ import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
 import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
-import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
@@ -40,7 +39,6 @@ public class Robot extends TimedRobot {
 	PIDlift mb;
 	PIDlift my;
 	PIDlift mx;
-	VisionDriveStraightOn vdso;
 	VisionWithGyro vwg;
 	ClimbCommandGroup c3;
 	RetractClimb rc;
@@ -77,7 +75,6 @@ public class Robot extends TimedRobot {
 		mb = new PIDlift(RobotMap.midPos);
 		my = new PIDlift(RobotMap.highPos);
 		mx = new PIDlift(RobotMap.xPos);
-		vdso = new VisionDriveStraightOn();
 		vwg = new VisionWithGyro();
 		c3 = new ClimbCommandGroup(16500);
 		rc = new RetractClimb();
