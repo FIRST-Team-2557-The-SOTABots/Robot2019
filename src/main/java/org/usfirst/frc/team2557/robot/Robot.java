@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		awa.start();
 		defaultUnlockArm = false;
-		gyroSwerveDrive.driveStraight(0);
+		gyroSwerveDrive.gyroDrive(0, 0, 0);;
 		climber.climb(0);
 
 		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(!awa.isRunning()) awa.start();
 		defaultUnlockArm = false;
-		gyroSwerveDrive.driveStraight(0);
+		gyroSwerveDrive.gyroDrive(0, 0, 0);
 		if (m_autonomousCommand != null) m_autonomousCommand.cancel();
 
 

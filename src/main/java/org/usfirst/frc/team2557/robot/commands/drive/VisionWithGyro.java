@@ -135,7 +135,7 @@ public class VisionWithGyro extends Command {
     if(Robot.m_oi.da.get()){
       angleTarget = 27.5;
     }else if(Robot.m_oi.db.get()){
-      angleTarget = 154;
+      angleTarget = 152.5;
     }else if(Robot.m_oi.dx.get()){
       angleTarget = 330;
     }else if(Robot.m_oi.dy.get()){
@@ -152,7 +152,7 @@ public class VisionWithGyro extends Command {
   }
 
   private void getForward() {
-    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5))) fwdCmp = (((a0+a1)/-2.7) + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
+    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5))) fwdCmp = (((a0+a1)/-2.85) + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
     else if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a0+a1)/-8.0) + 1) * fwd;
     else if (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5) fwdCmp = fwd*.25;
     // else fwdCmp = fwd*.25;
