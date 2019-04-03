@@ -151,9 +151,9 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # # VS Code Specific Java Settings
-.classpath
+# .classpath
 .project
-.settings/
+# .settings/
 bin/
 
 
