@@ -13,7 +13,7 @@ import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
-import org.usfirst.frc.team2557.robot.subsystems.Swerve;
+import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static TrajectoryGenerator tg;
-	public static Swerve swerve;
+	public static GyroSwerveDrive gyroSwerveDrive;
 	public static Lift lift;
 	public static Intake intake;
 	public static Arm arm;
@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
 		RobotMap.arduino.put("ToFR", 0);
 
 		tg = new TrajectoryGenerator();
-		swerve = new Swerve();
+		gyroSwerveDrive = new GyroSwerveDrive();
 		lift = new Lift();
 		intake = new Intake();
 		arm = new Arm();
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		awa.start();
 		defaultUnlockArm = false;
-		swerve.driveStraight(0);
+		gyroSwerveDrive.driveStraight(0);
 		climber.climb(0);
 
 		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(!awa.isRunning()) awa.start();
 		defaultUnlockArm = false;
-		swerve.driveStraight(0);
+		gyroSwerveDrive.driveStraight(0);
 		if (m_autonomousCommand != null) m_autonomousCommand.cancel();
 
 

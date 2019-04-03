@@ -8,7 +8,7 @@ public class DistanceDrive extends Command {
   double time;
   Timer timer = new Timer();
   public DistanceDrive(double time) {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
   }
 
   
@@ -19,7 +19,7 @@ public class DistanceDrive extends Command {
 
   @Override
   protected void execute() {
-    Robot.swerve.gyroDrive(0, 0.08, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0.08, 0);
   }
 
   @Override
@@ -32,7 +32,7 @@ public class DistanceDrive extends Command {
 
   @Override
   protected void end() {
-    Robot.swerve.gyroDrive(0, 0, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
   }
 
   @Override

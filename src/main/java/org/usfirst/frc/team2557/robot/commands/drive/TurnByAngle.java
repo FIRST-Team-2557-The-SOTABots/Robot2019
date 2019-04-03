@@ -8,7 +8,7 @@ public class TurnByAngle extends Command {
   double angle;
 
   public TurnByAngle(double angle) {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
     this.angle = angle;
   }
 
@@ -19,9 +19,9 @@ public class TurnByAngle extends Command {
   @Override
   protected void execute() {
     if(RobotMap.gyro.getAngle() > angle){
-      Robot.swerve.gyroDrive(0, 0, 0.5);
+      Robot.gyroSwerveDrive.gyroDrive(0, 0, 0.5);
     }else if(RobotMap.gyro.getAngle() < angle){
-      Robot.swerve.gyroDrive(0, 0, -0.5);
+      Robot.gyroSwerveDrive.gyroDrive(0, 0, -0.5);
     }
   }
 

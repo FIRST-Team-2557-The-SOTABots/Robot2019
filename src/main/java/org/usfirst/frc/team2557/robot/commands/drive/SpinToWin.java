@@ -8,7 +8,7 @@ public class SpinToWin extends Command {
   double angle;
 
   public SpinToWin(double angle) {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
     this.angle = angle;
   }
 
@@ -19,9 +19,9 @@ public class SpinToWin extends Command {
   @Override
   protected void execute() {
     if(RobotMap.gyro.getAngle() > angle){
-      Robot.swerve.gyroDrive(0, 0, 1.0);
+      Robot.gyroSwerveDrive.gyroDrive(0, 0, 1.0);
     }else if(RobotMap.gyro.getAngle() < angle){
-      Robot.swerve.gyroDrive(0, 0, -1.0);
+      Robot.gyroSwerveDrive.gyroDrive(0, 0, -1.0);
     }
   }
 

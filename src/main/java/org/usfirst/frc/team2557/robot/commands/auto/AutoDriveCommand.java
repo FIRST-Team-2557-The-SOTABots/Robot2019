@@ -18,7 +18,7 @@ public class AutoDriveCommand extends Command {
   Trajectory fl;
   
   public AutoDriveCommand(String name) {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
     this.name = name;
   }
 

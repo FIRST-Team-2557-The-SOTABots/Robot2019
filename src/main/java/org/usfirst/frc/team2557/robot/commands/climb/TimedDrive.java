@@ -9,7 +9,7 @@ public class TimedDrive extends Command {
   double time;
   double fwd;
   public TimedDrive(double time, double fwd) {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
     t = new Timer();
     this.time = time;
     this.fwd = fwd;
@@ -17,14 +17,14 @@ public class TimedDrive extends Command {
 
   @Override
   protected void initialize() {
-    Robot.swerve.gyroDrive(0, 0, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
     t.reset();
     t.start();
   }
 
   @Override
   protected void execute() {
-    Robot.swerve.driveStraight(fwd);
+    Robot.gyroSwerveDrive.driveStraight(fwd);
   }
 
   @Override
@@ -35,11 +35,11 @@ public class TimedDrive extends Command {
 
   @Override
   protected void end() {
-    Robot.swerve.driveStraight(0);
+    Robot.gyroSwerveDrive.driveStraight(0);
   }
 
   @Override
   protected void interrupted() {
-    Robot.swerve.gyroDrive(0, 0, 0);
+    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
   }
 }

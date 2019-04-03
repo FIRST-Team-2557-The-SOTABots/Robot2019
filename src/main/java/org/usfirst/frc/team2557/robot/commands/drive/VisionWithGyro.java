@@ -46,7 +46,7 @@ public class VisionWithGyro extends Command {
   NetworkTableEntry tv;
 
   public VisionWithGyro() {
-    requires(Robot.swerve);
+    requires(Robot.gyroSwerveDrive);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -130,8 +130,8 @@ public class VisionWithGyro extends Command {
       SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
       if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 
           || Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) 
-              Robot.swerve.drive(outputs, fwdCmp, outputr);
-      else Robot.swerve.drive(0, 0, outputr);
+              Robot.gyroSwerveDrive.drive(outputs, fwdCmp, outputr);
+      else Robot.gyroSwerveDrive.drive(0, 0, outputr);
     }
     if(Robot.m_oi.da.get()){
       angleTarget = 27.5;
