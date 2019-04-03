@@ -28,7 +28,7 @@ public class RobotMap {
 	public static double multilift = 0.00; //0
 	public static double multdlift = 0.39; //0.004
 	public static double driveMult = -1;
-	public static double Y = 447000;
+	public static double Y = 442000;
 	public static double B = 80000;
 	public static double A = -275000; //-165000
 	public static double X = -295000;
@@ -43,14 +43,14 @@ public class RobotMap {
 	public static double kP = 0.7;
 	public static double SWERVE_ENC_CIRC = 4.94;
 	public static final double[] SWERVE_SETPOINT_OFFSET = {2.330, 2.792, 3.486, 1.98};
-	public static double[][] SWERVE_PID_CONSTANTS = {{kP * 0.97, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP * 0.97, 0.0, 0.0}};
+	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP, 0.0, 0.0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 	public static double pidarmStall = 0.05;
 	public static double pidliftStall = -0.2;
 	public static double climberEncoderDirection = -1;
 	public static double driveDirection = -1;
-	public static double kProt = 0.0025;
-	public static double kIrot = 0.000014;
+	public static double kProt = 0.00225;
+	public static double kIrot = 0.0000175;
 	public static double kDrot = 0.0000;
 	public static double tolerance = 0.01;
 	public static double kPstr = 0.0074;

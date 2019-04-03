@@ -150,8 +150,6 @@ public class Robot extends TimedRobot {
 	}
 
 	public void driverVision(){
-		// if(m_oi.joystick1.getRawAxis(2) > 0.5) vdso.start();
-		// else vdso.cancel();
 		if(m_oi.joystick1.getRawAxis(2) > 0.5 || m_oi.joystick1.getRawAxis(3) > 0.5 || m_oi.da.get() || m_oi.db.get() || m_oi.dx.get() || m_oi.dy.get()) vwg.start();
 		else vwg.cancel();
 	}
