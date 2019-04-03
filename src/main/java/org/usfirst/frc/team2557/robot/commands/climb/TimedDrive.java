@@ -25,6 +25,7 @@ public class TimedDrive extends Command {
   @Override
   protected void execute() {
     Robot.gyroSwerveDrive.driveStraight(fwd);
+    // System.out.println("time driving for: " + time);
   }
 
   @Override
@@ -35,6 +36,7 @@ public class TimedDrive extends Command {
 
   @Override
   protected void end() {
+    // System.out.println("time drived for: " + time);
     Robot.gyroSwerveDrive.driveStraight(0);
   }
 
