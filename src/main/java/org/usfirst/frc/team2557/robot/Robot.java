@@ -219,17 +219,23 @@ public class Robot extends TimedRobot {
 		}
 
 		if (Robot.m_oi.ma.get()) {
-			ma.setSetpoint(RobotMap.lowPos);
+			mb.setSetpoint(RobotMap.lowPos);
 			ma.start();
 		} else ma.cancel();
     
 		if (Robot.m_oi.mb.get()) {
 			mb.setSetpoint(RobotMap.midPos);
+			if(Robot.m_oi.joystick2.getPOV() == 270){
+				my.setSetpoint(RobotMap.midPos + 30000);
+			}
 			mb.start();
 		} else mb.cancel();
 		
 		if (Robot.m_oi.my.get()) {
 			my.setSetpoint(RobotMap.highPos);
+			if(Robot.m_oi.joystick2.getPOV() == 270){
+				my.setSetpoint(RobotMap.highPos + 30000);
+			}
 			my.start();
 		} else my.cancel();
 

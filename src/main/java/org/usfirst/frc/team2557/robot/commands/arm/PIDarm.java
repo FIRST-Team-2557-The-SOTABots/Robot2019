@@ -30,12 +30,12 @@ public class PIDarm extends Command {
 			multp = RobotMap.multparm;
 			multi = RobotMap.multiarm;
 			multd = RobotMap.multdarm;
-		}else if(Robot.m_oi.joystick2.getPOV() == 270){
-			RobotMap.armTarget = RobotMap.armClimb;
-			multp = RobotMap.multparm;
-			multi = RobotMap.multiarm;
-			multd = RobotMap.multdarm;
-		}
+		 }//else if(Robot.m_oi.joystick2.getPOV() == 270){
+		// 	RobotMap.armTarget = RobotMap.armClimb;
+		// 	multp = RobotMap.multparm;
+		// 	multi = RobotMap.multiarm;
+		// 	multd = RobotMap.multdarm;
+		// }
 	}
 	public PIDarm() {
 		requires(Robot.arm);

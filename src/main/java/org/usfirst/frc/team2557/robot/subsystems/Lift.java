@@ -31,7 +31,7 @@ public class Lift extends Subsystem {
       }
 
       if (Robot.m_oi.mbumperLeft.get()) {
-        power *= 0.3;
+        power *= 0.4;
       } else {
         power *= 0.8;
       }
