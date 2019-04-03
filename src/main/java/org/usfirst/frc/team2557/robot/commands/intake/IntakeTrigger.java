@@ -6,9 +6,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeTrigger extends Command {
-
-  boolean letGo = false;
-
   public IntakeTrigger() {
     requires(Robot.intake);
   }
@@ -28,19 +25,6 @@ public class IntakeTrigger extends Command {
 
     double mtr = Math.max(mtrr, mtrl);
     // double dtr = Math.max(dtrr, dtrl);
-
-    // if(Robot.m_oi.mbumperLeft.get()){
-    //   if(RobotMap.TIMEOFFLIGHT1 < 5 && RobotMap.TIMEOFFLIGHT2 < 5){
-    //     RobotMap.dsIntake.set(Value.kForward);
-    //     letGo = true;
-    //   }
-    // }
-
-    // if(letGo){
-    //   RobotMap.dsIntake.set(Value.kForward);
-    //   letGo = false;
-    // }
-
 
     if(mtr > 0.2){
       if(mtrr > 0.2){

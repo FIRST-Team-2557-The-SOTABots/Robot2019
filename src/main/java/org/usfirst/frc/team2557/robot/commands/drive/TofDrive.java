@@ -24,7 +24,7 @@ public class TofDrive extends Command {
   double outputrot;
 
   public TofDrive() {
-    requires(Robot.gyroSwerveDrive);
+    requires(Robot.swerve);
 
     outputrot = 0;
     // kProt = 0.0005;
@@ -59,7 +59,7 @@ public class TofDrive extends Command {
 
   @Override
   protected void initialize() {
-    Robot.gyroSwerveDrive.driveStraight(0);
+    Robot.swerve.driveStraight(0);
     pidcontrollerrot.reset();
     pidcontrollerrot.setSetpoint(0.0);
     pidcontrollerrot.enable();
@@ -77,7 +77,7 @@ public class TofDrive extends Command {
     // SmartDashboard.putNumber("climb tofr", tofr);
     // SmartDashboard.putNumber("climb tofl", tofl);
 
-    Robot.gyroSwerveDrive.drive(0, fwdCmp, -outputrot);
+    Robot.swerve.drive(0, fwdCmp, -outputrot);
   }
 
   private void getAngle() {

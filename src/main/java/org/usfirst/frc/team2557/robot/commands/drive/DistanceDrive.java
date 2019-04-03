@@ -1,33 +1,30 @@
 package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
-import org.usfirst.frc.team2557.robot.RobotMap;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SpinToWin extends Command {
-  double angle;
-
-  public SpinToWin(double angle) {
+public class DistanceDrive extends Command {
+  double time;
+  Timer timer = new Timer();
+  public DistanceDrive(double time) {
     requires(Robot.swerve);
-    this.angle = angle;
   }
 
+  
   @Override
   protected void initialize() {
+    timer.start();
   }
 
   @Override
   protected void execute() {
-    if(RobotMap.gyro.getAngle() > angle){
-      Robot.swerve.gyroDrive(0, 0, 1.0);
-    }else if(RobotMap.gyro.getAngle() < angle){
-      Robot.swerve.gyroDrive(0, 0, -1.0);
-    }
+    Robot.swerve.gyroDrive(0, 0.08, 0);
   }
 
   @Override
   protected boolean isFinished() {
-    if(Math.abs(RobotMap.gyro.getAngle() - angle) < 2.0){
+    if(timer.get() > time){
       return true;
     }
     return false;
@@ -35,6 +32,7 @@ public class SpinToWin extends Command {
 
   @Override
   protected void end() {
+    Robot.swerve.gyroDrive(0, 0, 0);
   }
 
   @Override

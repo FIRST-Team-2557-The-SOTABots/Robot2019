@@ -7,13 +7,14 @@ import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
 import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
+import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
 import org.usfirst.frc.team2557.robot.subsystems.Climber;
-import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
+import org.usfirst.frc.team2557.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,7 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static TrajectoryGenerator tg;
-	public static GyroSwerveDrive gyroSwerveDrive;
+	public static Swerve swerve;
 	public static Lift lift;
 	public static Intake intake;
 	public static Arm arm;
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
 	PIDlift mb;
 	PIDlift my;
 	PIDlift mx;
+	VisionDriveStraightOn vdso;
 	VisionWithGyro vwg;
 	ClimbCommandGroup c3;
 	RetractClimb rc;
@@ -61,7 +63,7 @@ public class Robot extends TimedRobot {
 		RobotMap.arduino.put("ToFR", 0);
 
 		tg = new TrajectoryGenerator();
-		gyroSwerveDrive = new GyroSwerveDrive();
+		swerve = new Swerve();
 		lift = new Lift();
 		intake = new Intake();
 		arm = new Arm();
@@ -75,6 +77,7 @@ public class Robot extends TimedRobot {
 		mb = new PIDlift(RobotMap.midPos);
 		my = new PIDlift(RobotMap.highPos);
 		mx = new PIDlift(RobotMap.xPos);
+		vdso = new VisionDriveStraightOn();
 		vwg = new VisionWithGyro();
 		c3 = new ClimbCommandGroup(16500);
 		rc = new RetractClimb();
@@ -101,7 +104,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		awa.start();
 		defaultUnlockArm = false;
-		gyroSwerveDrive.driveStraight(0);
+		swerve.driveStraight(0);
 		climber.climb(0);
 
 		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
@@ -128,7 +131,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		if(!awa.isRunning()) awa.start();
 		defaultUnlockArm = false;
-		gyroSwerveDrive.driveStraight(0);
+		swerve.driveStraight(0);
 		if (m_autonomousCommand != null) m_autonomousCommand.cancel();
 
 
@@ -212,17 +215,23 @@ public class Robot extends TimedRobot {
 		}
 
 		if (Robot.m_oi.ma.get()) {
-			ma.setSetpoint(RobotMap.lowPos);
+			mb.setSetpoint(RobotMap.lowPos);
 			ma.start();
 		} else ma.cancel();
     
 		if (Robot.m_oi.mb.get()) {
 			mb.setSetpoint(RobotMap.midPos);
+			if(Robot.m_oi.joystick2.getPOV() == 270){
+				my.setSetpoint(RobotMap.midPos + 30000);
+			}
 			mb.start();
 		} else mb.cancel();
 		
 		if (Robot.m_oi.my.get()) {
 			my.setSetpoint(RobotMap.highPos);
+			if(Robot.m_oi.joystick2.getPOV() == 270){
+				my.setSetpoint(RobotMap.highPos + 30000);
+			}
 			my.start();
 		} else my.cancel();
 

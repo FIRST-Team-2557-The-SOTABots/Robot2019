@@ -44,7 +44,7 @@ public class VisionDriveStraightOn extends Command {
   NetworkTableEntry tv;
 
   public VisionDriveStraightOn() {
-    requires(Robot.gyroSwerveDrive);
+    requires(Robot.swerve);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -109,7 +109,7 @@ public class VisionDriveStraightOn extends Command {
 
   @Override
   protected void initialize() {
-    Robot.gyroSwerveDrive.gyroDrive(0, 0, 0);
+    Robot.swerve.gyroDrive(0, 0, 0);
     pidcontrollerrot.reset();
     pidcontrollerrot.setSetpoint(0);
     pidcontrollerrot.enable();
@@ -129,8 +129,8 @@ public class VisionDriveStraightOn extends Command {
     SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
     // SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
 
-    if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) Robot.gyroSwerveDrive.drive(outputs*-1*(-1*Math.abs(pidcontrollerrot.getError() + 0.1)/0.1), fwdCmp, outputr);
-    else Robot.gyroSwerveDrive.drive(0, fwdCmp, 0);
+    if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) Robot.swerve.drive(outputs*-1*(-1*Math.abs(pidcontrollerrot.getError() + 0.1)/0.1), fwdCmp, outputr);
+    else Robot.swerve.drive(0, fwdCmp, 0);
   }
 
   private void getAngle() {
