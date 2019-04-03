@@ -28,7 +28,7 @@ public class RobotMap {
 	public static double multilift = 0.00; //0
 	public static double multdlift = 0.39; //0.004
 	public static double driveMult = -1;
-	public static double Y = 447000;
+	public static double Y = 442000;
 	public static double B = 80000;
 	public static double A = -275000; //-165000
 	public static double X = -295000;
