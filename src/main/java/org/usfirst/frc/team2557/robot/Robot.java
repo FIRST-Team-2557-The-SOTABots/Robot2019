@@ -3,10 +3,8 @@ package org.usfirst.frc.team2557.robot;
 import java.util.ArrayList;
 import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
-import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
-import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
@@ -23,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 	public static OI m_oi;
-	public static TrajectoryGenerator tg;
+	// public static TrajectoryGenerator tg;
 	public static GyroSwerveDrive gyroSwerveDrive;
 	public static Lift lift;
 	public static Intake intake;
@@ -43,7 +41,6 @@ public class Robot extends TimedRobot {
 	ClimbCommandGroup c3;
 	RetractClimb rc;
 	ClimbCommandGroup c2;
-	TofDrive td;
 	PIDarm pidarm;
 	ArmWithAxis awa;
 	Command m_autonomousCommand;
@@ -60,7 +57,7 @@ public class Robot extends TimedRobot {
 		RobotMap.arduino.put("ToFL", 0);
 		RobotMap.arduino.put("ToFR", 0);
 
-		tg = new TrajectoryGenerator();
+		// tg = new TrajectoryGenerator();
 		gyroSwerveDrive = new GyroSwerveDrive();
 		lift = new Lift();
 		intake = new Intake();
@@ -79,12 +76,11 @@ public class Robot extends TimedRobot {
 		c3 = new ClimbCommandGroup(16500);
 		rc = new RetractClimb();
 		c2 = new ClimbCommandGroup(7950);
-		td = new TofDrive();
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
 
 		m_chooser.addOption("Default Auto", null);
-		m_chooser.addOption("My Auto", new Segment1());
+		// m_chooser.addOption("My Auto", new Segment1());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -104,7 +100,7 @@ public class Robot extends TimedRobot {
 		gyroSwerveDrive.driveStraight(0);
 		climber.climb(0);
 
-		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
+		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder();
 		RobotMap.armRight.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.lift2.getSensorCollection().setQuadraturePosition(0, 10);
 		RobotMap.climber.getSensorCollection().setQuadraturePosition(0, 10);
@@ -132,7 +128,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) m_autonomousCommand.cancel();
 
 
-		for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
+		// for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].speedMotor.getEncoder().setPosition(0);
 
 		// Robot.tg.trajectory0();
 		// System.out.println("trajectory0 written");
