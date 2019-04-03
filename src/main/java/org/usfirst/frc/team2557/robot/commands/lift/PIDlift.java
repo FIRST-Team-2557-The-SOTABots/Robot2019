@@ -67,6 +67,9 @@ public class PIDlift extends Command {
 		// double p = SmartDashboard.getNumber("Plift", RobotMap.multplift);
 		// double i = SmartDashboard.getNumber("Ilift", RobotMap.multilift);
 		// double d = SmartDashboard.getNumber("Dlift", RobotMap.multdlift);
+		if(Robot.m_oi.joystick2.getPOV() == 270){
+			pidcontroller.setSetpoint(target + 20000);
+		}
 		pidcontroller.setP(SmartDashboard.getNumber("Plift", RobotMap.multplift) * factor);
 		pidcontroller.setI(SmartDashboard.getNumber("Ilift", RobotMap.multilift) * factor);
 		pidcontroller.setD(SmartDashboard.getNumber("Dlift", RobotMap.multdlift) * factor);

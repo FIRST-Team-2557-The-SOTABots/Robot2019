@@ -33,6 +33,7 @@ public class IntakeTrigger extends Command {
       }else if(mtrl > 0.2){
         RobotMap.dsIntake.set(Value.kForward);
         Robot.intake.speed(-mtrl);
+        // Robot.gyroSwerveDrive.driveStraight(0.15);
       }
     }else if(Robot.m_oi.joystick2.getPOV() == 135){
       Robot.intake.speed(0.9);
