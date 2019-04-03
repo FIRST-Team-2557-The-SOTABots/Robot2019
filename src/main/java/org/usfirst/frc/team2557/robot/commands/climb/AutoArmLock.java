@@ -1,33 +1,32 @@
-package org.usfirst.frc.team2557.robot.commands.arm;
+package org.usfirst.frc.team2557.robot.commands.climb;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmWithAxis extends Command {
-  public ArmWithAxis() {
+public class AutoArmLock extends Command {
+  boolean lock;
+  public AutoArmLock(boolean lock) {
     requires(Robot.arm);
+    this.lock = lock;
   }
 
   @Override
   protected void initialize() {
     Robot.arm.arm(0);
-    if(Robot.defaultUnlockArm){ RobotMap.dsArmLock.set(Value.kForward); }
   }
 
   @Override
   protected void execute() {
-    double power = Robot.m_oi.joystick2.getRawAxis(1);
-    if(power > -RobotMap.JOYSTICK_DEADBAND && power < RobotMap.JOYSTICK_DEADBAND){
-      power = 0.0;
-    }
-    Robot.arm.arm(power * 0.8); // make arm slower for user to not break things
+    if(lock) RobotMap.dsArmLock.set(Value.kReverse); 
+    else RobotMap.dsArmLock.set(Value.kForward);
   }
 
   @Override
   protected boolean isFinished() {
-    return false;
+    if(lock) return RobotMap.dsArmLock.get() == Value.kReverse;
+    else return RobotMap.dsArmLock.get() == Value.kForward;
   }
 
   @Override

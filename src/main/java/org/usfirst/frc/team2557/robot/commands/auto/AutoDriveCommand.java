@@ -1,14 +1,13 @@
 package org.usfirst.frc.team2557.robot.commands.auto;
 
 import java.io.File;
-
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
-import jaci.pathfinder.modifiers.SwerveModifier;
 
 public class AutoDriveCommand extends Command {
   String name;
@@ -23,7 +22,6 @@ public class AutoDriveCommand extends Command {
     this.name = name;
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     follower = new EncoderFollower[4];
@@ -46,25 +44,37 @@ public class AutoDriveCommand extends Command {
     follower[2] = new EncoderFollower(bl);
     follower[3] = new EncoderFollower(fl);
     
-    RobotMap.gyro.reset();
     for(int i = 0; i < 4; i++){
       follower[i].reset();
-      follower[i].configureEncoder(0, (int) (RobotMap.SWERVE_ENC_CIRC * 1000), RobotMap.SWERVE_WHEEL_DIAMETER);
+      follower[i].configureEncoder((int) (1000* RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()), (int) (1000* 5.41), RobotMap.SWERVE_WHEEL_DIAMETER);
       follower[i].configurePIDVA(1, 0, 0, 1/RobotMap.MAX_VEL, RobotMap.MAX_ACC);
     }
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  double[] angle;
+  double[] speed;
   @Override
   protected void execute() {
+    angle = new double[4];
+    speed = new double[4];
     for(int i = 0; i < 4; i++){
-      double output = follower[i].calculate((int) (RobotMap.swerveMod[i].encoder.pidGet() * 1000));
-      double heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()));
-      RobotMap.swerveMod[i].drive(output, heading);
+      speed[i] = follower[i].calculate((int) (1000 *RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition()));
+      angle[i] = Pathfinder.boundHalfDegrees(Pathfinder.r2d(follower[i].getHeading()))*RobotMap.SWERVE_ENC_CIRC/360;
+      // angle[i] = follower[i].getHeading();
     }
+
+    SmartDashboard.putNumberArray("drive angles", angle);
+    SmartDashboard.putNumberArray("drive speeds", speed);
+    // Robot.gyroSwerveDrive.autoDrive(angle, speed);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  public double getOppositeAngle(int heading){
+    double opp = heading;
+    if(opp < RobotMap.SWERVE_ENC_CIRC/2) opp += RobotMap.SWERVE_ENC_CIRC/2;
+    else opp -= RobotMap.SWERVE_ENC_CIRC/2;
+    return opp;
+  }
+
   @Override
   protected boolean isFinished() {
     for(int i = 0; i < 4; i++){
@@ -76,20 +86,13 @@ public class AutoDriveCommand extends Command {
     // return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
-    for(int i = 0; i < 4; i++){
-      RobotMap.swerveMod[i].drive(0, 0);
-    }
+    for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, 0);
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    for(int i = 0; i < 4; i++){
-      RobotMap.swerveMod[i].drive(0, 0);
-    }
+    for(int i = 0; i < 4; i++) RobotMap.swerveMod[i].drive(0, 0);
   }
 }

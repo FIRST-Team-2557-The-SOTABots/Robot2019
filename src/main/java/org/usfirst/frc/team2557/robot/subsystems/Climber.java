@@ -1,34 +1,31 @@
 package org.usfirst.frc.team2557.robot.subsystems;
 
-import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-import org.usfirst.frc.team2557.robot.commands.climb.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Climber extends Subsystem {
-
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ClimbCommandGroup());
   }
 
-  public void climb(){
-    //  dydoes all retract
-    if(Robot.m_oi.dy.get()){
-      RobotMap.ds8inch.set(Value.kForward);
-      RobotMap.ds12inch.set(Value.kForward);
+  public void lock(boolean yes){
+    if(yes){
+      if(RobotMap.dsClimbLock.get() != Value.kForward){
+        RobotMap.dsClimbLock.set(Value.kForward);
+      }
+    }else{
+      if(RobotMap.dsClimbLock.get() != Value.kReverse){
+        RobotMap.dsClimbLock.set(Value.kReverse);
+      }
     }
-    //dstart does 12" extrude
-    if(Robot.m_oi.start.get()){
-      RobotMap.ds12inch.set(Value.kReverse);
-    }
-    //dback does  8" extrude
-    if(Robot.m_oi.back.get()){
-      RobotMap.ds8inch.set(Value.kReverse);
-    }
+  }
+
+  public void climb(double power){
+    RobotMap.climber.set (power * RobotMap.climberEncoderDirection);
   }
 
   public void cancel() {
+    RobotMap.climber.set (0);
   }
 }
