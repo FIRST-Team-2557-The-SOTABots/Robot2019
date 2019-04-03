@@ -7,7 +7,6 @@ import org.usfirst.frc.team2557.robot.commands.auto.segments.Segment1;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
 import org.usfirst.frc.team2557.robot.commands.drive.TofDrive;
-import org.usfirst.frc.team2557.robot.commands.drive.VisionDriveStraightOn;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
@@ -15,10 +14,6 @@ import org.usfirst.frc.team2557.robot.subsystems.Climber;
 import org.usfirst.frc.team2557.robot.subsystems.GyroSwerveDrive;
 import org.usfirst.frc.team2557.robot.subsystems.Intake;
 import org.usfirst.frc.team2557.robot.subsystems.Lift;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -44,7 +39,6 @@ public class Robot extends TimedRobot {
 	PIDlift mb;
 	PIDlift my;
 	PIDlift mx;
-	VisionDriveStraightOn vdso;
 	VisionWithGyro vwg;
 	ClimbCommandGroup c3;
 	RetractClimb rc;
@@ -81,7 +75,6 @@ public class Robot extends TimedRobot {
 		mb = new PIDlift(RobotMap.midPos);
 		my = new PIDlift(RobotMap.highPos);
 		mx = new PIDlift(RobotMap.xPos);
-		vdso = new VisionDriveStraightOn();
 		vwg = new VisionWithGyro();
 		c3 = new ClimbCommandGroup(16500);
 		rc = new RetractClimb();

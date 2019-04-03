@@ -180,7 +180,5 @@ public class RobotMap {
 
 		gyro = new AHRS(SPI.Port.kMXP);
 		serial = new SerialPort(9600, SerialPort.Port.kUSB);
-
-		dsArmLock.clearAllPCMStickyFaults(1);
 	}
 }
