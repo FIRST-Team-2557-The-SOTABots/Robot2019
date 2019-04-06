@@ -8,9 +8,12 @@ public class Climb extends Command {
 	double enc;
 	double power;
 
-	public Climb(double enc, double power) {
+	public Climb(int enc, double power) {
+		if(enc == 3)this.enc = RobotMap.climbHigh;
+		else if(enc == 2)this.enc = RobotMap.climbLow;
+		else this.enc= RobotMap.climbRetract;
+
 		requires(Robot.climber);
-		this.enc = enc;
 		this.power = power;
 	}
 

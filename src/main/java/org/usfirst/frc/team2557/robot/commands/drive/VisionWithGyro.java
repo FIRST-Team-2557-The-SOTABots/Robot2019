@@ -17,7 +17,7 @@ public class VisionWithGyro extends Command {
 
   double pixels_height = 240;
   double pixels_width = 320;
-  double fwd = 0.2;
+  double fwd = -0.2 * RobotMap.driveDirection;
   double fwdCmp = 0;
 
   PIDController pidcontrollerrot;
@@ -104,7 +104,7 @@ public class VisionWithGyro extends Command {
 		}, new PIDOutput(){
 			@Override
 			public void pidWrite(double output) {
-        outputs = output;
+        outputs = -output * RobotMap.driveDirection;
 			}
 		});
 		pidcontrollerstr.setOutputRange(-1, 1);
@@ -129,19 +129,19 @@ public class VisionWithGyro extends Command {
       SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
       if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 
           || Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) 
-              Robot.gyroSwerveDrive.drive(outputs, fwdCmp, outputr);
-      else Robot.gyroSwerveDrive.drive(0, 0, outputr);
+              Robot.gyroSwerveDrive.drive(outputs, fwdCmp, -outputr * RobotMap.driveDirection);
+      else Robot.gyroSwerveDrive.drive(0, 0, -outputr * RobotMap.driveDirection);
     }
     if(Robot.m_oi.da.get()){
-      angleTarget = 27.5;
+      angleTarget = 28.77;
     }else if(Robot.m_oi.db.get()){
-      angleTarget = 152.5;
+      angleTarget = 151.23;
     }else if(Robot.m_oi.dx.get()){
-      angleTarget = 330;
+      angleTarget = 331.23;
     }else if(Robot.m_oi.dy.get()){
-      angleTarget = 206;
+      angleTarget = 208.77;
     }else if(Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
-      angleTarget = 180;
+      angleTarget = 180.0;
     }
     pidcontrollerrot.setSetpoint(angleTarget);
     SmartDashboard.putNumber("angleTarget vision", angleTarget);

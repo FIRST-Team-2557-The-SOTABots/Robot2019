@@ -13,10 +13,12 @@ public class ClimbByGyro extends Command {
   PIDController pidcontroller;
   double target;
 
-	public ClimbByGyro(double target) {
-		this.target = target;
+	public ClimbByGyro(int target) {
+		if(target == 3)this.target = RobotMap.climbHigh;
+		else if(target == 2)this.target = RobotMap.climbLow;
+		else this.target= RobotMap.climbRetract;
 		requires(Robot.lift);
-		pidcontroller = new PIDController(0.12,0.0,0, new PIDSource(){
+		pidcontroller = new PIDController(0.275,0.00,0, new PIDSource(){
 			@Override
 			public PIDSourceType getPIDSourceType() {
 				return PIDSourceType.kDisplacement;
@@ -47,6 +49,16 @@ public class ClimbByGyro extends Command {
 	}
 	
 	protected void execute(){
+		if(target == 3 || target == 0) {
+			pidcontroller.setP(RobotMap.kPch);
+			pidcontroller.setP(RobotMap.kIch);
+			pidcontroller.setP(RobotMap.kDch);
+		}else if(target == 2) {
+			pidcontroller.setP(RobotMap.kPcl);
+			pidcontroller.setP(RobotMap.kIcl);
+			pidcontroller.setP(RobotMap.kDcl);
+		}
+
 		if(Robot.m_oi.dstart.get() || Robot.m_oi.joystick1.getPOV() == 0){
 			pidcontroller.enable();
 		}else{

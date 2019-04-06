@@ -54,8 +54,8 @@ public class Robot extends TimedRobot {
 
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
-		RobotMap.arduino.put("ToFL", 0);
-		RobotMap.arduino.put("ToFR", 0);
+		// RobotMap.arduino.put("ToFL", 0);
+		// RobotMap.arduino.put("ToFR", 0);
 
 		// tg = new TrajectoryGenerator();
 		gyroSwerveDrive = new GyroSwerveDrive();
@@ -73,9 +73,9 @@ public class Robot extends TimedRobot {
 		my = new PIDlift(RobotMap.highPos);
 		mx = new PIDlift(RobotMap.xPos);
 		vwg = new VisionWithGyro();
-		c3 = new ClimbCommandGroup(16500);
+		c3 = new ClimbCommandGroup(RobotMap.climb3);
 		rc = new RetractClimb();
-		c2 = new ClimbCommandGroup(7950);
+		c2 = new ClimbCommandGroup(RobotMap.climb2);
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
 
@@ -258,6 +258,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void smartdashboarding(){
+		System.out.println(RobotMap.swerveMod[0].encoder.pidGet());
 		SmartDashboard.putNumber("Pitch", RobotMap.gyro.getPitch());
 		SmartDashboard.putBoolean("dsArmLock", RobotMap.dsArmLock.get() == Value.kReverse);
 		SmartDashboard.putNumber("Gyro", RobotMap.gyro.getAngle());

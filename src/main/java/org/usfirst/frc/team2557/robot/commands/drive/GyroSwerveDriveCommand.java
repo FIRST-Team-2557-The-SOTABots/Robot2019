@@ -41,7 +41,7 @@ public class GyroSwerveDriveCommand extends Command {
     // if(triggerRight > 0.2) axis4 = -triggerRight;
     // else if(triggerLeft > 0.2) axis4 = triggerLeft;
 
-    if(axis0 != 0 || axis1 != 0 || axis4 != 0 /* || triggerLeft != 0 || triggerRight != 0*/) Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*rotMult);
+    if(axis0 != 0 || axis1 != 0 || axis4 != 0 /* || triggerLeft != 0 || triggerRight != 0*/) Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, axis4*rotMult*0.7);
     else Robot.gyroSwerveDrive.gyroDriveAngle();
   }
 
