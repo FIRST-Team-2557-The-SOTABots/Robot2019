@@ -104,10 +104,10 @@ public class RobotMap {
 	public static int climb3 = 3;
 	public static int climb2 = 2;
 	public static int climb0 = 0;
-	public static double kPch = 0.15;
+	public static double kPch = 0.15; // 0.001==kinda bad
 	public static double kIch = 0.00;
 	public static double kDch = 0.00;
-	public static double kPcl = 0.3;
+	public static double kPcl = 0.25; //?
 	public static double kIcl = 0.00;
 	public static double kDcl = 0.00;
 

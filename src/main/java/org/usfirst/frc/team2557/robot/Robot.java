@@ -258,7 +258,8 @@ public class Robot extends TimedRobot {
 	}
 
 	public void smartdashboarding(){
-		System.out.println(RobotMap.swerveMod[0].encoder.pidGet());
+		// System.out.println(RobotMap.swerveMod[0].encoder.pidGet());
+		System.out.println(RobotMap.lift2.getSensorCollection().getQuadraturePosition());
 		SmartDashboard.putNumber("Pitch", RobotMap.gyro.getPitch());
 		SmartDashboard.putBoolean("dsArmLock", RobotMap.dsArmLock.get() == Value.kReverse);
 		SmartDashboard.putNumber("Gyro", RobotMap.gyro.getAngle());
