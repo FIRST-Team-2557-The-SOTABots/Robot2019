@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2557.robot.commands.drive;
 
+import com.sun.org.apache.xpath.internal.operations.Mult;
+
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,9 +33,13 @@ public class GyroSwerveDriveCommand extends Command {
     if (axis5 < RobotMap.JOYSTICK_DEADBAND && axis5 > -RobotMap.JOYSTICK_DEADBAND) axis5 = 0.0;
     // if (triggerLeft < RobotMap.TRIGGER_DEADBAND && triggerLeft > -RobotMap.TRIGGER_DEADBAND) triggerLeft = 0;
     // if (triggerRight < RobotMap.TRIGGER_DEADBAND && triggerRight > -RobotMap.TRIGGER_DEADBAND) triggerRight = 0;
-
     double mult = 0.7;
     double rotMult = 0.35;
+    if (Robot.m_oi.dterribleRight.get()) rotMult = 1.0;
+    else rotMult = 0.35;
+    if (Robot.m_oi.dterribleLeft.get()) mult = 1.0;
+    else mult = 0.7;
+
     if(Robot.m_oi.dbumperLeft.get()) {
       mult = 0.2;
       rotMult = 0.2;
