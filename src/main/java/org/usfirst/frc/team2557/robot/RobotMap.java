@@ -40,9 +40,9 @@ public class RobotMap {
 	public static double armForCargo = 6650;
 	public static double armIntake = 4550;
 	public static double TofDistance = 1397;
-	public static double kP = 0.7;
+	public static double kP = 0.85;
 	public static double SWERVE_ENC_CIRC = 4.94;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {2.330, 2.792, 3.486, 1.98};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.291259531, 2.792, 3.496093392, 2.021484168}; //2.291259531,0.269775363,3.496093392,2.021484168 //2.29, 2.807, 3.486, 1.98
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP, 0.0, 0.0}, {kP, 0.0, 0.0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, true, false, false};
 	public static double pidarmStall = 0.05;
@@ -52,6 +52,9 @@ public class RobotMap {
 	public static double kProt = 0.0025;
 	public static double kIrot = 0.0000175;
 	public static double kDrot = 0.0000;
+	public static double kProtBig = 0.0025;
+	public static double kIrotBig = 0.0000;
+	public static double kDrotBig = 0.0000;
 	public static double tolerance = 0.01;
 	public static double kPstr = 0.0074;
 	public static double kIstr = 0.000000125;

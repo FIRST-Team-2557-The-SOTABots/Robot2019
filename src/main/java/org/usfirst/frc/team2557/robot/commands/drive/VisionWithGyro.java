@@ -122,16 +122,43 @@ public class VisionWithGyro extends Command {
 
   @Override
   protected void execute() {
-    if(Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
+    if(Math.abs(pidcontrollerrot.getError()) > 5.0){
+      pidcontrollerrot.setPID(RobotMap.kProtBig, RobotMap.kIrotBig,RobotMap.kDrotBig);
+      System.out.println("BIG Anegle");
+    }else{
+      pidcontrollerrot.setPID(RobotMap.kProt, RobotMap.kIrot,RobotMap.kDrot);
+      System.out.println("SMALL Anegle");
+    }
+
+    if(Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5 || 
+          Robot.m_oi.da.get() || Robot.m_oi.db.get() || Robot.m_oi.dx.get() || Robot.m_oi.dy.get()){
       getCamData();
       getForward();
       SmartDashboard.putNumber("vision rot output", pidcontrollerrot.get());
       SmartDashboard.putNumber("Vision str output", pidcontrollerstr.get());
+
+
       if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) 
               Robot.gyroSwerveDrive.drive(outputs, -fwdCmp * RobotMap.driveDirection, -outputr * RobotMap.driveDirection);
-      else Robot.gyroSwerveDrive.drive(0, -fwdCmp * RobotMap.driveDirection, -outputr * RobotMap.driveDirection);
+      else if(Robot.m_oi.da.get() || Robot.m_oi.db.get() || Robot.m_oi.dx.get() || Robot.m_oi.dy.get()) {
+        double axis0 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(0);
+        double axis1 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(1);
+        double Rad1 = Math.sqrt(Math.pow(axis0, 2) + Math.pow(axis1, 2));
+        if (Rad1 < RobotMap.JOYSTICK_DEADBAND) { axis0 = 0.0; axis1 = 0.0; }
+        double mult = 0.7;
+        if (Rad1 > 1 - RobotMap.JOYSTICK_DEADBAND || Robot.m_oi.dterribleLeft.get()) mult = 1.0;
+        else mult = 0.7;
+        if(Robot.m_oi.dbumperLeft.get()) {
+          mult = 0.2;
+        }
+        if(axis0 != 0 || axis1 != 0) Robot.gyroSwerveDrive.gyroDrive(axis0*mult, axis1*mult, -outputr * RobotMap.driveDirection);
+        else Robot.gyroSwerveDrive.gyroDrive(0, 0, -outputr * RobotMap.driveDirection);
+      } else Robot.gyroSwerveDrive.drive(0, -fwdCmp * RobotMap.driveDirection, -outputr * RobotMap.driveDirection);
     }
-    if(Robot.m_oi.da.get()){
+
+    if(Robot.m_oi.da.get() && Robot.m_oi.dx.get()){
+      angleTarget = 0;
+    }else if(Robot.m_oi.da.get()){
       angleTarget = 28.77;
     }else if(Robot.m_oi.db.get()){
       angleTarget = 151.23;
@@ -141,7 +168,24 @@ public class VisionWithGyro extends Command {
       angleTarget = 208.77;
     }else if(Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
       angleTarget = 180.0;
-    }
+    }//else if(Robot.m_oi.dx.get() && Robot.m_oi.da.get()){
+      //angleTarget = 0.0;
+    //}
+
+    // if(Robot.m_oi.da.get()){
+    //   angleTarget = 28.77;
+    // }else if(Robot.m_oi.db.get()){
+    //   angleTarget = 151.23;
+    // }else if(Robot.m_oi.dx.get()){
+    //   angleTarget = 331.23;
+    // }else if(Robot.m_oi.dy.get()){
+    //   angleTarget = 208.77;
+    // }else if(Robot.m_oi.joystick1.getRawAxis(2) > 0.5){
+    //   angleTarget = 180.0;
+    // }//else if(Robot.m_oi.dx.get() && Robot.m_oi.da.get()){
+    //   //angleTarget = 0.0;
+    // //}
+
     pidcontrollerrot.setSetpoint(angleTarget);
     SmartDashboard.putNumber("angleTarget vision", angleTarget);
     SmartDashboard.putNumber("angle setpoint vision", pidcontrollerrot.getSetpoint());
