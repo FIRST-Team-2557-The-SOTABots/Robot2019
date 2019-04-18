@@ -25,6 +25,7 @@ public class GyroSwerveDrive extends Subsystem {
 
     for(int i = 0; i < 4; i++) {
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+        SmartDashboard.putNumber("Speed" + i, speed[i]);
     }
   }
 
@@ -46,6 +47,8 @@ public class GyroSwerveDrive extends Subsystem {
     setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
+        SmartDashboard.putNumber("Speed", speed[i]);
+        // SmartDashboard.putNumber("", speed[i]);
     }
   }
 

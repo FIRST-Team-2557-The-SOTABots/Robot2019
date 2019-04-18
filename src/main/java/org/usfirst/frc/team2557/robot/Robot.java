@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
 	public static boolean defaultUnlockArm;
 	
 	boolean prevArm;
+	boolean prevClimbWas3;
 	String str = "";
 	ArrayList<String> list = new ArrayList<String>();
 	boolean climbed;
@@ -39,7 +40,8 @@ public class Robot extends TimedRobot {
 	PIDlift mx;
 	VisionWithGyro vwg;
 	ClimbCommandGroup c3;
-	RetractClimb rc;
+	RetractClimb rc3;
+	RetractClimb rc2;
 	ClimbCommandGroup c2;
 	PIDarm pidarm;
 	ArmWithAxis awa;
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
 		prevArm = false;
 		defaultUnlockArm = false;
 		climbed = false;
+		prevClimbWas3 = true;
 
 		// NOTE: RobotMap MUST be initialized before subsystems
 		RobotMap.init();
@@ -74,7 +77,8 @@ public class Robot extends TimedRobot {
 		mx = new PIDlift(RobotMap.xPos);
 		vwg = new VisionWithGyro();
 		c3 = new ClimbCommandGroup(RobotMap.climb3);
-		rc = new RetractClimb();
+		rc3 = new RetractClimb(RobotMap.climb03);
+		rc2 = new RetractClimb(RobotMap.climb02);
 		c2 = new ClimbCommandGroup(RobotMap.climb2);
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
@@ -82,6 +86,12 @@ public class Robot extends TimedRobot {
 		m_chooser.addOption("Default Auto", null);
 		// m_chooser.addOption("My Auto", new Segment1());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
+		for(int i = 0; i < 4; i++){
+			RobotMap.swerveMod[i].speedMotor.setSmartCurrentLimit(40);
+			RobotMap.swerveMod[i].speedMotor.setClosedLoopRampRate(0.15);
+			RobotMap.swerveMod[i].speedMotor.setOpenLoopRampRate(0.15);
+		}
 	}
 
 	@Override
@@ -153,22 +163,30 @@ public class Robot extends TimedRobot {
 	public void driverClimb(){
 		if(Robot.m_oi.joystick1.getPOV() == 90){
 			climber.lock(false);
-		}else if(m_oi.dback.get()){
-			rc.start();
+		}else if(m_oi.dback.get() /* && RobotMap.climber */){ // ** ?? //
+			if(prevClimbWas3){
+				rc3.start();
+			}else{
+				rc2.start();
+			}
 			c3.cancel();
 		}else if(Robot.m_oi.joystick1.getPOV() == 0){
 			c2.start();
+			prevClimbWas3 = false;
 		}else if(m_oi.dstart.get()){
 			c3.start();
+			prevClimbWas3 = true;
 		}else if(Robot.m_oi.joystick1.getPOV() == 270){
 			c3.cancel();
-			rc.cancel();
+			rc2.cancel();
+			rc3.cancel();
 			c2.cancel();
 			climber.lock(false);
 			RobotMap.climber.set (RobotMap.climberEncoderDirection * 0.75);
 		}else{
 			c3.cancel();
-			rc.cancel();
+			rc2.cancel();
+			rc3.cancel();
 			c2.cancel();
 			climber.lock(true);
 			RobotMap.climber.set (0);
@@ -273,6 +291,8 @@ public class Robot extends TimedRobot {
 		for (int i = 0; i < 4; i++) {
 			SmartDashboard.putNumber("SwerveMod" + i, RobotMap.swerveMod[i].encoder.pidGet());
 			SmartDashboard.putNumber("Spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+			SmartDashboard.putNumber(("Spark but the power volts"+ i), RobotMap.swerveMod[i].speedMotor.getBusVoltage());
+			SmartDashboard.putNumber(("Spark but the power amps" + i), RobotMap.swerveMod[i].speedMotor.getOutputCurrent());
 		}
 	}
 

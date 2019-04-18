@@ -4,14 +4,16 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Climb extends Command {
+public class Climb extends Command { // ** ?? //
 	double enc;
 	double power;
 
 	public Climb(int enc, double power) {
 		if(enc == 3)this.enc = RobotMap.climbHigh;
 		else if(enc == 2)this.enc = RobotMap.climbLow;
-		else this.enc= RobotMap.climbRetract;
+		else if(enc == 0)this.enc = RobotMap.climbRetract3;
+		else if(enc == 1)this.enc = RobotMap.climbRetract2;
+		// else this.enc= RobotMap.climbRetract;
 
 		requires(Robot.climber);
 		this.power = power;
@@ -21,6 +23,8 @@ public class Climb extends Command {
 		RobotMap.climber.set (0);
 		Robot.climber.lock(true); // default lock
 		// Robot.climber.lock(false); // unlocked CAREFUL
+
+		if(enc == RobotMap.climb03 || enc == RobotMap.climb02) RobotMap.climber.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
 	protected void execute(){
@@ -35,6 +39,8 @@ public class Climb extends Command {
 			Robot.climber.lock(true);
 		}
 		System.out.println("climber climbing");
+
+		if((Robot.m_oi.dstart.get() || Robot.m_oi.dback.get() || Robot.m_oi.joystick1.getPOV() == 0) && power  > 0) Robot.climber.lock(false);
 	}
 
 	protected boolean isFinished() {

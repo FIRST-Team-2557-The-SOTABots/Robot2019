@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
-public class ClimbByGyro extends Command {
+public class ClimbByGyro extends Command { 
   PIDController pidcontroller;
   double target;
   double p;
@@ -18,8 +18,8 @@ public class ClimbByGyro extends Command {
 
 	public ClimbByGyro(int target) {
 		if(target == 3)this.target = RobotMap.climbHigh;
-		else if(target == 2)this.target = RobotMap.climbLow;
-		else this.target= RobotMap.climbRetract;
+		else if(target == 2)this.target = RobotMap.climbLow; 
+		// else this.tar++get= RobotMap.climbRetract;
 		if(target == 3 || target == 0) {
 			p = (RobotMap.kPch);
 			i = (RobotMap.kIch);

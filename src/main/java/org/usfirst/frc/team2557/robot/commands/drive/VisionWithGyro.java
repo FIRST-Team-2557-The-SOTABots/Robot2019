@@ -139,7 +139,7 @@ public class VisionWithGyro extends Command {
 
 
       if(valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5)) 
-              Robot.gyroSwerveDrive.drive(outputs, -fwdCmp * RobotMap.driveDirection, -outputr * RobotMap.driveDirection);
+              Robot.gyroSwerveDrive.drive(outputs, fwdCmp * RobotMap.driveDirection, -outputr * RobotMap.driveDirection);
       else if(Robot.m_oi.da.get() || Robot.m_oi.db.get() || Robot.m_oi.dx.get() || Robot.m_oi.dy.get()) {
         double axis0 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(0);
         double axis1 = RobotMap.driveMult * Robot.m_oi.joystick1.getRawAxis(1);
