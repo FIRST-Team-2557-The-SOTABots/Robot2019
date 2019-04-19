@@ -250,38 +250,38 @@ public class Robot extends TimedRobot {
 		} else mx.cancel();
 	}
 
-	public void readTofs(){
-		if (RobotMap.serial.getBytesReceived() == 0) return;
+	// public void readTofs(){
+	// 	if (RobotMap.serial.getBytesReceived() == 0) return;
 
-		str += RobotMap.serial.readString();
-		while (str.indexOf('\n') != -1) {
-			list.add(str.substring(0, str.indexOf('\n')));
-			str = str.substring(str.indexOf('\n') + 1);
-		}
+	// 	str += RobotMap.serial.readString();
+	// 	while (str.indexOf('\n') != -1) {
+	// 		list.add(str.substring(0, str.indexOf('\n')));
+	// 		str = str.substring(str.indexOf('\n') + 1);
+	// 	}
 
-		for (int i = 0; i < list.size(); i++) {
-			String temp = list.get(i);
-			for (String key : RobotMap.arduino.keySet()) {
-				if (temp.contains(key)) {
-					String[] arr = temp.split(key);
-					parseNumber(arr[1], 0, key);
-				}
-			}
-			list.remove(i);
-		}
-		RobotMap.tofAngle = Math.toDegrees(Math.atan2((RobotMap.arduino.get("ToFR") - RobotMap.arduino.get("ToFL")),RobotMap.TofDistance));
-		RobotMap.tofAngle = (Math.round(RobotMap.tofAngle*100))/100.0;
+	// 	for (int i = 0; i < list.size(); i++) {
+	// 		String temp = list.get(i);
+	// 		for (String key : RobotMap.arduino.keySet()) {
+	// 			if (temp.contains(key)) {
+	// 				String[] arr = temp.split(key);
+	// 				parseNumber(arr[1], 0, key);
+	// 			}
+	// 		}
+	// 		list.remove(i);
+	// 	}
+	// 	RobotMap.tofAngle = Math.toDegrees(Math.atan2((RobotMap.arduino.get("ToFR") - RobotMap.arduino.get("ToFL")),RobotMap.TofDistance));
+	// 	RobotMap.tofAngle = (Math.round(RobotMap.tofAngle*100))/100.0;
 
-		SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
-	}
+	// 	SmartDashboard.putString("tof values", RobotMap.arduino.values().toString());
+	// }
 
 	public void smartdashboarding(){
-		SmartDashboard.putNumber("Pitch", RobotMap.gyro.getPitch());
+		// SmartDashboard.putNumber("Pitch", RobotMap.gyro.getPitch());
 		SmartDashboard.putBoolean("dsArmLock", RobotMap.dsArmLock.get() == Value.kReverse);
 		SmartDashboard.putNumber("Gyro", RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
-		SmartDashboard.putNumber("Arm axis", m_oi.joystick2.getRawAxis(1));
-		SmartDashboard.putNumber("Lift axis", m_oi.joystick2.getRawAxis(5));
+		// SmartDashboard.putNumber("Arm target", RobotMap.armTarget);
+		// SmartDashboard.putNumber("Arm axis", m_oi.joystick2.getRawAxis(1));
+		// SmartDashboard.putNumber("Lift axis", m_oi.joystick2.getRawAxis(5));
 		SmartDashboard.putBoolean("Touch cargo1", RobotMap.cargo.get());
 		SmartDashboard.putBoolean("Touch cargo2", RobotMap.cargo2.get());
 		SmartDashboard.putNumber("Arm enc", RobotMap.armRight.getSensorCollection().getQuadraturePosition());
@@ -290,20 +290,20 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("dsClimbLock", RobotMap.dsClimbLock.get() == Value.kForward);
 		for (int i = 0; i < 4; i++) {
 			SmartDashboard.putNumber("SwerveMod" + i, RobotMap.swerveMod[i].encoder.pidGet());
-			SmartDashboard.putNumber("Spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
-			SmartDashboard.putNumber(("Spark but the power volts"+ i), RobotMap.swerveMod[i].speedMotor.getBusVoltage());
+			// SmartDashboard.putNumber("Spark" + i, RobotMap.swerveMod[i].speedMotor.getEncoder().getPosition());
+			// SmartDashboard.putNumber(("Spark but the power volts"+ i), RobotMap.swerveMod[i].speedMotor.getBusVoltage());
 			SmartDashboard.putNumber(("Spark but the power amps" + i), RobotMap.swerveMod[i].speedMotor.getOutputCurrent());
 		}
 	}
 
-	public void parseNumber(String str, int num, String key){
-		if(str.length() != 0){
-			num *= 10;
-			parseNumber(str.substring(1), num + str.charAt(0) - 48, key);
-		}else{
-			RobotMap.arduino.put(key,((int) Math.round((num *0.5 + RobotMap.arduino.get(key)*0.5)/10))*10);
-		}
-  	}
+	// public void parseNumber(String str, int num, String key){
+	// 	if(str.length() != 0){
+	// 		num *= 10;
+	// 		parseNumber(str.substring(1), num + str.charAt(0) - 48, key);
+	// 	}else{
+	// 		RobotMap.arduino.put(key,((int) Math.round((num *0.5 + RobotMap.arduino.get(key)*0.5)/10))*10);
+	// 	}
+  	// }
 
 	@Override
 	public void testPeriodic() {

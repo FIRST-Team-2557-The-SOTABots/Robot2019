@@ -2,13 +2,11 @@ package org.usfirst.frc.team2557.robot.commands.drive;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TofDrive extends Command {
   double fwd = 0.1;
@@ -70,19 +68,10 @@ public class TofDrive extends Command {
     getForward();
     getAngle();
     midrot = angle;
-
-    SmartDashboard.putNumber("climb rot input", midrot);
-    SmartDashboard.putNumber("climb rot output", pidcontrollerrot.get());
-    // SmartDashboard.putNumber("climb angle", angle);
-    // SmartDashboard.putNumber("climb tofr", tofr);
-    // SmartDashboard.putNumber("climb tofl", tofl);
-
     Robot.gyroSwerveDrive.drive(0, fwdCmp, -outputrot);
   }
 
   private void getAngle() {
-    // tofr = RobotMap.arduino.get("ToFR");
-    // tofl = RobotMap.arduino.get("ToFL");
     angle = RobotMap.tofAngle;
   }
 

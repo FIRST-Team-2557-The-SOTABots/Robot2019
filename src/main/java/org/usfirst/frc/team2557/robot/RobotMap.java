@@ -89,7 +89,7 @@ public class RobotMap {
 	public static double A = -273000;
 	public static double X = -345000;
 	public static double backY = 518000;
-	public static double backB = 203000;
+	public static double backB = 147000;
 	public static double backA = -117000;
 	public static double backX = 80000;
 	public static double armClimb = 4400;
@@ -98,7 +98,7 @@ public class RobotMap {
 	public static double TofDistance = 1635;
 	public static double kP = 1;
 	public static double SWERVE_ENC_CIRC = 4.927;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {0.7, 4.72, 3.2825, 3.456}; //.
+	public static final double[] SWERVE_SETPOINT_OFFSET = {0.7, 4.72, 3.2825, 3.456};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};
 	public static double pidarmStall = 0.054;

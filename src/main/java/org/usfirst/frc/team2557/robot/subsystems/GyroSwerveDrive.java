@@ -25,7 +25,6 @@ public class GyroSwerveDrive extends Subsystem {
 
     for(int i = 0; i < 4; i++) {
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
-        SmartDashboard.putNumber("Speed" + i, speed[i]);
     }
   }
 
@@ -47,8 +46,6 @@ public class GyroSwerveDrive extends Subsystem {
     setSetpoints(rot); 
     for(int i = 0; i < 4; i++) {
         RobotMap.swerveMod[i].drive(speed[i], angle[i]);
-        SmartDashboard.putNumber("Speed", speed[i]);
-        // SmartDashboard.putNumber("", speed[i]);
     }
   }
 
@@ -59,16 +56,16 @@ public class GyroSwerveDrive extends Subsystem {
   }
 
   public void gyroDriveAngle(){
-    if(Robot.m_oi.dterribleRight.get()){
-      angle[0] = RobotMap.SWERVE_SETPOINT_OFFSET[0] - (RobotMap.SWERVE_ENC_CIRC/8); 
-      angle[1] = RobotMap.SWERVE_SETPOINT_OFFSET[1] + (RobotMap.SWERVE_ENC_CIRC/8);
-      angle[2] = RobotMap.SWERVE_SETPOINT_OFFSET[2] - (RobotMap.SWERVE_ENC_CIRC/8);
-      angle[3] = RobotMap.SWERVE_SETPOINT_OFFSET[3] + (RobotMap.SWERVE_ENC_CIRC/8);
-    }
+    // if(Robot.m_oi.dterribleRight.get()){
+    //   angle[0] = RobotMap.SWERVE_SETPOINT_OFFSET[0] - (RobotMap.SWERVE_ENC_CIRC/8); 
+    //   angle[1] = RobotMap.SWERVE_SETPOINT_OFFSET[1] + (RobotMap.SWERVE_ENC_CIRC/8);
+    //   angle[2] = RobotMap.SWERVE_SETPOINT_OFFSET[2] - (RobotMap.SWERVE_ENC_CIRC/8);
+    //   angle[3] = RobotMap.SWERVE_SETPOINT_OFFSET[3] + (RobotMap.SWERVE_ENC_CIRC/8);
+    // }
     for(int i = 0; i < 4; i++) {
-      if(Robot.m_oi.dterribleRight.get()){
-        speed[i] = 0.0;
-      }
+      // if(Robot.m_oi.dterribleRight.get()){
+      //   // speed[i] = 0.0;
+      // }
       RobotMap.swerveMod[i].drive(0, angle[i]);
     }
   }

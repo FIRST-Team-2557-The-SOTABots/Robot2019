@@ -26,13 +26,12 @@ public class GyroSwerveDriveCommand extends Command {
     double Rad2 = Math.sqrt(Math.pow(axis4, 2) + Math.pow(axis5, 2));
     if (Rad1 < RobotMap.JOYSTICK_DEADBAND) { axis0 = 0.0; axis1 = 0.0; }
     if (Rad2 < RobotMap.JOYSTICK_DEADBAND) { axis4 = 0.0; axis5 = 0.0; }
-    double mult = 0.7;
-    double rotMult = 0.35;
 
-    if (Rad2 > 1 - RobotMap.JOYSTICK_DEADBAND) rotMult = 1.0;
-    else rotMult = 0.35;
-    if (Rad1 > 1 - RobotMap.JOYSTICK_DEADBAND || Robot.m_oi.dterribleLeft.get()) mult = 1.0;
-    else mult = 0.7;
+    double mult = 0.8;
+    double rotMult = 0.45;
+
+    if (Robot.m_oi.dterribleRight.get()) rotMult = 0.8;
+    if (Robot.m_oi.dterribleLeft.get()) mult = 1.0;
 
     if(Robot.m_oi.dbumperLeft.get()) {
       mult = 0.2;

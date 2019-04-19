@@ -4,7 +4,6 @@ import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -67,10 +66,6 @@ public class ClimbByGyro extends Command {
 			pidcontroller.disable();
 			Robot.lift.lift(0);
 		}
-		SmartDashboard.putNumber("lift setpoint", pidcontroller.getSetpoint());
-		SmartDashboard.putNumber("lift error", pidcontroller.getError());
-		SmartDashboard.putNumber("lift power climb", pidcontroller.get());
-		System.out.println("lift climbing");
 	}
 
 	protected boolean isFinished() {
@@ -81,7 +76,6 @@ public class ClimbByGyro extends Command {
 	}
 
 	protected void end() {
-		System.out.println("lift climbed");
     	Robot.lift.lift(0);
 		pidcontroller.disable();
 	}

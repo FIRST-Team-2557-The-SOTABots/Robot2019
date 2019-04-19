@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDlift extends Command {
 	PIDController pidcontroller;
@@ -47,10 +46,6 @@ public class PIDlift extends Command {
 		this.target = target;
 		pidcontroller.setOutputRange(-1, 1);
 		pidcontroller.setAbsoluteTolerance(3000);
-
-		SmartDashboard.putNumber("Plift", RobotMap.multplift);
-		SmartDashboard.putNumber("Ilift", RobotMap.multilift);
-		SmartDashboard.putNumber("Dlift", RobotMap.multdlift);
 	}
 
 	protected void initialize() {
@@ -64,16 +59,9 @@ public class PIDlift extends Command {
 	}
 	
 	protected void execute(){
-		// double p = SmartDashboard.getNumber("Plift", RobotMap.multplift);
-		// double i = SmartDashboard.getNumber("Ilift", RobotMap.multilift);
-		// double d = SmartDashboard.getNumber("Dlift", RobotMap.multdlift);
 		if(Robot.m_oi.joystick2.getPOV() == 270){
 			pidcontroller.setSetpoint(target + 20000);
 		}
-		pidcontroller.setP(SmartDashboard.getNumber("Plift", RobotMap.multplift) * factor);
-		pidcontroller.setI(SmartDashboard.getNumber("Ilift", RobotMap.multilift) * factor);
-		pidcontroller.setD(SmartDashboard.getNumber("Dlift", RobotMap.multdlift) * factor);
-		SmartDashboard.putNumber("LiftUpTarget", target);
 	}
 
 	protected boolean isFinished() {

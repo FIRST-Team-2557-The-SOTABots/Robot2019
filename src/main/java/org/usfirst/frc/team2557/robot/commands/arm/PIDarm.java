@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDarm extends Command {
 	PIDController pidcontroller;
@@ -91,7 +90,6 @@ public class PIDarm extends Command {
 
 		armPositions();
 		pidcontroller.setSetpoint(RobotMap.armTarget);
-		SmartDashboard.putNumber("arm target", RobotMap.armTarget * -1);
 
 		pidcontroller.setP(multp* factor);
 		pidcontroller.setI( multi* factor);

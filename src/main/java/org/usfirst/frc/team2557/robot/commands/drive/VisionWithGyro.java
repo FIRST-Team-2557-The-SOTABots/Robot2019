@@ -187,11 +187,11 @@ public class VisionWithGyro extends Command {
     // //}
 
     pidcontrollerrot.setSetpoint(angleTarget);
-    SmartDashboard.putNumber("angleTarget vision", angleTarget);
+    // SmartDashboard.putNumber("angleTarget vision", angleTarget);
     SmartDashboard.putNumber("angle setpoint vision", pidcontrollerrot.getSetpoint());
-    SmartDashboard.putNumber("angle error vision", pidcontrollerrot.getError());
-    SmartDashboard.putNumber("outputr vision", outputr);
-    SmartDashboard.putNumber("strafe error", pidcontrollerstr.getError());
+    // SmartDashboard.putNumber("angle error vision", pidcontrollerrot.getError());
+    SmartDashboard.putNumber("outputrot vision", outputr);
+    // SmartDashboard.putNumber("strafe error", pidcontrollerstr.getError());
   }
 
   private void getForward() {
