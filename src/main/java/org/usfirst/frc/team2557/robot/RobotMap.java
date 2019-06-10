@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import jaci.pathfinder.Trajectory;
+
 import org.usfirst.frc.team2557.robot.subsystems.SwerveModule;
 
 public class RobotMap {
@@ -98,7 +100,7 @@ public class RobotMap {
 	public static double TofDistance = 1635;
 	public static double kP = 1;
 	public static double SWERVE_ENC_CIRC = 4.927;
-	public static final double[] SWERVE_SETPOINT_OFFSET = {0.7, 4.72, 3.2825, 3.456};
+	public static final double[] SWERVE_SETPOINT_OFFSET = {2.2776, 4.72, 3.2825, 3.456};
 	public static double[][] SWERVE_PID_CONSTANTS = {{kP, 0.0, 0.0}, {kP, 0.0, 0}, {kP, 0.0, 0}, {kP, 0.0, 0}};
 	public static boolean[] ANGLE_MOTOR_INVERTED = {true, false, false, false};
 	public static double pidarmStall = 0.054;
