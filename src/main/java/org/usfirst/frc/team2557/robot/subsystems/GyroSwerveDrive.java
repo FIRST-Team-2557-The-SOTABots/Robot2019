@@ -2,6 +2,7 @@ package org.usfirst.frc.team2557.robot.subsystems;
 
 import org.usfirst.frc.team2557.robot.Robot;
 import org.usfirst.frc.team2557.robot.RobotMap;
+import org.usfirst.frc.team2557.robot.commands.drive.DistanceCalc;
 import org.usfirst.frc.team2557.robot.commands.drive.GyroSwerveDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -153,5 +154,6 @@ public class GyroSwerveDrive extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new GyroSwerveDriveCommand());
+    // setDefaultCommand(new DistanceCalc());
   }
 }

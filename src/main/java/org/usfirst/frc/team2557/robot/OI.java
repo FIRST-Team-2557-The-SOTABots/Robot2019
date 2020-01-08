@@ -44,7 +44,6 @@ public class OI {
 		dstart = new JoystickButton(joystick1, 8); //12s
 		dterribleLeft = new JoystickButton(joystick1, 9);
 		dterribleRight = new JoystickButton(joystick1, 10);
-		
 
 		ma = new JoystickButton(joystick2, 1);
 		mb = new JoystickButton(joystick2, 2);

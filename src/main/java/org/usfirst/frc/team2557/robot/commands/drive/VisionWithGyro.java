@@ -35,12 +35,10 @@ public class VisionWithGyro extends Command {
   double outputs;
 
   double x;
-  double a0;
-  double a1;
+  double a;
   double valid;
   NetworkTable table;
-  NetworkTableEntry ta0;
-  NetworkTableEntry ta1;
+  NetworkTableEntry ta;
   NetworkTableEntry tx;
   NetworkTableEntry tv;
 
@@ -195,22 +193,20 @@ public class VisionWithGyro extends Command {
   }
 
   private void getForward() {
-    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5) && a0 < 1.15 && a1 < 1.15)) fwdCmp = (((a0+a1)/-2.85) + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
-    else if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5))) fwdCmp = (((a0+a1)/-5.0) + 1) * fwd;
-    else if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a0+a1)/-8.0) + 1) * fwd;
+    if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5) && a < 2.3)) fwdCmp = (((a)/-2.85) + 1) * fwd; //*(1/Math.abs(pidcontrollerstr.getError()*10.0 + 1))/2.0; //(((a0+a1)/-2.0)/2 + 1) * fwd;
+    else if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(3) > 0.5))) fwdCmp = (((a)/-5.0) + 1) * fwd;
+    else if ((valid == 1 && (Robot.m_oi.joystick1.getRawAxis(2) > 0.5))) fwdCmp = (((a)/-8.0) + 1) * fwd;
     else if (Robot.m_oi.joystick1.getRawAxis(3) > 0.5 || Robot.m_oi.joystick1.getRawAxis(2) > 0.5) fwdCmp = fwd;
   }
 
   public void getCamData() {
 	  tx = table.getEntry("tx");
-    ta0 = table.getEntry("ta0");
-    ta1 = table.getEntry("ta1");
+    ta = table.getEntry("ta");
     tv = table.getEntry("tv");
 
 		//read values periodically
 		x = tx.getDouble(0.0);
-    a0 = ta0.getDouble(0.0);
-    a1 = ta1.getDouble(0.0);
+    a = ta.getDouble(0.0);
     valid = tv.getDouble(0.0);
   }
 

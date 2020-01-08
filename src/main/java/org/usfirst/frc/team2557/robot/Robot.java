@@ -5,6 +5,7 @@ import org.usfirst.frc.team2557.robot.commands.arm.ArmWithAxis;
 import org.usfirst.frc.team2557.robot.commands.arm.PIDarm;
 import org.usfirst.frc.team2557.robot.commands.climb.ClimbCommandGroup;
 import org.usfirst.frc.team2557.robot.commands.climb.RetractClimb;
+import org.usfirst.frc.team2557.robot.commands.drive.DistanceCalc;
 import org.usfirst.frc.team2557.robot.commands.drive.VisionWithGyro;
 import org.usfirst.frc.team2557.robot.commands.lift.PIDlift;
 import org.usfirst.frc.team2557.robot.subsystems.Arm;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	ClimbCommandGroup c2;
 	PIDarm pidarm;
 	ArmWithAxis awa;
+	DistanceCalc dc;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser;
 
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
 		c2 = new ClimbCommandGroup(RobotMap.climb2);
 		pidarm = new PIDarm();
 		awa = new ArmWithAxis();
+		dc = new DistanceCalc();
 
 		m_chooser.addOption("Default Auto", null);
 		// m_chooser.addOption("My Auto", new Segment1());
@@ -151,6 +154,8 @@ public class Robot extends TimedRobot {
 		manipArm();
 		manipLift();
 		smartdashboarding();
+		if(Robot.m_oi.dterribleRight.get()) dc.start();
+		else dc.cancel();
 		Scheduler.getInstance().run();
 		// readTofs();
 	}
